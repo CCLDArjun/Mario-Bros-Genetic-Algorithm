@@ -26,6 +26,12 @@ public class Neuron {
    	 }
     }
     
+    /**
+	 * Predicts output of the neuron given input
+	 *
+	 * @param  inputs - all the inputs of the neruon
+	 * @return output
+	 */
     public double propagate(ArrayList<Double> inputs) {
    	 if (inputs.size() != weights.size())
    		 throw new Error("Input size given is not assigned");
