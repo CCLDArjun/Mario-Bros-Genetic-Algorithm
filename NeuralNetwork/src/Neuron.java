@@ -43,6 +43,6 @@ public class Neuron {
 		else if (activation == activation.Tanh)
 			sum = 2 / (1 + Math.pow(Math.E, (-2 * sum)));
 
-		return 1;
+		return sum;
 	}
 }
