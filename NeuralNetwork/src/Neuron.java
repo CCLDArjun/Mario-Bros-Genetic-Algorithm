@@ -82,7 +82,8 @@ public class Neuron {
 					newWeights.set(i, n2.getWeights().get(i));
 				}
 			}
-			if (rand >= n1.getWeights().size()) {
+			
+			if (rand >= n1.getWeights().size()-1) {
 				break;
 			}
 		}

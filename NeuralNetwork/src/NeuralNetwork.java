@@ -6,10 +6,6 @@ public class NeuralNetwork {
 	private double fitness = 0;
 	private ArrayList<ArrayList<Neuron>> layers = new ArrayList<ArrayList<Neuron>>();
 	
-	public static void main(String args[]) {
-		NeuralNetwork nn = new NeuralNetwork(5);
-	}
-	
 	/**
 	 * Adds a new layer to the network. No need to add the Input Layer
 	 *
@@ -20,7 +16,7 @@ public class NeuralNetwork {
 	public void addLayer(int numNeurons, Activation activation) {
 		ArrayList<Neuron> newLayer = new ArrayList<Neuron>();
 		for (int i = 0; i < numNeurons; i++) {
-			if (layers.size() == 1)
+			if (layers.size() == 0) 
 				newLayer.add(new Neuron(activation, numInputs));
 			else
 				newLayer.add(new Neuron(activation, layers.get(layers.size() - 1).size()));
@@ -28,6 +24,16 @@ public class NeuralNetwork {
 		layers.add(newLayer);
 	}
 	
+	/**
+	 * Predicts the result based on current weights and biases. First it takes the input and gives
+	 * it to the first layer, the layer then uses it's neurons to create a new list(neurons use the
+	 * propagate method). This list is the new input and is passed into the next layer. This process 
+	 * keeps on happening until the program has reached the last layer, where it then returns the 
+	 * index of the highest value neuron(a.k.a the prediction).
+	 * 
+	 * @param input
+	 * @return prediction
+	 */
 	public int predict(ArrayList<Double> input) {
 		ArrayList<Double> oldRes = input;
 		ArrayList<Double> newRes = new ArrayList<Double>();
@@ -42,6 +48,14 @@ public class NeuralNetwork {
 		return getMaxIndex(oldRes);
 	}
 	
+	/**
+	 *  Reproduce two Neural Networks. Analogous to recombination in meiosis.
+	 *  
+	 * @param nn1 - First Neural Network
+	 * @param nn2 - Second Neural Network
+	 * @param mutationRate - Higher number will result in more mutations
+	 * @return returns the offspring of the two neural networks passed in
+	 */
 	public static NeuralNetwork reproduce(NeuralNetwork nn1, NeuralNetwork nn2, double mutationRate) {
 		NeuralNetwork newNN = new NeuralNetwork(nn1.numInputs);
 		ArrayList<ArrayList<Neuron>> newLayers = nn1.getLayers();
