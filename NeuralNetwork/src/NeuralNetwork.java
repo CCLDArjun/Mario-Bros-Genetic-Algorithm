@@ -57,12 +57,12 @@ public class NeuralNetwork {
 	}
 	
 	public int getMaxIndex(ArrayList<Double> l) {
-		int lowestIndex = 0;
+		int maxIndex = 0;
 		for (int i=1; i<l.size(); i++) {
-			if (l.get(i) < l.get(lowestIndex)) {
-				lowestIndex = i;
+			if (l.get(i) < l.get(maxIndex)) {
+				maxIndex = i;
 			}
 		}
-		return lowestIndex;	
+		return maxIndex;	
 	}
 }
