@@ -29,7 +29,15 @@ public class Neuron {
 			weights.add((Math.random() * 2) - 1);
 		}
 	}
-
+	
+	/**
+	 *  Returns the output of the neuron given the appropriate inputs. First it multiplies each
+	 *  input to the corresponding weight, then it sums that value and runs it through an activation
+	 *  function so that the output is low and non-linear.
+	 *  
+	 * @param inputs is an ArrayList
+	 * @return output of the neuron
+	 */
 	public double propagate(ArrayList<Double> inputs) {
 		if (inputs.size() != weights.size())
 			throw new Error("Input size given is not assigned");
@@ -51,6 +59,16 @@ public class Neuron {
 		return sum;
 	}
 	
+	
+	/**
+	 * Creates offspring of two parent neurons analogous to meiosis. First it selects one of the two
+	 * parents randomly. Then it copies a random section of the parent's weights and adds it to the 
+	 * offspring's weights.
+	 * 
+	 * @param n1 First Parent Neuron
+	 * @param n2 Second Parent Neuron
+	 * @return offspring of the two neurons
+	 */
 	public static Neuron reproduce(Neuron n1, Neuron n2) {
 		if (n1.getWeights().size() != n2.getWeights().size())
 			throw new RuntimeException("Neuron input sizes are not same while trying to reproduce");
