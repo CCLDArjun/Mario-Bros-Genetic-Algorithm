@@ -18,6 +18,7 @@ public class Game {
 	private Keyboard keys = new Keyboard(m);
 	private int[][] tilelayout = new int[13][13];
 	private String[] tileID = {"AIR", "ground", "block"};
+	private int offset = 0;
 //	private int[] tileData = {1, 2};
 	private Timer repaint = new Timer(1, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
@@ -63,8 +64,29 @@ public class Game {
 		frame.setVisible(true);
 
 	}
+	private void loadNext() {
+		for (int y = 0; y < tilelayout.length; y++) {
+			for (int x = 1; x < tilelayout.length; x++) {
+				tilelayout[y][x - 1] = tilelayout[y][x];
+			}
+		}
+		int[] colay = getNewLine();
+		for (int y = 0; y < tilelayout.length; y++) {
+			tilelayout[y][tilelayout[y].length - 1] = colay[y];
+		}
+	}
+	
+	private int[] getNewLine() {
+		return new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+	}
 
 	private void draw(Graphics g) {
+		offset += m.draw(g, tilelayout);
+		while (offset >= 48) {
+			loadNext();
+			offset -= 48;
+		}
+		
 		for (int y = 0; y < tilelayout.length; y++) {
 			for (int x = 0; x < tilelayout.length; x++) {
 				int tile = tilelayout[y][x];
@@ -72,14 +94,12 @@ public class Game {
 					Image img;
 					try {
 						img = ImageIO.read(new File(tileID[tile] + ".png"));
-						g.drawImage(img, x * 48, y * 48, null);
+						g.drawImage(img, x * 48 - offset, y * 48, null);
 					} catch (IOException e) {
 						// Auto-generated catch block
 					}
 				}
 			}
 		}
-		
-		m.draw(g, tilelayout);
 	}
 }
