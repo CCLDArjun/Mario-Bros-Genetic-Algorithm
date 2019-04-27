@@ -1,29 +1,11 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class NeuralNetwork {
 	private int numInputs = 0;
 	private double fitness = 0;
+	private ArrayList<ArrayList<Neuron>> layers = new ArrayList<ArrayList<Neuron>>();
 	
-	
-	public static void main(String args[]) {
-		NeuralNetwork nn = new NeuralNetwork(5);
-	}
-
-	ArrayList<ArrayList<Neuron>> layers = new ArrayList<ArrayList<Neuron>>();
-	
-	
-	public void setFitness(double f) {
-		fitness = f;
-	}
-	
-	public double getFitness() {
-		return fitness;
-	}
-	
-	public NeuralNetwork(int numInputs) {
-		this.numInputs = numInputs;
-	}
-
 	/**
 	 * Adds a new layer to the network. No need to add the Input Layer
 	 *
@@ -34,7 +16,7 @@ public class NeuralNetwork {
 	public void addLayer(int numNeurons, Activation activation) {
 		ArrayList<Neuron> newLayer = new ArrayList<Neuron>();
 		for (int i = 0; i < numNeurons; i++) {
-			if (layers.size() == 1)
+			if (layers.size() == 0) 
 				newLayer.add(new Neuron(activation, numInputs));
 			else
 				newLayer.add(new Neuron(activation, layers.get(layers.size() - 1).size()));
@@ -42,6 +24,16 @@ public class NeuralNetwork {
 		layers.add(newLayer);
 	}
 	
+	/**
+	 * Predicts the result based on current weights and biases. First it takes the input and gives
+	 * it to the first layer, the layer then uses it's neurons to create a new list(neurons use the
+	 * propagate method). This list is the new input and is passed into the next layer. This process 
+	 * keeps on happening until the program has reached the last layer, where it then returns the 
+	 * index of the highest value neuron(a.k.a the prediction).
+	 * 
+	 * @param input
+	 * @return prediction
+	 */
 	public int predict(ArrayList<Double> input) {
 		ArrayList<Double> oldRes = input;
 		ArrayList<Double> newRes = new ArrayList<Double>();
@@ -56,7 +48,29 @@ public class NeuralNetwork {
 		return getMaxIndex(oldRes);
 	}
 	
-	public int getMaxIndex(ArrayList<Double> l) {
+	/**
+	 *  Reproduce two Neural Networks. Analogous to recombination in meiosis.
+	 *  
+	 * @param nn1 - First Neural Network
+	 * @param nn2 - Second Neural Network
+	 * @param mutationRate - Higher number will result in more mutations
+	 * @return returns the offspring of the two neural networks passed in
+	 */
+	public static NeuralNetwork reproduce(NeuralNetwork nn1, NeuralNetwork nn2, double mutationRate) {
+		NeuralNetwork newNN = new NeuralNetwork(nn1.numInputs);
+		ArrayList<ArrayList<Neuron>> newLayers = nn1.getLayers();
+		for (int r=0; r<nn1.getLayers().size(); r++) {
+			for (int c=0; c<nn1.getLayers().get(r).size(); c++) {
+				Neuron n1 = nn1.getLayers().get(r).get(c);
+				Neuron n2 = nn2.getLayers().get(r).get(c);
+				newLayers.get(r).set(c, Neuron.reproduce(n1,n2));
+			}
+		}
+		newNN.setLayers(newLayers);
+		return newNN;
+	}
+	
+	private int getMaxIndex(ArrayList<Double> l) {
 		int maxIndex = 0;
 		for (int i=1; i<l.size(); i++) {
 			if (l.get(i) < l.get(maxIndex)) {
@@ -64,5 +78,26 @@ public class NeuralNetwork {
 			}
 		}
 		return maxIndex;	
+	}
+	
+	
+	public void setFitness(double f) {
+		fitness = f;
+	}
+	
+	public double getFitness() {
+		return fitness;
+	}
+	
+	public NeuralNetwork(int numInputs) {
+		this.numInputs = numInputs;
+	}
+	
+	public ArrayList<ArrayList<Neuron>> getLayers() {
+		return new ArrayList<ArrayList<Neuron>>(layers);
+	}
+	
+	public void setLayers(ArrayList<ArrayList<Neuron>> l) {
+		layers = new ArrayList<ArrayList<Neuron>>(l);
 	}
 }
