@@ -47,7 +47,7 @@ public class Neuron {
 			sum += inputs.get(i) * weights.get(i);
 		}
 
-		if (activation == activation.Sigmoid)
+		if (activation == Activation.Sigmoid)
 			sum = (1 / (1 + Math.pow(Math.E, (-1 * sum))));
 
 		else if (activation == activation.ReLu)
@@ -57,6 +57,13 @@ public class Neuron {
 			sum = 2 / (1 + Math.pow(Math.E, (-2 * sum)));
 
 		return sum;
+	}
+	
+	static void print(ArrayList<Double> l) {
+		for (double a : l) {
+			System.out.print(a+", ");
+		}
+		System.out.print("\n");
 	}
 	
 	
@@ -79,7 +86,10 @@ public class Neuron {
 			int rand = randomNum(lastRandom, n1.getWeights().size()-1);
 			for (int i=lastRandom; i<rand; i++) {
 				if (Math.random() < 0.5) {
-					newWeights.set(i, n2.getWeights().get(i));
+					newWeights.set(i, n2.getWeights().get(i)); // need to clone
+				}
+				else {
+					newWeights.set(i, n1.getWeights().get(i));
 				}
 			}
 			
@@ -94,5 +104,21 @@ public class Neuron {
 	private static int randomNum(int min, int max) {
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
+	}
+	
+	@SuppressWarnings("null")
+	public double compareTo(Neuron n) {
+		double sum = 0.0;
+		
+		if (n.getWeights().size() != weights.size())
+			return (Double) null;
+		
+		for (int i=0; i<n.getWeights().size(); i++) {
+			sum += n.getWeights().get(i) - weights.get(i);
+		}
+		
+		sum += bias - n.getBias();
+		
+		return sum;
 	}
 }

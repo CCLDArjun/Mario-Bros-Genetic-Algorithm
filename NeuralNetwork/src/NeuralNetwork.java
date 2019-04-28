@@ -58,12 +58,16 @@ public class NeuralNetwork {
 	 */
 	public static NeuralNetwork reproduce(NeuralNetwork nn1, NeuralNetwork nn2, double mutationRate) {
 		NeuralNetwork newNN = new NeuralNetwork(nn1.numInputs);
-		ArrayList<ArrayList<Neuron>> newLayers = nn1.getLayers();
+		ArrayList<ArrayList<Neuron>> newLayers = new ArrayList<ArrayList<Neuron>>();
+		for (int r=0; r<nn1.getLayers().size(); r++) {
+			newLayers.add(new ArrayList<Neuron>());
+		}
+		
 		for (int r=0; r<nn1.getLayers().size(); r++) {
 			for (int c=0; c<nn1.getLayers().get(r).size(); c++) {
 				Neuron n1 = nn1.getLayers().get(r).get(c);
 				Neuron n2 = nn2.getLayers().get(r).get(c);
-				newLayers.get(r).set(c, Neuron.reproduce(n1,n2));
+				newLayers.get(r).add(c, Neuron.reproduce(n1,n2));
 			}
 		}
 		newNN.setLayers(newLayers);
