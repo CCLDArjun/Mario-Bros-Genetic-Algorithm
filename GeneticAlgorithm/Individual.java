@@ -2,24 +2,15 @@ import java.util.ArrayList;
 
 public class Individual {
 	private int fitness;
-	private static ArrayList<Byte> genes = new ArrayList<Byte>(22); 
-	private static byte uniqueID;
+	private NeuralNetwork network; 
 	//Mario possible moves--> 0(Jump), 1(LeftMove), 2(RightMove)
-	public static void generateUniqueID() {
-		;
-		for(int i = 0; i < genes.size(); i++) {
-			genes.set(i, (byte)(2 * Math.random()));
-			
-		}
-
-		System.out.println(genes);
-		
-	}
-
 	
-	public int calcFitness() {
-		return fitness;
-
+	public int play(int[][] state) {
+		return network.predict(state);
+	}
+	
+	public int getFitness() {
+		return network.getFitness();
 	}
 
 
