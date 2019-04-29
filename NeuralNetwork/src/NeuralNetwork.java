@@ -53,11 +53,15 @@ public class NeuralNetwork {
 	 *  
 	 * @param nn1 - First Neural Network
 	 * @param nn2 - Second Neural Network
-	 * @param mutationRate - Higher number will result in more mutations
+	 * @param mutationRate - Higher number will result in more mutations, number should be between 0 and 1
 	 * @return returns the offspring of the two neural networks passed in
 	 */
 	public static NeuralNetwork reproduce(NeuralNetwork nn1, NeuralNetwork nn2, double mutationRate) {
 		NeuralNetwork newNN = new NeuralNetwork(nn1.numInputs);
+		
+		if (mutationRate >= 1 || mutationRate < 0)
+			throw new RuntimeException("Mutation Rate given is not between 0 and 1 ");
+		
 		ArrayList<ArrayList<Neuron>> newLayers = new ArrayList<ArrayList<Neuron>>();
 		for (int r=0; r<nn1.getLayers().size(); r++) {
 			newLayers.add(new ArrayList<Neuron>());
@@ -67,7 +71,7 @@ public class NeuralNetwork {
 			for (int c=0; c<nn1.getLayers().get(r).size(); c++) {
 				Neuron n1 = nn1.getLayers().get(r).get(c);
 				Neuron n2 = nn2.getLayers().get(r).get(c);
-				newLayers.get(r).add(c, Neuron.reproduce(n1,n2));
+				newLayers.get(r).add(c, Neuron.reproduce(n1, n2, mutationRate));
 			}
 		}
 		newNN.setLayers(newLayers);

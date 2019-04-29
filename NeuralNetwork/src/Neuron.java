@@ -76,7 +76,7 @@ public class Neuron {
 	 * @param n2 Second Parent Neuron
 	 * @return offspring of the two neurons
 	 */
-	public static Neuron reproduce(Neuron n1, Neuron n2) {
+	public static Neuron reproduce(Neuron n1, Neuron n2, double mutationRate) {
 		if (n1.getWeights().size() != n2.getWeights().size())
 			throw new RuntimeException("Neuron input sizes are not same while trying to reproduce");
 		Neuron n = new Neuron(n1.activation, n1.getWeights().size());
@@ -85,11 +85,18 @@ public class Neuron {
 		while (true) {
 			int rand = randomNum(lastRandom, n1.getWeights().size()-1);
 			for (int i=lastRandom; i<rand; i++) {
-				if (Math.random() < 0.5) {
+				double num = Math.random();
+				if (num < mutationRate) {
+					newWeights.set(i, Math.random());
+					System.out.println("mutation");
+				}
+				else if (num < 0.5) {
 					newWeights.set(i, n2.getWeights().get(i)); // need to clone
+					System.out.println("not");
 				}
 				else {
 					newWeights.set(i, n1.getWeights().get(i));
+					System.out.println("not");
 				}
 			}
 			

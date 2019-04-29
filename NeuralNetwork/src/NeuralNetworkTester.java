@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class NeuralNetworkTester {
 	public static void main(String args[]) {
 		NeuralNetworkTester tst = new NeuralNetworkTester();
-		System.out.println("IS RUNNING");
 		tst.testReproduction();
 	}
 	
@@ -32,8 +31,7 @@ public class NeuralNetworkTester {
 		nn1.addLayer(4, Activation.ReLu);
 		nn1.addLayer(5, Activation.Sigmoid);
 		
-		NeuralNetwork nn3 = NeuralNetwork.reproduce(nn1, nn2, 0.1);
-		
+		NeuralNetwork nn3 = NeuralNetwork.reproduce(nn1, nn2, -1);
 		
 		boolean didFail = false;
 		if (nn3.getLayers().size() != nn1.getLayers().size()) {
