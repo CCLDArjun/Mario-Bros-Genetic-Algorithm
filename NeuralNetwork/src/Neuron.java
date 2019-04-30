@@ -56,10 +56,10 @@ public class Neuron {
 		if (activation == Activation.Sigmoid)
 			sum = (1 / (1 + Math.pow(Math.E, (-1 * sum))));
 
-		else if (activation == activation.ReLu)
+		else if (activation == Activation.ReLu)
 			sum = Math.max(0.01 * sum, sum);
 
-		else if (activation == activation.Tanh)
+		else if (activation == Activation.Tanh)
 			sum = 2 / (1 + Math.pow(Math.E, (-2 * sum)));
 
 		return sum;

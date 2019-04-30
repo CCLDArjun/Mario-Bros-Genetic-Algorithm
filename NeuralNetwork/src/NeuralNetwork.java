@@ -49,7 +49,7 @@ public class NeuralNetwork {
 	}
 	
 	public ArrayList<Integer> predict(ArrayList<Double> input) {
-		return predict(input, 0.5);
+		return predict(input, 0.9);
 	}
 	
 	/**
