@@ -10,7 +10,7 @@ public class Individual {
 	}
 	
 	public int getFitness() {
-		return network.getFitness();
+		return NeuralNetwork.getFitness();
 	}
 
 
