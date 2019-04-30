@@ -65,9 +65,9 @@ public class Neuron {
 		return sum;
 	}
 	
-	static void print(ArrayList<Double> l) {
-		for (double a : l) {
-			System.out.print(a+", ");
+	public static void print(ArrayList<Integer> arrayList) {
+		for (Integer a : arrayList) {
+			System.out.print(a.intValue()+", ");
 		}
 		System.out.print("\n");
 	}

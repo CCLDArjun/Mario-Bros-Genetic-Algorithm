@@ -1,13 +1,20 @@
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class NeuralNetworkTester {
 	public static void main(String args[]) {
+		Instant start = Instant.now();
 		NeuralNetworkTester tst = new NeuralNetworkTester();
 		tst.testPredict();
+		Instant finish = Instant.now();
+		long timeElapsed = Duration.between(start, finish).toMillis();
+		System.out.println("took: "+timeElapsed+" ms");
 	}
 	
 	
 	public void testPredict() {
+		
 		for (int i=0; i<50; i++) {
 			NeuralNetwork nn = new NeuralNetwork(5);
 			nn.addLayer(4, Activation.ReLu);
@@ -18,8 +25,10 @@ public class NeuralNetworkTester {
 			in.add(1.0);
 			in.add(2.0);
 			in.add(5.0);
-			System.out.println(nn.predict(in));
+			Neuron.print(nn.predict(in));
 		}
+		
+		
 	}
 	
 	public void testReproduction() {

@@ -34,7 +34,7 @@ public class NeuralNetwork {
 	 * @param input
 	 * @return prediction
 	 */
-	public int predict(ArrayList<Double> input) {
+	public ArrayList<Integer> predict(ArrayList<Double> input, double thresh) {
 		ArrayList<Double> oldRes = input;
 		ArrayList<Double> newRes = new ArrayList<Double>();
 		
@@ -45,7 +45,11 @@ public class NeuralNetwork {
 			oldRes = newRes;
 			newRes = new ArrayList<Double>();
 		}
-		return getMaxIndex(oldRes);
+		return getMaxIndexs(oldRes, 0.5);
+	}
+	
+	public ArrayList<Integer> predict(ArrayList<Double> input) {
+		return predict(input, 0.5);
 	}
 	
 	/**
@@ -78,14 +82,17 @@ public class NeuralNetwork {
 		return newNN;
 	}
 	
-	private int getMaxIndex(ArrayList<Double> l) {
-		int maxIndex = 0;
+	private ArrayList<Integer> getMaxIndexs(ArrayList<Double> l, double thresh) {
+		ArrayList<Integer> maxIndexs = new ArrayList<Integer>();
+		
 		for (int i=1; i<l.size(); i++) {
-			if (l.get(i) < l.get(maxIndex)) {
-				maxIndex = i;
+			if (l.get(i) > thresh) {
+				maxIndexs.add(i);
 			}
 		}
-		return maxIndex;	
+		if (maxIndexs.size() == 0)
+			maxIndexs.add(-1);
+		return maxIndexs;	
 	}
 	
 	
