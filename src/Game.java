@@ -16,11 +16,11 @@ public class Game {
 	private JPanel panel;
 	private Mario m = new Mario(0, 624);
 	private Keyboard keys = new Keyboard(m);
-	private int[][] tilelayout = new int[13][13];
-	private String[] tileID = {"AIR", "ground", "block"};
+	private int[][] tilelayout = new int[13][14];
+	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
 //	private int[] tileData = {1, 2};
-	private Timer repaint = new Timer(1, new ActionListener(){
+	private Timer repaint = new Timer(18, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 //				frame.dispose();
@@ -50,11 +50,10 @@ public class Game {
 			}
 		};
 		frame.add(panel);
-		
-		for (int x = 0; x < tilelayout.length; x++) {
-			tilelayout[12][x] = 1;
+		for (int x = 0; x < tilelayout[0].length; x++) {
+			tilelayout[tilelayout.length - 1][x] = 1;
 		}
-		
+		printArray(tilelayout);
 		panel.repaint();
 		panel.setPreferredSize(new Dimension(624, 624));
 		panel.addKeyListener(keys);
@@ -64,9 +63,19 @@ public class Game {
 		frame.setVisible(true);
 
 	}
+
+	private void printArray(int[][] t) {
+		for (int [] y : t) {
+			for (int x : y) {
+				System.out.print(x + ", ");
+			}
+			System.out.println();
+		}
+	}
+
 	private void loadNext() {
 		for (int y = 0; y < tilelayout.length; y++) {
-			for (int x = 1; x < tilelayout.length; x++) {
+			for (int x = 1; x < tilelayout[0].length; x++) {
 				tilelayout[y][x - 1] = tilelayout[y][x];
 			}
 		}
@@ -77,10 +86,28 @@ public class Game {
 	}
 	
 	private int[] getNewLine() {
+		/*/
+		int[] ans = new int[14];
+		int[] lastcol = new int[14];
+		int HEIGHT = 1;
+		// (int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT
+		for (int y = 0; y < tilelayout.length; y++) {
+			lastcol[y] = tilelayout[y][tilelayout[y].length - 2];
+		}
+		
+		for (int y = 0; y < lastcol.length; y++) {
+			if (lastcol[y] == 1) {
+				ans[14] = 1;
+			}
+		}
+		
+		return ans;
+		/*/
 		return new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
 	}
-
+	
 	private void draw(Graphics g) {
+		System.out.println(offset);
 		offset += m.draw(g, tilelayout);
 		while (offset >= 48) {
 			loadNext();
@@ -88,7 +115,7 @@ public class Game {
 		}
 		
 		for (int y = 0; y < tilelayout.length; y++) {
-			for (int x = 0; x < tilelayout.length; x++) {
+			for (int x = 0; x < tilelayout[0].length; x++) {
 				int tile = tilelayout[y][x];
 				if (tile != 0) {
 					Image img;
