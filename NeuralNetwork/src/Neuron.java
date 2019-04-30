@@ -31,6 +31,10 @@ public class Neuron {
 		}
 	}
 	
+	public Neuron() {
+		
+	}
+	
 	/**
 	 *  Returns the output of the neuron given the appropriate inputs. First it multiplies each
 	 *  input to the corresponding weight, then it sums that value and runs it through an activation
@@ -47,7 +51,8 @@ public class Neuron {
 		for (int i = 0; i < inputs.size(); i++) {
 			sum += inputs.get(i) * weights.get(i);
 		}
-
+		sum += bias;
+		
 		if (activation == Activation.Sigmoid)
 			sum = (1 / (1 + Math.pow(Math.E, (-1 * sum))));
 
@@ -80,7 +85,7 @@ public class Neuron {
 	public static Neuron reproduce(Neuron n1, Neuron n2, double mutationRate) {
 		if (n1.getWeights().size() != n2.getWeights().size())
 			throw new RuntimeException("Neuron input sizes are not same while trying to reproduce");
-		Neuron n = new Neuron(n1.activation, n1.getWeights().size());
+		Neuron n = new Neuron();
 		ArrayList<Double> newWeights = n1.getWeights();
 		int lastRandom = 0;
 		while (true) {
@@ -105,6 +110,15 @@ public class Neuron {
 				break;
 			}
 		}
+		
+		double num = Math.random();
+		if (num < mutationRate)
+			n.setBias(Math.random());
+		else if (num < 0.5)
+			n.setBias(n1.getBias());
+		else
+			n.setBias(n2.getBias());
+		
 		n.setWeights(newWeights);
 		return n;
 	}
