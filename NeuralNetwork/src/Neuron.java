@@ -24,6 +24,7 @@ public class Neuron {
 
 	public Neuron(Activation activation, int numInputs) {
 		this.activation = activation;
+		this.bias = (Math.random() * 2) - 1; 
 		weights = new ArrayList<Double>();
 		for (int i = 0; i < numInputs; i++) {
 			weights.add((Math.random() * 2) - 1);
