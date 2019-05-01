@@ -1,23 +1,45 @@
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-public class NeuralNetworkTester {
-	public static void main(String args[]) {
-		Instant start = Instant.now();
-		NeuralNetworkTester tst = new NeuralNetworkTester();
-		tst.testPredict();
-		Instant finish = Instant.now();
-		long timeElapsed = Duration.between(start, finish).toMillis();
-		System.out.println("took: "+timeElapsed+" ms");
+public class NeuralNetworkTester implements Callable<Integer> {
+	public static void main(String args[]) throws InterruptedException, ExecutionException {
+		ExecutorService executor = Executors.newFixedThreadPool(10);
+		Callable<Integer> callable = new NeuralNetworkTester();
+		Callable<Integer> callable2 = new NeuralNetworkTester();
+		
+		int t = 0;
+		t+= executor.submit(callable).get().intValue();
+		t+= executor.submit(callable).get().intValue();
+		System.out.println("Took "+t+" ms");
 	}
 	
+	
+	@Override
+	public Integer call() throws Exception {
+		Instant start = Instant.now();
+		testPredict();
+		Instant finish = Instant.now();
+		int timeElapsed = (int) Duration.between(start, finish).toMillis();
+		return timeElapsed;
+	}
 	
 	public void testPredict() {
 		
 		for (int i=0; i<50; i++) {
 			NeuralNetwork nn = new NeuralNetwork(5);
 			nn.addLayer(4, Activation.ReLu);
+			nn.addLayer(5, Activation.Sigmoid);
+			nn.addLayer(5, Activation.Sigmoid);
+			nn.addLayer(5, Activation.Sigmoid);
+			nn.addLayer(5, Activation.ReLu);
+			nn.addLayer(5, Activation.Sigmoid);
+			nn.addLayer(5, Activation.Tanh);
 			nn.addLayer(5, Activation.Sigmoid);
 			ArrayList<Double> in = new ArrayList<Double>();
 			in.add(1.0);
@@ -71,4 +93,9 @@ public class NeuralNetworkTester {
 		}
 		
 	}
+
+
+	
+
+	
 }
