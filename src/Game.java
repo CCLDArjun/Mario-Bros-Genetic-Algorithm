@@ -20,7 +20,7 @@ public class Game {
 	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
 //	private int[] tileData = {1, 2};
-	private Timer repaint = new Timer(18, new ActionListener(){
+	private Timer repaint = new Timer(60, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 //				frame.dispose();
@@ -86,29 +86,29 @@ public class Game {
 	}
 	
 	private int[] getNewLine() {
-		/*/
 		int[] ans = new int[14];
 		int[] lastcol = new int[14];
 		int HEIGHT = 1;
-		// (int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT
+
 		for (int y = 0; y < tilelayout.length; y++) {
 			lastcol[y] = tilelayout[y][tilelayout[y].length - 2];
 		}
 		
 		for (int y = 0; y < lastcol.length; y++) {
 			if (lastcol[y] == 1) {
-				ans[14] = 1;
+				ans[(int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT] = 1;
 			}
 		}
+		ans[(int) (Math.random() * (lastcol.length))] = 1;
+		ans[(int) (Math.random() * (lastcol.length))] = 0;
 		
 		return ans;
-		/*/
-		return new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+//		return new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
 	}
 	
 	private void draw(Graphics g) {
 		System.out.println(offset);
-		offset += m.draw(g, tilelayout);
+		offset += m.draw(g, tilelayout, offset);
 		while (offset >= 48) {
 			loadNext();
 			offset -= 48;

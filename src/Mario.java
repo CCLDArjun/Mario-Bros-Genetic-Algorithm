@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -5,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Mario {
+public class Mario{
 	int x = 0;
 	int y = 0;
 	double x_vel = 0;
@@ -15,6 +16,10 @@ public class Mario {
 	public Mario(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public boolean collided(int x1, int y1, int x2, int y2) {
+		return true;
 	}
 	
 	public void key(int[] useKeys) {
@@ -37,11 +42,16 @@ public class Mario {
 
 	}
 	
-	public int draw(Graphics g, int[][] t) {
+	public int draw(Graphics g, int[][] t, int offset) {
 		int answer = 0;
 
 		int tilex = (int) Math.ceil(x / 48.0);
 		int tiley = (int) Math.ceil((624 - y) / 48.0);
+		g.setColor(Color.RED);
+		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) + 48 - offset, (tiley * 48));
+		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) - offset, (tiley * 48) + 48);
+		g.drawLine((tilex * 48) - offset, (tiley * 48) + 48, (tilex * 48) + 48 - offset, (tiley * 48) + 48);
+		g.drawLine((tilex * 48) + 48 - offset, (tiley * 48) + 48, (tilex * 48) + 48 - offset, (tiley * 48));
 		if (tiley < 0) {
 			tiley = 0;
 		}
@@ -77,6 +87,17 @@ public class Mario {
 			x_vel = 0;
 		}
 		
+		if (tilex == 0) {
+			ti = true;
+		}
+		else {
+			ti = t[tiley][tilex - 1] == 1;
+		}
+
+		if (ti && x_vel < 0) {
+			x_vel = 0;
+		}
+
 		x = (int) Math.round(x + x_vel);
 		y = (int) Math.round(y + y_vel);
 		x_vel = x_vel * 0.9;
