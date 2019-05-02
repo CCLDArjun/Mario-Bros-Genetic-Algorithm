@@ -9,6 +9,9 @@ import javax.imageio.ImageIO;
 public class Mario{
 	int x = 0;
 	int y = 0;
+	int prev_x = 0;
+	int prev_y = 0;
+	final int MAX_SPEED = 24;
 	double x_vel = 0;
 	double y_vel = 0;
 	boolean inAir = true;
@@ -19,8 +22,8 @@ public class Mario{
 	}
 	
 	public boolean collided(int x2, int y2) {
-		System.out.println(Math.abs(x - x2));
-		System.out.println(Math.abs((618 - y) - y2));
+//		System.out.println(Math.abs(x - x2));
+//		System.out.println(Math.abs((618 - y) - y2));
 		return ((Math.abs(x - x2) < 48) && (Math.abs((618 - y) - y2) < 48));
 	}
 	
@@ -74,6 +77,11 @@ public class Mario{
 		}
 //		System.out.println(tilex);
 //		System.out.println(tiley);
+		if (t[tiley][tilex] == 1 && collided(tilex * 48 - offset, tiley * 48)) {
+			x = prev_x;
+			y = prev_y;
+		}
+		
 		boolean ti;
 		if (tiley == 0) {
 			ti = true;
@@ -111,6 +119,24 @@ public class Mario{
 		if (ti && x_vel < 0) {
 			x_vel = 0;
 		}
+		
+		Image img;
+		try {
+			img = ImageIO.read(new File("mario.png"));
+			g.drawImage(img, x, 624 - y, null);
+		} catch (IOException e) {
+			// 1 2 Oatmeal
+		}
+		
+		if (x_vel > MAX_SPEED) {
+			x_vel = MAX_SPEED;
+		}
+		if (x_vel < -MAX_SPEED) {
+			x_vel = -MAX_SPEED;
+		}
+		
+		prev_x = x;
+		prev_y = y;
 
 		x = (int) Math.round(x + x_vel);
 		y = (int) Math.round(y + y_vel);
@@ -128,14 +154,8 @@ public class Mario{
 				x_vel = 0;
 			}
 		}
-		
-		Image img;
-		try {
-			img = ImageIO.read(new File("mario.png"));
-			g.drawImage(img, x, 624 - y, null);
-		} catch (IOException e) {
-			// 1 2 Oatmeal
-		}
+		System.out.println(x_vel);
+		System.out.println(y_vel);
 		return answer;
 	}
 }

@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -69,6 +68,7 @@ public class Game {
 		for (int x = 0; x < tilelayout[0].length; x++) {
 			tilelayout[tilelayout.length - 1][x] = 1;
 		}
+		tilelayout[tilelayout.length - 2][13] = 1;
 //		printArray(tilelayout);
 		panel.repaint();
 		panel.setPreferredSize(new Dimension(624, 624));
@@ -109,12 +109,20 @@ public class Game {
 		for (int y = 0; y < tilelayout.length; y++) {
 			lastcol[y] = tilelayout[y][tilelayout[y].length - 2];
 		}
-		
+
 		for (int y = 0; y < lastcol.length; y++) {
 			if (lastcol[y] == 1) {
-				ans[(int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT] = 1;
+				try {
+					ans[(int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT] = 1;
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println("ERRRRRROOOOOOOOOOOAAAAAAAARRRRRR");
+					System.out.println(y);
+					System.out.println(HEIGHT);
+					System.out.println(lastcol.length);
+				}
 			}
 		}
+
 		ans[(int) (Math.random() * (lastcol.length))] = 1;
 		ans[(int) (Math.random() * (lastcol.length))] = 0;
 		
