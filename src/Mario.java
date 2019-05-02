@@ -18,8 +18,22 @@ public class Mario{
 		this.y = y;
 	}
 	
-	public boolean collided(int x1, int y1, int x2, int y2) {
-		return true;
+	public boolean collided(int x2, int y2) {
+		System.out.println(Math.abs(x - x2));
+		System.out.println(Math.abs((618 - y) - y2));
+		return ((Math.abs(x - x2) < 48) && (Math.abs((618 - y) - y2) < 48));
+	}
+	
+	public void jump() {
+		y_vel = 48;
+	}
+	
+	public void moveRight() {
+		x_vel += 1;
+	}
+
+	public void moveLeft() {
+		x_vel -= 1;
 	}
 	
 	public void key(int[] useKeys) {
@@ -27,13 +41,13 @@ public class Mario{
 //		System.out.print(useKeys[1] + " ");
 //		System.out.println(useKeys[2]);
 		if ((useKeys[1] == -1) && (inAir == false)) {
-			y_vel = 48;
+			jump();
 		}
 		if (useKeys[0] == 1) {
-			x_vel += 1;
+			moveRight();
 		}
 		if (useKeys[0] == -1) {
-			x_vel -= 1;
+			moveLeft();
 		}
 		
 		if ((useKeys[2] == 1) && (useKeys[0] != 0)) {
@@ -55,8 +69,8 @@ public class Mario{
 		if (tiley < 0) {
 			tiley = 0;
 		}
-		if (tiley > 13) {
-			tiley = 13;
+		if (tiley > 11) {
+			tiley = 11;
 		}
 //		System.out.println(tilex);
 //		System.out.println(tiley);
@@ -65,13 +79,13 @@ public class Mario{
 			ti = true;
 		}
 		else {
-			ti = t[tiley - 1][tilex] == 1;
+			ti = t[tiley - 1][tilex] == 1 && collided(tilex * 48 - offset, (tiley - 1) * 48);
 		}
 
 		if (ti && y_vel > 0) {
 			y_vel = 0;
 		}
-		
+
 		if (t[tiley + 1][tilex] == 1) {
 			inAir = false;
 			y = y / 48 * 48;
@@ -83,7 +97,7 @@ public class Mario{
 			inAir = true;
 		}
 
-		if (t[tiley][tilex + 1] == 1 && x_vel > 0) {
+		if (t[tiley][tilex + 1] == 1 && x_vel > 0 && collided((tilex + 1) * 48 - offset, tiley * 48)) {
 			x_vel = 0;
 		}
 		
@@ -91,7 +105,7 @@ public class Mario{
 			ti = true;
 		}
 		else {
-			ti = t[tiley][tilex - 1] == 1;
+			ti = t[tiley][tilex - 1] == 1 && collided((tilex - 1) * 48 - offset, tiley * 48);
 		}
 
 		if (ti && x_vel < 0) {

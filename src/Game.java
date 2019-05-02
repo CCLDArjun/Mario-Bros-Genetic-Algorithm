@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -19,14 +20,17 @@ public class Game {
 	private int[][] tilelayout = new int[13][14];
 	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
-//	private int[] tileData = {1, 2};
+	private int fitness = 0;
+	private boolean isDone = false;
 	private Timer repaint = new Timer(60, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
-//				frame.dispose();
-//				JOptionPane.showMessageDialog(null, "You died!\nPoints: " + ((Integer) movey).toString(), "You lost!", JOptionPane.WARNINGMESSAGE);
-//				repaint.stop();
-//			}
+			if (m.y < 0) {
+				frame.dispose();
+				isDone = true;
+				repaint.stop();
+				System.out.println(fitness / 48);
+			}
 		}
 	});	
 	
@@ -37,6 +41,18 @@ public class Game {
 	private void start() {
 		makeFrame();
 		repaint.start();
+	}
+
+	public void jump() {
+		m.jump();
+	}
+	
+	public void moveRight() {
+		m.moveRight();
+	}
+
+	public void moveLeft() {
+		m.moveLeft();
 	}
 
 	@SuppressWarnings("serial")
@@ -53,7 +69,7 @@ public class Game {
 		for (int x = 0; x < tilelayout[0].length; x++) {
 			tilelayout[tilelayout.length - 1][x] = 1;
 		}
-		printArray(tilelayout);
+//		printArray(tilelayout);
 		panel.repaint();
 		panel.setPreferredSize(new Dimension(624, 624));
 		panel.addKeyListener(keys);
@@ -64,7 +80,7 @@ public class Game {
 
 	}
 
-	private void printArray(int[][] t) {
+/*/	private void printArray(int[][] t) {
 		for (int [] y : t) {
 			for (int x : y) {
 				System.out.print(x + ", ");
@@ -72,7 +88,7 @@ public class Game {
 			System.out.println();
 		}
 	}
-
+/*/
 	private void loadNext() {
 		for (int y = 0; y < tilelayout.length; y++) {
 			for (int x = 1; x < tilelayout[0].length; x++) {
@@ -107,8 +123,9 @@ public class Game {
 	}
 	
 	private void draw(Graphics g) {
-		System.out.println(offset);
+//		System.out.println(offset);
 		offset += m.draw(g, tilelayout, offset);
+		fitness += offset;
 		while (offset >= 48) {
 			loadNext();
 			offset -= 48;
