@@ -11,7 +11,7 @@ public class Mario{
 	int y = 0;
 	int prev_x = 0;
 	int prev_y = 0;
-	final int MAX_SPEED = 24;
+	final int MAX_SPEED = 48;
 	double x_vel = 0;
 	double y_vel = 0;
 	boolean inAir = true;
@@ -92,6 +92,7 @@ public class Mario{
 
 		if (ti && y_vel > 0) {
 			y_vel = 0;
+			y = y / 48 * 48;
 		}
 
 		if (t[tiley + 1][tilex] == 1) {
@@ -107,6 +108,7 @@ public class Mario{
 
 		if (t[tiley][tilex + 1] == 1 && x_vel > 0 && collided((tilex + 1) * 48 - offset, tiley * 48)) {
 			x_vel = 0;
+			x = tilex * 48 - offset;
 		}
 		
 		if (tilex == 0) {
@@ -118,6 +120,7 @@ public class Mario{
 
 		if (ti && x_vel < 0) {
 			x_vel = 0;
+			x = tilex * 48 - offset;
 		}
 		
 		Image img;
@@ -134,6 +137,13 @@ public class Mario{
 		if (x_vel < -MAX_SPEED) {
 			x_vel = -MAX_SPEED;
 		}
+		if (y_vel > MAX_SPEED) {
+			y_vel = MAX_SPEED;
+		}
+		if (y_vel < -MAX_SPEED) {
+			y_vel = -MAX_SPEED;
+		}
+
 		
 		prev_x = x;
 		prev_y = y;
