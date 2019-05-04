@@ -19,14 +19,17 @@ public class Game {
 	private int[][] tilelayout = new int[13][14];
 	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
-//	private int[] tileData = {1, 2};
-	private Timer repaint = new Timer(18, new ActionListener(){
+	private int fitness = 0;
+	private boolean isDone = false;
+	private Timer repaint = new Timer(60, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
-//				frame.dispose();
-//				JOptionPane.showMessageDialog(null, "You died!\nPoints: " + ((Integer) movey).toString(), "You lost!", JOptionPane.WARNINGMESSAGE);
-//				repaint.stop();
-//			}
+			if (m.y < 0) {
+				frame.dispose();
+				isDone = true;
+				repaint.stop();
+				System.out.println(fitness / 48);
+			}
 		}
 	});	
 	
@@ -37,6 +40,18 @@ public class Game {
 	private void start() {
 		makeFrame();
 		repaint.start();
+	}
+
+	public void jump() {
+		m.jump();
+	}
+	
+	public void moveRight() {
+		m.moveRight();
+	}
+
+	public void moveLeft() {
+		m.moveLeft();
 	}
 
 	@SuppressWarnings("serial")
@@ -53,7 +68,8 @@ public class Game {
 		for (int x = 0; x < tilelayout[0].length; x++) {
 			tilelayout[tilelayout.length - 1][x] = 1;
 		}
-		printArray(tilelayout);
+		tilelayout[tilelayout.length - 2][13] = 1;
+//		printArray(tilelayout);
 		panel.repaint();
 		panel.setPreferredSize(new Dimension(624, 624));
 		panel.addKeyListener(keys);
@@ -64,7 +80,7 @@ public class Game {
 
 	}
 
-	private void printArray(int[][] t) {
+/*/	private void printArray(int[][] t) {
 		for (int [] y : t) {
 			for (int x : y) {
 				System.out.print(x + ", ");
@@ -72,7 +88,7 @@ public class Game {
 			System.out.println();
 		}
 	}
-
+/*/
 	private void loadNext() {
 		for (int y = 0; y < tilelayout.length; y++) {
 			for (int x = 1; x < tilelayout[0].length; x++) {
@@ -86,29 +102,38 @@ public class Game {
 	}
 	
 	private int[] getNewLine() {
-		/*/
 		int[] ans = new int[14];
 		int[] lastcol = new int[14];
 		int HEIGHT = 1;
-		// (int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT
+
 		for (int y = 0; y < tilelayout.length; y++) {
 			lastcol[y] = tilelayout[y][tilelayout[y].length - 2];
 		}
-		
+
 		for (int y = 0; y < lastcol.length; y++) {
 			if (lastcol[y] == 1) {
-				ans[14] = 1;
+				try {
+					ans[(int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT] = 1;
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println("ERRRRRROOOOOOOOOOOAAAAAAAARRRRRR");
+					System.out.println(y);
+					System.out.println(HEIGHT);
+					System.out.println(lastcol.length);
+				}
 			}
 		}
+
+		ans[(int) (Math.random() * (lastcol.length))] = 1;
+		ans[(int) (Math.random() * (lastcol.length))] = 0;
 		
 		return ans;
-		/*/
-		return new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+//		return new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
 	}
 	
 	private void draw(Graphics g) {
-		System.out.println(offset);
-		offset += m.draw(g, tilelayout);
+//		System.out.println(offset);
+		offset += m.draw(g, tilelayout, offset);
+		fitness += offset;
 		while (offset >= 48) {
 			loadNext();
 			offset -= 48;
