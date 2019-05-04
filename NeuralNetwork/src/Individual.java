@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Individual {
+public class Individual implements Callable {
 	private NeuralNetwork network; 
 	private Game game;
 
