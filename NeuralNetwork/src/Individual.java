@@ -12,6 +12,11 @@ public class Individual implements Callable<Individual> {
 		this.game = game;
 	}
 	
+	public Individual(NeuralNetwork n, Game game) {
+		network = n; 
+		this.game = game; 
+	}
+	
 	public double getFitness() {
 		return network.getFitness();
 		

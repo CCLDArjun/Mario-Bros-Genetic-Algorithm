@@ -51,25 +51,37 @@ public class GeneticAlgorithm {
 					futures.get(j) = temp;
 
 				}
-
+				individuals.add(futures.get(i));
 			}
-			individuals.add(futures.get(i));
+
 		}
+
+		for(int i = 0; i < individuals.size() -1; i++) {
+
+
+			if (ind < individuals.get(i)) continue;
+
+			if (ind  == individuals.get(i)) 
+
+				individuals.add(i, ind);
+
+		}
+
 		select(individuals);
 	}
 
 
 	private void select(ArrayList<Individual> inds) {
 
-		for(int i = inds.size(); i > 30; i--) {
+		for(int i = inds.size(); i > 90; i--) {
 			inds.remove(i);
 		}
-		
+
 		for(int i = 0; i < inds.size() -1; i++) {
 			net.reproduce(inds.get(i).network, inds.get(i + 1).network, mutationRate);
 		}
-		
-		
+
+
 		// individuals should be sorted, kill ones who are doing bad, 
 		// repoduce good ones, dont reproduce best, just keep them in the
 		// new generation
