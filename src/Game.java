@@ -19,16 +19,18 @@ public class Game {
 	private int[][] tilelayout = new int[13][14];
 	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
-	private int fitness = 0;
+	private double fitness = 0;
 	private boolean isDone = false;
-	private Timer repaint = new Timer(60, new ActionListener(){
+	private Timer repaint = new Timer(18, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			if (m.y < 0) {
 				frame.dispose();
 				isDone = true;
-				repaint.stop();
-				System.out.println(fitness / 48);
+				if (isDone) {
+					repaint.stop();
+					System.out.println(fitness / 48);
+				}
 			}
 		}
 	});	
@@ -42,6 +44,16 @@ public class Game {
 		repaint.start();
 	}
 
+	public double[][] getState() {
+		double[][] doubles = new double[tilelayout.length][tilelayout[0].length];
+		for(int i = 0; i < tilelayout.length; i++) {
+			for(int j = 0; j < tilelayout.length; j++) {
+				doubles[i][j] = tilelayout[i][j];
+			}
+		}
+		return doubles;
+	}
+	
 	public void jump() {
 		m.jump();
 	}
@@ -53,7 +65,11 @@ public class Game {
 	public void moveLeft() {
 		m.moveLeft();
 	}
-
+	
+	public double getFitness() {
+		return fitness;
+	}
+	
 	@SuppressWarnings("serial")
 	private void makeFrame() {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

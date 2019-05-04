@@ -11,7 +11,7 @@ public class Mario{
 	int y = 0;
 	int prev_x = 0;
 	int prev_y = 0;
-	final int MAX_SPEED = 48;
+	final int MAX_SPEED = 24;
 	double x_vel = 0;
 	double y_vel = 0;
 	boolean inAir = true;
@@ -137,9 +137,6 @@ public class Mario{
 		if (x_vel < -MAX_SPEED) {
 			x_vel = -MAX_SPEED;
 		}
-		if (y_vel > MAX_SPEED) {
-			y_vel = MAX_SPEED;
-		}
 		if (y_vel < -MAX_SPEED) {
 			y_vel = -MAX_SPEED;
 		}
@@ -164,8 +161,8 @@ public class Mario{
 				x_vel = 0;
 			}
 		}
-		System.out.println(x_vel);
-		System.out.println(y_vel);
+//		System.out.println(x_vel);
+//		System.out.println(y_vel);
 		return answer;
 	}
 }
