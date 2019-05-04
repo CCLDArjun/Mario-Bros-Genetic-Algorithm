@@ -11,6 +11,7 @@ public class Mario{
 	int y = 0;
 	int prev_x = 0;
 	int prev_y = 0;
+	int movedTilesInFrame = 0;
 	final int MAX_SPEED = 48;
 	double x_vel = 0;
 	double y_vel = 0;
@@ -156,6 +157,7 @@ public class Mario{
 		}
 		if (x > 312) {
 			answer = x - 312;
+			movedTilesInFrame = answer / 48;
 			x = 312;
 		}
 		if (x < 0) {
@@ -164,8 +166,10 @@ public class Mario{
 				x_vel = 0;
 			}
 		}
-		System.out.println(x_vel);
-		System.out.println(y_vel);
+//		System.out.println(x_vel);
+//		System.out.println(y_vel);
+//		System.out.println(Math.hypot(x - prev_x, y- prev_y));
+//		System.out.println(x);
 		return answer;
 	}
 }
