@@ -1,13 +1,15 @@
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
-public class Individual implements Callable {
+public class Individual implements Callable<Individual> {
 	private NeuralNetwork network; 
 	private Game game;
 
-	public Individual(int numInputs) {
+	public Individual(int numInputs, Game game) {
 		network = new NeuralNetwork(numInputs);
 		network.addLayer(4,	Activation.ReLu);
 		network.addLayer(3, Activation.Sigmoid);
+		this.game = game;
 	}
 	
 	public double getFitness() {
@@ -50,5 +52,11 @@ public class Individual implements Callable {
 		}
 
 
+	}
+
+	@Override
+	public Individual call() throws Exception {
+		play();
+		return this;
 	}
 }
