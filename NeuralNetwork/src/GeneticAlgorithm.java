@@ -73,7 +73,7 @@ public class GeneticAlgorithm {
 
 	private void select(ArrayList<Individual> inds) {
 
-		for(int i = inds.size(); i > 90; i--) {
+		for(int i = inds.size() -1; i > 90; i--) {
 			inds.remove(i);
 		}
 
