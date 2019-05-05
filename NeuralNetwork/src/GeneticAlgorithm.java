@@ -40,20 +40,7 @@ public class GeneticAlgorithm {
 			Individual ind = futures.get(i).get();
 			// add in a sorted manner into individuals ArrayList.
 
-			for (int j = i + 1; j < futures.size(); j++) 
-			{
-				if (futures.get(i) > futures.get(j)) 
-				{
-					temp = futures.get(i);
-
-					futures.get(i) = futures.get(j);
-
-					futures.get(j) = temp;
-
-				}
-				individuals.add(futures.get(i));
-			}
-
+			
 		}
 
 		for(int i = 0; i < individuals.size() -1; i++) {
@@ -73,7 +60,7 @@ public class GeneticAlgorithm {
 
 	private void select(ArrayList<Individual> inds) {
 
-		for(int i = inds.size(); i > 90; i--) {
+		for(int i = inds.size() -1; i > 90; i--) {
 			inds.remove(i);
 		}
 
