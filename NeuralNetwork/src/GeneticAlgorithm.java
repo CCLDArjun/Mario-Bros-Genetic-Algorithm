@@ -40,8 +40,9 @@ public class GeneticAlgorithm {
 		for (int i=0; i<futures.size(); i++) {
 			Individual ind = futures.get(i).get();
 			// add in a sorted manner into individuals ArrayList.
+			if (individuals.size() == 0) individuals.add(ind);
 
-			for(int j = 0; i < individuals.size(); j++) {
+			for(int j = 0; j < individuals.size(); j++) {
 
 
 				if (ind.getFitness() < individuals.get(i).getFitness()) continue;
@@ -49,7 +50,7 @@ public class GeneticAlgorithm {
 				if (ind.getFitness()  >= individuals.get(i).getFitness()) 
 
 					individuals.add(i, ind);
-				if (individuals.size() == 0) individuals.add(ind);
+				
 			}
 
 		}
