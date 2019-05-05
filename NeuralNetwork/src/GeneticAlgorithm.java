@@ -74,6 +74,7 @@ public class GeneticAlgorithm {
 		}
 		
 	}
+	individuals = theBest;
 }
 
 
