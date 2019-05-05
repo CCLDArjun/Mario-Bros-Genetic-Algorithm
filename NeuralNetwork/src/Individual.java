@@ -15,8 +15,19 @@ public class Individual implements Callable<Individual> {
 	public Individual(NeuralNetwork n, Game game) {
 		network = n; 
 		this.game = game; 
+		ArrayList<Individual> theBest = new ArrayList<Individual>();
+		for(int i = 0: i < 3; i++) {
+			theBest.add(individuals.get(i));
+		}
+		for(int i = 0; i < 69; i++) {
+		NeuralNetwork m = GeneticAlgorithm.reproduce(individuals.get(i).n, individuals.get(i).n, GeneticAlgorithm.mutationRate);
+		theBest.add(new Individual(m, game));
+		}
+		for(int i = 0; i < 30; i++) {
+			theBest.add(new Individual(network, game));
+		}
+		
 	}
-	
 	public double getFitness() {
 		return network.getFitness();
 		
