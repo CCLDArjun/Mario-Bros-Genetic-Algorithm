@@ -68,10 +68,18 @@ public class GeneticAlgorithm {
 			net.reproduce(inds.get(i).network, inds.get(i + 1).network, mutationRate);
 		}
 
-
-		// individuals should be sorted, kill ones who are doing bad, 
-		// repoduce good ones, dont reproduce best, just keep them in the
-		// new generation
+		ArrayList<Individual> theBest = new ArrayList<Individual>();
+		for(int i = 0: i < 3; i++) {
+			theBest.add(individuals.get(i));
+		}
+		for(int i = 0; i < 69; i++) {
+		NeuralNetwork m = GeneticAlgorithm.reproduce(individuals.get(i).n, individuals.get(i + 1).n, GeneticAlgorithm.mutationRate);
+		theBest.add(new Individual(m, game));
+		}
+		for(int i = 0; i < 30; i++) {
+			theBest.add(new Individual(network, game));
+		}
+		
 	}
 }
 
