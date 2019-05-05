@@ -9,9 +9,10 @@ import java.util.concurrent.Future;
 
 public class GeneticAlgorithm {
 	private ArrayList <Individual> individuals =  new ArrayList <Individual>();
-	private double mutationRate;
+	private static double mutationRate;
 	private int popSize;
 	public NeuralNetwork net; 
+	public Game game;
 
 
 	public GeneticAlgorithm(double mutationRate, int popSize, int numInputs) {
@@ -70,7 +71,7 @@ public class GeneticAlgorithm {
 			theBest.add(new Individual(m, game));
 		}
 		for(int i = 0; i < 30; i++) {
-			theBest.add(new Individual(network, game));
+			theBest.add(new Individual(net, game));
 		}
 		individuals = theBest;
 	}
