@@ -11,7 +11,7 @@ public class GeneticAlgorithm {
 	private ArrayList <Individual> individuals =  new ArrayList <Individual>();
 	private double mutationRate;
 	private int popSize;
-	public NueralNetwork net; 
+	public NeuralNetwork net; 
 
 
 	public GeneticAlgorithm(double mutationRate, int popSize, int numInputs) {
@@ -40,19 +40,19 @@ public class GeneticAlgorithm {
 			Individual ind = futures.get(i).get();
 			// add in a sorted manner into individuals ArrayList.
 
-			
+			for(int j = 0; i < individuals.size(); j++) {
+
+
+				if (ind.getFitness() < individuals.get(i).getFitness()) continue;
+
+				if (ind.getFitness()  >= individuals.get(i).getFitness()) 
+
+					individuals.add(i, ind);
+				if (individuals.size() == 0) individuals.add(ind);
+			}
+
 		}
 
-		for(int i = 0; i < individuals.size() -1; i++) {
-
-
-			if (ind < individuals.get(i)) continue;
-
-			if (ind  == individuals.get(i)) 
-
-				individuals.add(i, ind);
-
-		}
 
 		select(individuals);
 	}
@@ -60,21 +60,21 @@ public class GeneticAlgorithm {
 
 	private void select(ArrayList<Individual> inds) {
 
-	
+
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
-		for(int i = 0: i < 3; i++) {
+		for(int i = 0; i < 3; i++) {
 			theBest.add(individuals.get(i));
 		}
 		for(int i = 0; i < 69; i++) {
-		NeuralNetwork m = GeneticAlgorithm.reproduce(individuals.get(i).n, individuals.get(i + 1).n, GeneticAlgorithm.mutationRate);
-		theBest.add(new Individual(m, game));
+			NeuralNetwork m = GeneticAlgorithm.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), GeneticAlgorithm.mutationRate);
+			theBest.add(new Individual(m, game));
 		}
 		for(int i = 0; i < 30; i++) {
 			theBest.add(new Individual(network, game));
 		}
-		
+		individuals = theBest;
 	}
-	individuals = theBest;
+
 }
 
 
