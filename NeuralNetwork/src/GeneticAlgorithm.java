@@ -60,14 +60,7 @@ public class GeneticAlgorithm {
 
 	private void select(ArrayList<Individual> inds) {
 
-		for(int i = inds.size() -1; i > 90; i--) {
-			inds.remove(i);
-		}
-
-		for(int i = 0; i < inds.size() -1; i++) {
-			net.reproduce(inds.get(i).network, inds.get(i + 1).network, mutationRate);
-		}
-
+	
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
 		for(int i = 0: i < 3; i++) {
 			theBest.add(individuals.get(i));
