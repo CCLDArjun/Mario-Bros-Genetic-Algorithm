@@ -66,9 +66,12 @@ public class Individual implements Callable<Individual> {
 				break;
 			}
 		}
-
-
+	public NeuralNetwork getNN() {
+		return network;
+		
 	}
+
+	
 
 	@Override
 	public Individual call() throws Exception {
