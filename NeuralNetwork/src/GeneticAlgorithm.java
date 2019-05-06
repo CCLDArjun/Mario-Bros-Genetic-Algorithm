@@ -49,7 +49,7 @@ public class GeneticAlgorithm {
 
 				if (ind.getFitness()  >= individuals.get(j).getFitness()) 
 
-					individuals.add(i, ind);
+					individuals.add(j, ind);
 				
 			}
 
