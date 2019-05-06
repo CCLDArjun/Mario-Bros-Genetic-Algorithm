@@ -68,7 +68,7 @@ public class GeneticAlgorithm {
 			theBest.add(individuals.get(i));
 		}
 		for(int i = 0; i < 69; i++) {
-			NeuralNetwork m = GeneticAlgorithm.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), GeneticAlgorithm.mutationRate);
+			NeuralNetwork m = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), GeneticAlgorithm.mutationRate);
 			theBest.add(new Individual(m, game));
 		}
 		for(int i = 0; i < 30; i++) {
