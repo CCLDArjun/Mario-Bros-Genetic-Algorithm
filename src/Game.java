@@ -20,7 +20,7 @@ public class Game {
 	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
 	private double fitness = 0;
-	private boolean isDone = false;
+	boolean isDone = false;
 	private Timer repaint = new Timer(18, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
@@ -39,7 +39,7 @@ public class Game {
 		new Game().start();
 	}
 
-	private void start() {
+	void start() {
 		makeFrame();
 		repaint.start();
 	}
@@ -171,3 +171,4 @@ public class Game {
 		}
 	}
 }
+

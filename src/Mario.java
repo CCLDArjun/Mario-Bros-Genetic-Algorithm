@@ -11,6 +11,10 @@ public class Mario{
 	int y = 0;
 	int prev_x = 0;
 	int prev_y = 0;
+	int prev_tile_x = 0;
+	int prev_tile_y = 0;
+	int tilex;
+	int tiley;
 	final int MAX_SPEED = 24;
 	double x_vel = 0;
 	double y_vel = 0;
@@ -62,8 +66,10 @@ public class Mario{
 	public int draw(Graphics g, int[][] t, int offset) {
 		int answer = 0;
 
-		int tilex = (int) Math.ceil(x / 48.0);
-		int tiley = (int) Math.ceil((624 - y) / 48.0);
+		prev_tile_x = tilex;
+		prev_tile_y = tiley;
+		tilex = (int) Math.ceil(x / 48.0);
+		tiley = (int) Math.ceil((624 - y) / 48.0);
 		g.setColor(Color.RED);
 		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) + 48 - offset, (tiley * 48));
 		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) - offset, (tiley * 48) + 48);
@@ -78,9 +84,20 @@ public class Mario{
 //		System.out.println(tilex);
 //		System.out.println(tiley);
 		if (t[tiley][tilex] == 1 && collided(tilex * 48 - offset, tiley * 48)) {
+			System.out.println("SUGONDESE");
+			System.out.println(tilex);
+			System.out.println(tiley);
+			System.out.println(prev_tile_x);
+			System.out.println(prev_tile_y);
+			System.out.println("CO");
+			tilex = prev_tile_x;
+			tiley = prev_tile_y;
 			x = prev_x;
 			y = prev_y;
 		}
+		
+		prev_x = x;
+		prev_y = y;
 		
 		boolean ti;
 		if (tiley == 0) {
@@ -140,10 +157,6 @@ public class Mario{
 		if (y_vel < -MAX_SPEED) {
 			y_vel = -MAX_SPEED;
 		}
-
-		
-		prev_x = x;
-		prev_y = y;
 
 		x = (int) Math.round(x + x_vel);
 		y = (int) Math.round(y + y_vel);
