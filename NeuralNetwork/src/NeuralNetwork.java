@@ -8,7 +8,8 @@ public class NeuralNetwork {
 	
 	/**
 	 * Adds a new layer to the network. No need to add the Input Layer
-	 *
+	 * 
+	 * @author Arjun
 	 * @param numNeurons - Number of Neurons
 	 * @param activation - can choose between ReLu, Sigmoid, Tanh
 	 * @return void
@@ -31,6 +32,7 @@ public class NeuralNetwork {
 	 * keeps on happening until the program has reached the last layer, where it then returns the 
 	 * index of the highest value neuron(a.k.a the prediction).
 	 * 
+	 * @author Arjun
 	 * @param input
 	 * @return prediction
 	 */
@@ -54,6 +56,7 @@ public class NeuralNetwork {
 	
 	/**
 	 *  Reproduce two Neural Networks. Analogous to recombination in meiosis.
+	 * @author Arjun
 	 *  
 	 * @param nn1 - First Neural Network
 	 * @param nn2 - Second Neural Network
