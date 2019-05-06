@@ -7,31 +7,31 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class NeuralNetworkTester implements Callable<Integer> {
+public class NeuralNetworkTester implements Callable<ArrayList<Integer>> {
 	public static void main(String args[]) throws InterruptedException, ExecutionException {
 		ExecutorService executor = Executors.newFixedThreadPool(10);
-		Callable<Integer> callable = new NeuralNetworkTester();
-		Callable<Integer> callable2 = new NeuralNetworkTester();
-		
-		int t = 0;
-		t+= executor.submit(callable).get().intValue();
-		t+= executor.submit(callable).get().intValue();
-		System.out.println("Took "+t+" ms");
+		int times = 0;
+		while (true) {
+			times++;
+			System.out.println(times+" times");
+			Callable<ArrayList<Integer>> callable = new NeuralNetworkTester();
+			Callable<ArrayList<Integer>> callable2 = new NeuralNetworkTester();
+			
+			int t = 0;
+			executor.submit(callable).get();
+			executor.submit(callable).get();
+		}
 	}
 	
 	
 	@Override
-	public Integer call() throws Exception {
-		Instant start = Instant.now();
-		testPredict();
-		Instant finish = Instant.now();
-		int timeElapsed = (int) Duration.between(start, finish).toMillis();
-		return timeElapsed;
+	public ArrayList<Integer> call() throws Exception {
+		return testPredict();
 	}
 	
-	public void testPredict() {
+	public ArrayList<Integer> testPredict() {
 		
-		for (int i=0; i<50; i++) {
+//		for (int i=0; i<50; i++) {
 			NeuralNetwork nn = new NeuralNetwork(5);
 			nn.addLayer(4, Activation.ReLu);
 			nn.addLayer(5, Activation.Sigmoid);
@@ -47,8 +47,8 @@ public class NeuralNetworkTester implements Callable<Integer> {
 			in.add(1.0);
 			in.add(2.0);
 			in.add(5.0);
-			Neuron.print(nn.predict(in));
-		}
+			return nn.predict(in);
+//		}
 		
 		
 	}
