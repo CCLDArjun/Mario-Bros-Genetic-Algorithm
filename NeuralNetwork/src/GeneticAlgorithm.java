@@ -9,7 +9,7 @@ import java.util.concurrent.Future;
 
 public class GeneticAlgorithm {
 	private ArrayList <Individual> individuals =  new ArrayList <Individual>();
-	private static double mutationRate;
+	private double mutationRate;
 	private int popSize;
 	public NeuralNetwork net; 
 	public Game game;
@@ -66,15 +66,19 @@ public class GeneticAlgorithm {
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
 		for(int i = 0; i < 3; i++) {
 			theBest.add(individuals.get(i));
+			
 		}
 		for(int i = 0; i < 69; i++) {
-			NeuralNetwork m = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), GeneticAlgorithm.mutationRate);
+			NeuralNetwork m = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 			theBest.add(new Individual(m, game));
 		}
 		for(int i = 0; i < 30; i++) {
 			theBest.add(new Individual(net, game));
 		}
 		individuals = theBest;
+		while(mutationRate - 0.1 >= 0) {
+			mutationRate -=0.1;
+		}
 	}
 
 }
