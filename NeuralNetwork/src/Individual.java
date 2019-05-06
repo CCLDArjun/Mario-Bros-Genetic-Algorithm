@@ -12,6 +12,10 @@ public class Individual implements Callable<Individual> {
 		this.game = game;
 	}
 	
+	/**
+	 * @author Sri Kondapalli
+	 * @param NeeralNetwork passed in as a requirement for pairs of individuals to reproduce
+	 */
 	public Individual(NeuralNetwork n, Game game) {
 		network = n; 
 		this.game = game; 

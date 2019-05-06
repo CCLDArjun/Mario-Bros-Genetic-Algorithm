@@ -36,6 +36,10 @@ public class GeneticAlgorithm {
 			futures.add(service.submit(ind));
 		}
 
+		/**
+		 * @author Sri Kondapalli 
+		 * places an Individual ind into a sorted ArrayList
+		 */
 
 		for (int i=0; i<futures.size(); i++) {
 			Individual ind = futures.get(i).get();
@@ -62,6 +66,12 @@ public class GeneticAlgorithm {
 
 	private void select() {
 
+		/**
+		 * @author Sri Kondapalli
+		 * 
+		 * Adds the best individuals from the individuals arrayList, and reproduces pairs of best 70 individuals
+		 * adds 30 new individuals to maintain population size(100). 
+		 */
 
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
 		for(int i = 0; i < 3; i++) {
