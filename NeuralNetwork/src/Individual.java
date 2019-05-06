@@ -21,6 +21,7 @@ public class Individual implements Callable<Individual> {
 		this.game = game; 
 		
 	}
+	
 	public double getFitness() {
 		return network.getFitness();
 		
@@ -59,12 +60,12 @@ public class Individual implements Callable<Individual> {
 				break;
 			}
 		}
+	}
+	
 	public NeuralNetwork getNN() {
 		return network;
 		
 	}
-
-	
 
 	@Override
 	public Individual call() throws Exception {
