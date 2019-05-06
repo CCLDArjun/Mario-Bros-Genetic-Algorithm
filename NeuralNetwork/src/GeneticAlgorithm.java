@@ -45,9 +45,9 @@ public class GeneticAlgorithm {
 			for(int j = 0; j < individuals.size(); j++) {
 
 
-				if (ind.getFitness() < individuals.get(i).getFitness()) continue;
+				if (ind.getFitness() < individuals.get(j).getFitness()) continue;
 
-				if (ind.getFitness()  >= individuals.get(i).getFitness()) 
+				if (ind.getFitness()  >= individuals.get(j).getFitness()) 
 
 					individuals.add(i, ind);
 				
