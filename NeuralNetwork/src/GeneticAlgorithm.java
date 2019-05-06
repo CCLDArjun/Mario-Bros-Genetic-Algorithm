@@ -56,11 +56,11 @@ public class GeneticAlgorithm {
 		}
 
 
-		select(individuals);
+		select();
 	}
 
 
-	private void select(ArrayList<Individual> inds) {
+	private void select() {
 
 
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
