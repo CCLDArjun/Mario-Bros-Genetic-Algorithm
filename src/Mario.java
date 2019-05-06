@@ -166,6 +166,7 @@ public class Mario{
 		}
 		if (x > 312) {
 			answer = x - 312;
+			movedTilesInFrame = answer / 48;
 			x = 312;
 		}
 		if (x < 0) {
@@ -176,6 +177,8 @@ public class Mario{
 		}
 //		System.out.println(x_vel);
 //		System.out.println(y_vel);
+//		System.out.println(Math.hypot(x - prev_x, y- prev_y));
+//		System.out.println(x);
 		return answer;
 	}
 }
