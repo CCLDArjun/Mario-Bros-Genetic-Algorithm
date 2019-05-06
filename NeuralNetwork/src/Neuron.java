@@ -40,6 +40,7 @@ public class Neuron {
 	 *  input to the corresponding weight, then it sums that value and runs it through an activation
 	 *  function so that the output is low and non-linear.
 	 *  
+	 * @author Arjun
 	 * @param inputs is an ArrayList
 	 * @return output of the neuron
 	 */
@@ -78,6 +79,7 @@ public class Neuron {
 	 * parents randomly. Then it copies a random section of the parent's weights and adds it to the 
 	 * offspring's weights.
 	 * 
+	 * @author Arjun
 	 * @param n1 First Parent Neuron
 	 * @param n2 Second Parent Neuron
 	 * @return offspring of the two neurons
