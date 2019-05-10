@@ -13,6 +13,7 @@ import javax.swing.Timer;
 
 public class Game {
 	private JFrame frame = new JFrame("Super Mario Bros!");
+	frame.getContentPane().setBackground(Color.BLUE);
 	private JPanel panel;
 	private Mario m = new Mario(0, 624);
 	private Keyboard keys = new Keyboard(m);
