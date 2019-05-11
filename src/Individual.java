@@ -8,7 +8,7 @@ public class Individual implements Callable<Individual> {
 	public Individual(int numInputs, Game game) {
 		network = new NeuralNetwork(numInputs);
 		network.addLayer(40, Activation.ReLu);
-		network.addLayer(3, Activation.Sigmoid);
+		network.addLayer(4, Activation.Sigmoid);
 		this.game = game;
 	}
 	
@@ -38,9 +38,16 @@ public class Individual implements Callable<Individual> {
 					newState.add(state[r][c]); 
 				}
 			}
+			
+			System.out.println(newState.size());
 
-			ArrayList<Integer> actions = network.predict(newState);
-
+			ArrayList<Integer> actions = network.predict(newState, 0);
+			
+			for (Integer i : actions) {
+				System.out.print(i.intValue());
+			}
+			System.out.print("\n sso");
+			
 			if (actions.get(0) == -1) {
 				continue;
 			}
@@ -53,9 +60,11 @@ public class Individual implements Callable<Individual> {
 			if(actions.get(2) >= 1) {
 				game.moveLeft();
 			}
+			System.out.print(isDone);
 			isDone = game.isDone;
 			if (isDone) {
 				network.setFitness(game.getFitness());
+				System.out.println("done boi");
 				break;
 			}
 		}

@@ -92,6 +92,9 @@ public class NeuralNetwork {
 			if (l.get(i) > thresh) {
 				maxIndexs.add(i);
 			}
+			else {
+				maxIndexs.add(0);
+			}
 		}
 		if (maxIndexs.size() == 0)
 			maxIndexs.add(-1);

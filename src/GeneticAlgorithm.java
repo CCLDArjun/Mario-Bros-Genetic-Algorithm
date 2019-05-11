@@ -37,16 +37,15 @@ public class GeneticAlgorithm {
 		ExecutorService service = Executors.newFixedThreadPool(10);
 		ArrayList<Future<Individual>> futures = new ArrayList<Future<Individual>>();
 		for(int i = 0; i < popSize; i++) {
-			Individual ind = new Individual(numInputs, null);
+			Individual ind = new Individual(numInputs, new Game());
 			futures.add(service.submit(ind));
 		}
-
 		/**
 		 * @author Sri Kondapalli 
 		 * places an Individual ind into a sorted ArrayList
 		 */
 
-		for (int i=0; i<futures.size(); i++) {
+		for (int i=0; i<futures.size()-1; i++) {
 			Individual ind = futures.get(i).get();
 			// add in a sorted manner into individuals ArrayList.
 			if (individuals.size() == 0) individuals.add(ind);
@@ -79,11 +78,11 @@ public class GeneticAlgorithm {
 			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 			NeuralNetwork m2 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 
-			theBest.add(new Individual(m1, null));
-			theBest.add(new Individual(m2, null));
+			theBest.add(new Individual(m1, new Game()));
+			theBest.add(new Individual(m2, new Game()));
 		}
 		for(int i = 0; i < individuals.size() * 0.30; i++) {
-			theBest.add(new Individual(numInputs, null));
+			theBest.add(new Individual(numInputs, new Game()));
 		}
 		individuals = theBest;
 		while(mutationRate - 0.1 >= 0.01) {
