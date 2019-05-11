@@ -39,28 +39,35 @@ public class Individual implements Callable<Individual> {
 				}
 			}
 			
-			System.out.println(newState.size());
+//			System.out.println(newState.size());
 
-			ArrayList<Integer> actions = network.predict(newState, 0);
+			ArrayList<Integer> actions = network.predict(newState, 0.1);
 			
 			for (Integer i : actions) {
 				System.out.print(i.intValue());
 			}
 			System.out.print("\n sso");
 			
+//			game.moveRight();
 			if (actions.get(0) == -1) {
 				continue;
 			}
-			if (actions.get(0) == 1) {
-				game.jump();
+			
+			boolean isMovingRight = false;
+			if (actions.get(0) >= 1) {
+				game.moveRight();
+				isMovingRight = true;
 			}
 			if(actions.get(1) >= 1) {
-				game.moveRight();
+				System.out.println("JUMPING");
+				game.jump();
 			}
 			if(actions.get(2) >= 1) {
-				game.moveLeft();
+				if (!isMovingRight) {
+					System.out.println("MOVING LEFT");
+					game.moveLeft();
+				}
 			}
-			System.out.print(isDone);
 			isDone = game.isDone;
 			if (isDone) {
 				network.setFitness(game.getFitness());
