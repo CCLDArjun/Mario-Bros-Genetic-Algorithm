@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Neuron {
+public class Neuron implements Serializable {
 	private ArrayList<Double> weights;
 	private double bias;
 	Activation activation;

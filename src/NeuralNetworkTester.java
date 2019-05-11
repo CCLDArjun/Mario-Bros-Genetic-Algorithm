@@ -9,21 +9,36 @@ import java.util.concurrent.Future;
 
 public class NeuralNetworkTester implements Callable<ArrayList<Integer>> {
 	public static void main(String args[]) throws InterruptedException, ExecutionException {
-		ExecutorService executor = Executors.newFixedThreadPool(10);
-		int times = 0;
-		while (true) {
-			times++;
-			System.out.println(times+" times");
-			Callable<ArrayList<Integer>> callable = new NeuralNetworkTester();
-			Callable<ArrayList<Integer>> callable2 = new NeuralNetworkTester();
-			
-			int t = 0;
-			executor.submit(callable).get();
-			executor.submit(callable).get();
-		}
+//		ExecutorService executor = Executors.newFixedThreadPool(10);
+//		int times = 0;
+//		while (true) {
+//			times++;
+//			System.out.println(times+" times");
+//			Callable<ArrayList<Integer>> callable = new NeuralNetworkTester();
+//			Callable<ArrayList<Integer>> callable2 = new NeuralNetworkTester();
+//			
+//			int t = 0;
+//			executor.submit(callable).get();
+//			executor.submit(callable).get();
+//		}
+		NeuralNetworkTester n = new NeuralNetworkTester();
+		n.testSave();
 	}
 	
 	
+	private void testSave() {
+		NeuralNetwork nn = new NeuralNetwork(5);
+		nn.addLayer(4, Activation.ReLu);
+		nn.addLayer(5, Activation.Sigmoid);
+		nn.addLayer(5, Activation.Sigmoid);
+		String p = "/Users/arjunbemarkar/Desktop/SAVE.txt";
+		nn.save(p);
+		
+		NeuralNetwork nd = NeuralNetwork.getFromFile(p);
+		System.out.println("done!");
+	}
+
+
 	@Override
 	public ArrayList<Integer> call() throws Exception {
 		return testPredict();
