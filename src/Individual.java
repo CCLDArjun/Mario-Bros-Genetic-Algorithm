@@ -38,23 +38,15 @@ public class Individual implements Callable<Individual> {
 					newState.add(state[r][c]); 
 				}
 			}
-			
-//			System.out.println(newState.size());
 
 			ArrayList<Integer> actions = network.predict(newState, 0.1);
-			
-			for (Integer i : actions) {
-				System.out.print(i.intValue());
-			}
-			System.out.print("\n sso");
-			
-//			game.moveRight();
 			if (actions.get(0) == -1) {
 				continue;
 			}
 			
 			boolean isMovingRight = false;
 			if (actions.get(0) >= 1) {
+				System.out.println("MOVING RIGHT");
 				game.moveRight();
 				isMovingRight = true;
 			}
