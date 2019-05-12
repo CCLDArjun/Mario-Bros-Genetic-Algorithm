@@ -5,28 +5,27 @@ public class Individual implements Callable<Individual> {
 	private NeuralNetwork network; 
 	private Game game;
 
-	public Individual(int numInputs, Game game) {
+	public Individual(int numInputs) {
 		network = new NeuralNetwork(numInputs);
 		network.addLayer(40, Activation.ReLu);
 		network.addLayer(4, Activation.Sigmoid);
-		this.game = game;
 	}
 	
 	/**
 	 * @author Sri Kondapalli
 	 * @param NeeralNetwork passed in as a requirement for pairs of individuals to reproduce
 	 */
-	public Individual(NeuralNetwork n, Game game) {
+	public Individual(NeuralNetwork n) {
 		network = n; 
-		this.game = game; 
-		
 	}
+	
 	public double getFitness() {
 		return network.getFitness();
 		
 	}
 	
 	public void play() {
+		game = new Game();
 		game.start();
 		boolean isDone = false;
 		while (true) {
@@ -46,17 +45,14 @@ public class Individual implements Callable<Individual> {
 			
 			boolean isMovingRight = false;
 			if (actions.get(0) >= 1) {
-				System.out.println("MOVING RIGHT");
 				game.moveRight();
 				isMovingRight = true;
 			}
 			if(actions.get(1) >= 1) {
-				System.out.println("JUMPING");
 				game.jump();
 			}
 			if(actions.get(2) >= 1) {
 				if (!isMovingRight) {
-					System.out.println("MOVING LEFT");
 					game.moveLeft();
 				}
 			}

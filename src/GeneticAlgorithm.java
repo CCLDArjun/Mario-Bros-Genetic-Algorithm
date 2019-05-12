@@ -37,7 +37,7 @@ public class GeneticAlgorithm {
 		ExecutorService service = Executors.newFixedThreadPool(10);
 		ArrayList<Future<Individual>> futures = new ArrayList<Future<Individual>>();
 		for(int i = 0; i < popSize; i++) {
-			Individual ind = new Individual(numInputs, new Game());
+			Individual ind = new Individual(numInputs);
 			futures.add(service.submit(ind));
 		}
 		/**
@@ -78,11 +78,11 @@ public class GeneticAlgorithm {
 			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 			NeuralNetwork m2 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 
-			theBest.add(new Individual(m1, new Game()));
-			theBest.add(new Individual(m2, new Game()));
+			theBest.add(new Individual(m1));
+			theBest.add(new Individual(m2));
 		}
 		for(int i = 0; i < individuals.size() * 0.30; i++) {
-			theBest.add(new Individual(numInputs, new Game()));
+			theBest.add(new Individual(numInputs));
 		}
 		individuals = theBest;
 		while(mutationRate - 0.1 >= 0.01) {

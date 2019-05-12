@@ -41,6 +41,7 @@ public class Game {
 	}
 
 	void start() {
+		System.out.println("THREAD: "+Thread.currentThread().getId());
 		makeFrame();
 		repaint.start();
 	}
