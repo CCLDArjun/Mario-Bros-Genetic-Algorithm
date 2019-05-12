@@ -38,7 +38,7 @@ public class Individual implements Callable<Individual> {
 				}
 			}
 
-			ArrayList<Integer> actions = network.predict(newState, 0.5);
+			ArrayList<Integer> actions = network.predict(newState, 0);
 			if (actions.get(0) == -1) {
 				continue;
 			}
@@ -63,13 +63,17 @@ public class Individual implements Callable<Individual> {
 				break;
 			}
 		}
+		game = null;
 	}
 	public NeuralNetwork getNN() {
 		return network;
 		
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Individual<fitness: "+ network.getFitness()+">";
+	}
 
 	@Override
 	public Individual call() throws Exception {

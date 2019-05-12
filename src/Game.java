@@ -25,11 +25,12 @@ public class Game {
 	private Timer repaint = new Timer(18, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
-			if (m.y < 0 || m.y > 624) {
+			if (m.y < 0 || m.y > 624 || m.x<0) {
 				frame.dispose();
 				isDone = true;
 				if (isDone) {
 					repaint.stop();
+					
 					System.out.println(fitness / 48);
 				}
 			}
