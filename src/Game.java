@@ -25,7 +25,7 @@ public class Game {
 	private Timer repaint = new Timer(18, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
-			if (m.y < 0) {
+			if (m.y < 0 || m.y > 624) {
 				frame.dispose();
 				isDone = true;
 				if (isDone) {
@@ -41,7 +41,7 @@ public class Game {
 	}
 
 	void start() {
-		System.out.println("THREAD: "+Thread.currentThread().getId());
+		System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
 		makeFrame();
 		repaint.start();
 	}

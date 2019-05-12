@@ -1,10 +1,10 @@
 import java.util.ArrayList;
+import java.util.Timer;
 import java.util.concurrent.Callable;
 
 public class Individual implements Callable<Individual> {
 	private NeuralNetwork network; 
 	private Game game;
-
 	public Individual(int numInputs) {
 		network = new NeuralNetwork(numInputs);
 		network.addLayer(40, Activation.ReLu);
@@ -38,7 +38,7 @@ public class Individual implements Callable<Individual> {
 				}
 			}
 
-			ArrayList<Integer> actions = network.predict(newState, 0.1);
+			ArrayList<Integer> actions = network.predict(newState, 0.5);
 			if (actions.get(0) == -1) {
 				continue;
 			}

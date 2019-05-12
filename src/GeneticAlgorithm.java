@@ -44,18 +44,27 @@ public class GeneticAlgorithm {
 		 * @author Sri Kondapalli 
 		 * places an Individual ind into a sorted ArrayList
 		 */
-
+		Thread.sleep(5000);
 		for (int i=0; i<futures.size()-1; i++) {
+			System.out.println(i);
 			Individual ind = futures.get(i).get();
 			// add in a sorted manner into individuals ArrayList.
 			if (individuals.size() == 0) individuals.add(ind);
-
-			for(int j = 0; j < individuals.size(); j++) {
-				if (ind.getFitness()  >= individuals.get(j).getFitness()) 
+			System.out.println("GOT HERE "+individuals.size());
+			
+			boolean didAdd =  false;
+			int size = individuals.size();
+			for(int j = 0; j < size; j++) {
+				if (ind.getFitness()  >= individuals.get(j).getFitness()) {
 					individuals.add(j, ind);
-
+					didAdd = true;
+				}
+			}
+			if (!didAdd) {
+				individuals.add(0, ind);
 			}
 		}
+		
 		select();
 	}
 
