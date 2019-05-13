@@ -28,7 +28,9 @@ public class Mario{
 	}
 	
 	public void jump() {
-		y_vel = 48;
+		if (inAir == false) {
+			y_vel = 48;
+		}
 	}
 	
 	public void moveRight() {
@@ -43,7 +45,7 @@ public class Mario{
 //		System.out.print(useKeys[0] + " ");
 //		System.out.print(useKeys[1] + " ");
 //		System.out.println(useKeys[2]);
-		if ((useKeys[1] == -1) && (inAir == false)) {
+		if (useKeys[1] == -1) {
 			jump();
 		}
 		if (useKeys[0] == 1) {
