@@ -11,8 +11,7 @@ public class Mario{
 	int y = 0;
 	int prev_x = 0;
 	int prev_y = 0;
-	int movedTilesInFrame = 0;
-	final int MAX_SPEED = 48;
+	final int MAX_SPEED = 24;
 	double x_vel = 0;
 	double y_vel = 0;
 	boolean inAir = true;
@@ -79,6 +78,12 @@ public class Mario{
 //		System.out.println(tilex);
 //		System.out.println(tiley);
 		if (t[tiley][tilex] == 1 && collided(tilex * 48 - offset, tiley * 48)) {
+//			System.out.println("SUGONDESE");
+//			System.out.println(x);
+//			System.out.println(y);
+//			System.out.println(prev_x);
+//			System.out.println(prev_y);
+//			System.out.println("CO");
 			x = prev_x;
 			y = prev_y;
 		}
@@ -138,9 +143,6 @@ public class Mario{
 		if (x_vel < -MAX_SPEED) {
 			x_vel = -MAX_SPEED;
 		}
-		if (y_vel > MAX_SPEED) {
-			y_vel = MAX_SPEED;
-		}
 		if (y_vel < -MAX_SPEED) {
 			y_vel = -MAX_SPEED;
 		}
@@ -157,7 +159,6 @@ public class Mario{
 		}
 		if (x > 312) {
 			answer = x - 312;
-			movedTilesInFrame = answer / 48;
 			x = 312;
 		}
 		if (x < 0) {
@@ -166,10 +167,12 @@ public class Mario{
 				x_vel = 0;
 			}
 		}
+		
+		if (y > 624) {
+			y = 624;
+		}
 //		System.out.println(x_vel);
 //		System.out.println(y_vel);
-//		System.out.println(Math.hypot(x - prev_x, y- prev_y));
-//		System.out.println(x);
 		return answer;
 	}
 }

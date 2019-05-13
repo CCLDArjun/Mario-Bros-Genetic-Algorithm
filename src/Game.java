@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -19,16 +20,21 @@ public class Game {
 	private int[][] tilelayout = new int[13][14];
 	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
-	private int fitness = 0;
-	private boolean isDone = false;
-	private Timer repaint = new Timer(60, new ActionListener(){
+	private double fitness = 0;
+	boolean isDone = false;
+	private int frames = 0;
+	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
-			if (m.y < 0) {
+			frames += 1;
+			if (m.y < 0 || frames > 300) {
 				frame.dispose();
 				isDone = true;
-				repaint.stop();
-				System.out.println(fitness / 48);
+				if (isDone) {
+					repaint.stop();
+					
+					System.out.println(fitness / 48);
+				}
 			}
 		}
 	});	
@@ -37,11 +43,22 @@ public class Game {
 		new Game().start();
 	}
 
-	private void start() {
+	void start() {
+		System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
 		makeFrame();
 		repaint.start();
 	}
 
+	public double[][] getState() {
+		double[][] doubles = new double[tilelayout.length][tilelayout[0].length - 1];
+		for(int i = 0; i < tilelayout.length; i++) {
+			for(int j = 0; j < tilelayout.length - 1; j++) {
+				doubles[i][j] = tilelayout[i][j]*5;
+			}
+		}
+		return doubles;
+	}
+	
 	public void jump() {
 		m.jump();
 	}
@@ -53,7 +70,11 @@ public class Game {
 	public void moveLeft() {
 		m.moveLeft();
 	}
-
+	
+	public double getFitness() {
+		return fitness;
+	}
+	
 	@SuppressWarnings("serial")
 	private void makeFrame() {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,6 +85,7 @@ public class Game {
 				draw(g);
 			}
 		};
+		panel.setBackground(new Color(111,196,249));
 		frame.add(panel);
 		for (int x = 0; x < tilelayout[0].length; x++) {
 			tilelayout[tilelayout.length - 1][x] = 1;
@@ -155,3 +177,4 @@ public class Game {
 		}
 	}
 }
+
