@@ -58,12 +58,12 @@ public class Individual implements Callable<Individual> {
 			}
 			isDone = game.isDone;
 			if (isDone) {
+				GeneticAlgorithm.numDone++;
 				network.setFitness(game.getFitness());
 				System.out.println("done boi");
 				break;
 			}
 		}
-		game = null;
 	}
 	public NeuralNetwork getNN() {
 		return network;

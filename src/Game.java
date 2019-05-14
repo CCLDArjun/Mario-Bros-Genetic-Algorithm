@@ -27,9 +27,8 @@ public class Game {
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
-			if (m.y < 0 || frames > 300) {
-				frame.dispose();
-				isDone = true;
+			if (m.y < 0 || frames > 30) {
+				isDone = true;frame.dispose();
 				if (isDone) {
 					repaint.stop();
 					
