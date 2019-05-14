@@ -7,7 +7,7 @@ public class Individual implements Callable<Individual> {
 	public Individual(int numInputs) {
 		network = new NeuralNetwork(numInputs);
 		network.addLayer(40, Activation.ReLu);
-		network.addLayer(4, Activation.Sigmoid);
+		network.addLayer(3, Activation.Sigmoid);
 	}
 	
 	/**
