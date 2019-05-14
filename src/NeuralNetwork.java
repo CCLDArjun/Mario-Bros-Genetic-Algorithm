@@ -87,14 +87,20 @@ public class NeuralNetwork {
 	
 	private ArrayList<Integer> getMaxIndexs(ArrayList<Double> l, double thresh) {
 		ArrayList<Integer> maxIndexs = new ArrayList<Integer>();
-		
+		boolean didFind = false;
 		for (int i=1; i<l.size(); i++) {
 			if (l.get(i) > thresh) {
 				maxIndexs.add(i);
+				didFind = true;
+			}
+			else {
+				maxIndexs.add(0);
 			}
 		}
-		if (maxIndexs.size() == 0)
+		if (!didFind) {
+		        maxIndexs = new ArrayList<Integer>();
 			maxIndexs.add(-1);
+		}
 		return maxIndexs;	
 	}
 	
