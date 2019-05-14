@@ -49,11 +49,9 @@ public class Individual implements Callable<Individual> {
 					isMovingRight = true;
 			}
 			if(actions.size() >= 2 && actions.get(1) >= 1) {
-				// add logic for if jump is not possible (i.e wall above)
 				game.jump();
 			}
 			if(actions.size() >= 3 && actions.get(2) >= 1) {
-				// insert logic for if move Left is not possible (i.e wall)
 				if (!isMovingRight) {
 					game.moveLeft();
 				}
