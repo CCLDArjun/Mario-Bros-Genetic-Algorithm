@@ -45,7 +45,7 @@ public class GeneticAlgorithm {
 		 */
 		while (true) {
 			System.out.println("counts "+GeneticAlgorithm.numDone+", "+popSize);
-			if (GeneticAlgorithm.numDone == popSize) {
+			if (GeneticAlgorithm.numDone == popSize-1) {
 				for (int i = 0; i < futures.size(); i++) {
 					Individual ind = futures.get(i).get(); 
 					// add in a sorted manner into individuals ArrayList.
@@ -67,7 +67,7 @@ public class GeneticAlgorithm {
 				break;
 			}
 		}
-		
+		GeneticAlgorithm.numDone = 0;
 		select();
 	}
 
