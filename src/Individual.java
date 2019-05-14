@@ -38,19 +38,22 @@ public class Individual implements Callable<Individual> {
 			}
 
 			ArrayList<Integer> actions = network.predict(newState, 0);
+			
 			if (actions.get(0) == -1) {
 				continue;
 			}
 			
 			boolean isMovingRight = false;
-			if (actions.get(0) >= 1) {
-				game.moveRight();
-				isMovingRight = true;
+			if (actions.size() >= 1 && actions.get(0) >= 1) {
+					game.moveRight();
+					isMovingRight = true;
 			}
-			if(actions.get(1) >= 1) {
+			if(actions.size() >= 2 && actions.get(1) >= 1) {
+				// add logic for if jump is not possible (i.e wall above)
 				game.jump();
 			}
-			if(actions.get(2) >= 1) {
+			if(actions.size() >= 3 && actions.get(2) >= 1) {
+				// insert logic for if move Left is not possible (i.e wall)
 				if (!isMovingRight) {
 					game.moveLeft();
 				}

@@ -42,9 +42,8 @@ public class GeneticAlgorithm {
 		 * places an Individual ind into a sorted ArrayList
 		 */
 		Thread.sleep(5000);
-		for (int i = 0; i < futures.size() - 1; i++) {
-			System.out.println(i);
-			Individual ind = futures.get(i).get();
+		for (int i = 0; i < futures.size(); i++) {
+			Individual ind = futures.get(i).get(); 
 			// add in a sorted manner into individuals ArrayList.
 			if (individuals.size() == 0) individuals.add(ind);
 			System.out.println("GOT HERE " + individuals.size());
