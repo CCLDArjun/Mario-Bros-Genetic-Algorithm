@@ -1,11 +1,8 @@
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class NeuralNetworkTester implements Callable<ArrayList<Integer>> {
 	public static void main(String args[]) throws InterruptedException, ExecutionException {
@@ -15,42 +12,33 @@ public class NeuralNetworkTester implements Callable<ArrayList<Integer>> {
 			times++;
 			System.out.println(times+" times");
 			Callable<ArrayList<Integer>> callable = new NeuralNetworkTester();
-			Callable<ArrayList<Integer>> callable2 = new NeuralNetworkTester();
-			
-			int t = 0;
 			executor.submit(callable).get();
 			executor.submit(callable).get();
 		}
 	}
-	
 	
 	@Override
 	public ArrayList<Integer> call() throws Exception {
 		return testPredict();
 	}
 	
-	public ArrayList<Integer> testPredict() {
-		
-//		for (int i=0; i<50; i++) {
-			NeuralNetwork nn = new NeuralNetwork(5);
-			nn.addLayer(4, Activation.ReLu);
-			nn.addLayer(5, Activation.Sigmoid);
-			nn.addLayer(5, Activation.Sigmoid);
-			nn.addLayer(5, Activation.Sigmoid);
-			nn.addLayer(5, Activation.ReLu);
-			nn.addLayer(5, Activation.Sigmoid);
-			nn.addLayer(5, Activation.Tanh);
-			nn.addLayer(5, Activation.Sigmoid);
-			ArrayList<Double> in = new ArrayList<Double>();
-			in.add(1.0);
-			in.add(2.0);
-			in.add(1.0);
-			in.add(2.0);
-			in.add(5.0);
-			return nn.predict(in);
-//		}
-		
-		
+	public ArrayList<Integer> testPredict() {	
+		NeuralNetwork nn = new NeuralNetwork(5);
+		nn.addLayer(4, Activation.ReLu);
+		nn.addLayer(5, Activation.Sigmoid);
+		nn.addLayer(5, Activation.Sigmoid);
+		nn.addLayer(5, Activation.Sigmoid);
+		nn.addLayer(5, Activation.ReLu);
+		nn.addLayer(5, Activation.Sigmoid);
+		nn.addLayer(5, Activation.Tanh);
+		nn.addLayer(5, Activation.Sigmoid);
+		ArrayList<Double> in = new ArrayList<Double>();
+		in.add(1.0);
+		in.add(2.0);
+		in.add(1.0);
+		in.add(2.0);
+		in.add(5.0);
+		return nn.predict(in);
 	}
 	
 	public void testReproduction() {
@@ -69,12 +57,14 @@ public class NeuralNetworkTester implements Callable<ArrayList<Integer>> {
 			didFail = true;
 			System.out.println("FAIL");
 		}
+		
 		for (int r=0; r<nn1.getLayers().size(); r++) {
 			if (nn2.getLayers().get(r).size() != nn1.getLayers().get(r).size()) {
 				didFail = true;
 				System.out.println("FAIL 2");
 			}
 		}
+		
 		double su = 0;
 		for (int r=0; r<nn1.getLayers().size(); r++) {
 			for (int c=0; c<nn1.getLayers().get(r).size(); c++) {
@@ -87,15 +77,9 @@ public class NeuralNetworkTester implements Callable<ArrayList<Integer>> {
 			didFail = true;
 		}
 		
-		
 		if (!didFail) {
 			System.out.println("SUCCESS!");
 		}
 		
 	}
-
-
-	
-
-	
 }
