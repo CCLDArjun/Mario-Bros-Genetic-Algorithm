@@ -90,11 +90,10 @@ public class GeneticAlgorithm {
 			theBest.add(new Individual(numInputs));
 		}
 		individuals = theBest;
-		while(mutationRate - 0.1 >= 0.01) {
-			mutationRate -=0.1;
+		if (mutationRate >= 0.01) {
+			mutationRate = mutationRate * 0.5;
 		}
 	}
-
 }
 
 
