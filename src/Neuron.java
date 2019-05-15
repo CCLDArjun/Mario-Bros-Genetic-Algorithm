@@ -96,15 +96,12 @@ public class Neuron {
 				double num = Math.random();
 				if (num < mutationRate) {
 					newWeights.set(i, Math.random());
-					System.out.println("mutation");
 				}
 				else if (num < 0.5) {
 					newWeights.set(i, n2.getWeights().get(i)); // need to clone
-					System.out.println("not");
 				}
 				else {
 					newWeights.set(i, n1.getWeights().get(i));
-					System.out.println("not");
 				}
 			}
 			

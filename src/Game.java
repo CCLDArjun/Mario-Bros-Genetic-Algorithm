@@ -23,12 +23,16 @@ public class Game {
 	private double fitness = 0;
 	boolean isDone = false;
 	private int frames = 0;
+	public Individual indiv;
+	public static int me = 0;
 	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
-			if (m.y < 0 || frames > 30) {
-				GeneticAlgorithm.numDone++;
+			if (m.y < 0 || frames >= 0) {
+				Game.me++;
+				System.out.println("ME"+Game.me);
+				indiv.setDone(true);
 				isDone = true;
 				frame.dispose();
 				if (isDone) {

@@ -23,48 +23,86 @@ public class Individual implements Callable<Individual> {
 		
 	}
 	
+//	public void play() {
+//		game = new Game();
+//		game.indiv = this;
+//		game.start();
+//		boolean isDone = false;
+//		while (true) {
+//			double[][] state = game.getState();
+//			ArrayList<Double> newState = new ArrayList<Double>();
+//
+//			for(int r = 0; r < state.length; r++) {
+//				for(int c = 0; c < state[r].length; c++) {
+//					newState.add(state[r][c]); 
+//				}
+//			}
+//
+//			ArrayList<Integer> actions = network.predict(newState, 0);
+//			
+//			if (actions.get(0) == -1) {
+//				continue;
+//			}
+//			
+//			boolean isMovingRight = false;
+//			if (actions.size() >= 1 && actions.get(0) >= 1) {
+//					game.moveRight();
+//					isMovingRight = true;
+//			}
+//			if(actions.size() >= 2 && actions.get(1) >= 1) {
+//				game.jump();
+//			}
+//			if(actions.size() >= 3 && actions.get(2) >= 1) {
+//				if (!isMovingRight) {
+//					game.moveLeft();
+//				}
+//			}
+//			isDone = game.isDone;
+//			if (isDone || ifDone) {
+//				System.out.println("jk");
+//				network.setFitness(game.getFitness());
+//				break;
+//			}
+//		}
+//	}
+	
 	public void play() {
-		game = new Game();
-		game.start();
-		boolean isDone = false;
-		while (true) {
-			double[][] state = game.getState();
-			ArrayList<Double> newState = new ArrayList<Double>();
+		double[][] state = game.getState();
+		ArrayList<Double> newState = new ArrayList<Double>();
 
-			for(int r = 0; r < state.length; r++) {
-				for(int c = 0; c < state[r].length; c++) {
-					newState.add(state[r][c]); 
-				}
+		for(int r = 0; r < state.length; r++) {
+			for(int c = 0; c < state[r].length; c++) {
+				newState.add(state[r][c]); 
 			}
+		}
 
-			ArrayList<Integer> actions = network.predict(newState, 0);
+		ArrayList<Integer> actions = network.predict(newState, 0);
 			
-			if (actions.get(0) == -1) {
-				continue;
-			}
+		if (actions.get(0) == -1) {
+			return;
+		}
 			
-			boolean isMovingRight = false;
-			if (actions.size() >= 1 && actions.get(0) >= 1) {
-					game.moveRight();
-					isMovingRight = true;
-			}
-			if(actions.size() >= 2 && actions.get(1) >= 1) {
-				game.jump();
-			}
-			if(actions.size() >= 3 && actions.get(2) >= 1) {
-				if (!isMovingRight) {
-					game.moveLeft();
-				}
-			}
-			isDone = game.isDone;
-			if (isDone) {
-//				GeneticAlgorithm.numDone++;
-				network.setFitness(game.getFitness());
-				System.out.println("done boi");
-				break;
+		boolean isMovingRight = false;
+		if (actions.size() >= 1 && actions.get(0) >= 1) {
+			game.moveRight();
+			isMovingRight = true;
+		}
+		if(actions.size() >= 2 && actions.get(1) >= 1) {
+			game.jump();
+		}
+		if(actions.size() >= 3 && actions.get(2) >= 1) {
+			if (!isMovingRight) {
+				game.moveLeft();
 			}
 		}
 	}
+	
+	public boolean ifDone = false;
+	public void setDone(boolean f) {
+		System.out.println("WHAT?"+GeneticAlgorithm.numDone);
+		ifDone = f;
+	}
+	
 	public NeuralNetwork getNN() {
 		return network;
 		
@@ -77,7 +115,15 @@ public class Individual implements Callable<Individual> {
 
 	@Override
 	public Individual call() throws Exception {
-		play();
+		game = new Game();
+		game.indiv = this;
+		game.start();
+		while (!game.isDone) {
+			play();
+		}
+		network.setFitness(game.getFitness());
+		GeneticAlgorithm.numDone++;
+		System.out.println("NUM DONE"+GeneticAlgorithm.numDone);
 		return this;
 	}
 }
