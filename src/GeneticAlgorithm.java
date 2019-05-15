@@ -30,38 +30,52 @@ public class GeneticAlgorithm {
 		}
 	}
 
-
+	boolean firstTime = true;
+	/**
+	 * @author Sri Kondapalli 
+	 * places an Individual ind into a sorted ArrayList
+	 */
 	private void main() throws InterruptedException, ExecutionException {
 		ExecutorService service = Executors.newFixedThreadPool(popSize);
 		ArrayList<Future<Individual>> futures = new ArrayList<Future<Individual>>();
-		for(int i = 0; i < popSize; i++) {
-			Individual ind = new Individual(numInputs);
-			futures.add(service.submit(ind));
+		if (firstTime) {
+			for(int i = 0; i < popSize; i++) {
+				Individual ind = new Individual(numInputs);
+				futures.add(service.submit(ind));
+			}
+			firstTime = false;
+		}
+		else {
+			for (Individual indi : individuals) {
+				futures.add(service.submit(indi));
+			}
 		}
 		System.out.println("Population size is" + popSize);
-		/**
-		 * @author Sri Kondapalli 
-		 * places an Individual ind into a sorted ArrayList
-		 */
 		
 		while (true) {
+			Thread.sleep(1);
 			if (GeneticAlgorithm.numDone >= popSize-1) {
 				System.out.println("Storing all results in sorted manner"+futures.size());
-				for (int i = 0; i < futures.size(); i++) {
+				individuals = new ArrayList<Individual>();
+ 				for (int i = 0; i < futures.size(); i++) {
 					Individual ind = futures.get(i).get();
-					// add in a sorted manner into individuals ArrayList.
-					if (individuals.size() == 0) individuals.add(ind);
-					boolean didAdd =  false;
-					int size = individuals.size();
-					for(int j = 0; j < size; j++) {
-						if (ind.getFitness()  >= individuals.get(j).getFitness()) {
-							individuals.add(j, ind);
-							didAdd = true;
-						}
-					}
-					if (!didAdd) {
-						individuals.add(0, ind);
-					}
+					individuals.add(ind);
+//					int x = 0;
+//					while (individuals.size() > x && individuals.get(x).getFitness() < ind.getFitness()) {
+//						x++;
+//						System.out.println("i am stuck here arjun is trash");
+//					}
+//					individuals.add(x, ind);
+//					boolean didAdd = false;
+//					for (int x = 0; x<individuals.size(); x++) {
+//						if (individuals.get(x).getFitness() >= ind.getFitness()) {
+//							individuals.add(ind);
+//							didAdd = true;
+//							break;
+//						}
+//					}
+//					if (!didAdd)
+//						individuals.add(individuals.size(), ind);
 				}
 				break;
 			}
@@ -80,22 +94,25 @@ public class GeneticAlgorithm {
 		 * Adds the best individuals from the individuals arrayList, and reproduces pairs of best 70 individuals
 		 * adds 30 new individuals to maintain population size(100). 
 		 */
-		System.out.println("Selection in progress");
+		System.out.println("Selection in progress"+individuals.size());
 		int initSize = individuals.size();
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
-		for(int i = 0; i < individuals.size()*0.03; i++) {
+		for(int i = 0; i < individuals.size() * 0.03; i++) {
+			System.out.println("WAITING HERE12");
 			theBest.add(individuals.get(i));
 
 		}
-		for(int i = 0; i < individuals.size()*0.69; i++) {
+		for(int i = 0; i < individuals.size() * 0.69; i++) {
+			System.out.println("WAITING HERE1" + " " + i + " " + individuals.size() * 0.69);
 			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
-			NeuralNetwork m2 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
+//			NeuralNetwork m2 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 
 			theBest.add(new Individual(m1));
-			theBest.add(new Individual(m2));
+//			theBest.add(new Individual(m2));
 		}
 		
-		while (theBest.size() <= initSize) {
+		while (theBest.size() < initSize) {
+			System.out.println("WAITING HERE");
 			theBest.add(new Individual(numInputs));
 		}
 		
@@ -103,7 +120,7 @@ public class GeneticAlgorithm {
 		if (mutationRate >= 0.01) {
 			mutationRate = mutationRate * 0.5;
 		}
-		Game.maxFrames += 15;
+		Game.maxFrames += 2;
 		System.out.println("Finished Selection");
 	}
 }
