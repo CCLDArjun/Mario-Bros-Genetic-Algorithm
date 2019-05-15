@@ -25,14 +25,16 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
+	public static int maxFrames = 20;
 	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
-			if (m.y < 0 || frames >= 0) {
+			if (m.y < 0 || frames >= Game.maxFrames) {
 				Game.me++;
 				System.out.println("ME"+Game.me);
-				indiv.setDone(true);
+				if (indiv != null)
+					indiv.setDone(true);
 				isDone = true;
 				frame.dispose();
 				if (isDone) {

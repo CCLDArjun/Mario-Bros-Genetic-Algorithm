@@ -45,27 +45,20 @@ public class GeneticAlgorithm {
 		 */
 		
 		while (true) {
-			System.out.println(GeneticAlgorithm.numDone >= popSize-1);
 			if (GeneticAlgorithm.numDone >= popSize-1) {
 				System.out.println("Storing all results in sorted manner"+futures.size());
 				for (int i = 0; i < futures.size(); i++) {
-					System.out.println("HErE-1");
 					Individual ind = futures.get(i).get();
-					System.out.println("HErE-2");
 					// add in a sorted manner into individuals ArrayList.
 					if (individuals.size() == 0) individuals.add(ind);
-					System.out.println("HErE");
 					boolean didAdd =  false;
-					System.out.println("HErE2");
 					int size = individuals.size();
-					System.out.println("HErE3");
 					for(int j = 0; j < size; j++) {
 						if (ind.getFitness()  >= individuals.get(j).getFitness()) {
 							individuals.add(j, ind);
 							didAdd = true;
 						}
 					}
-					System.out.println("HErE4");
 					if (!didAdd) {
 						individuals.add(0, ind);
 					}
@@ -102,13 +95,15 @@ public class GeneticAlgorithm {
 			theBest.add(new Individual(m2));
 		}
 		
-		while (theBest.size() != initSize)
+		while (theBest.size() <= initSize) {
 			theBest.add(new Individual(numInputs));
+		}
 		
 		individuals = theBest;
 		if (mutationRate >= 0.01) {
 			mutationRate = mutationRate * 0.5;
 		}
+		Game.maxFrames += 15;
 		System.out.println("Finished Selection");
 	}
 }
