@@ -1,8 +1,7 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Neuron implements Serializable {
+public class Neuron {
 	private ArrayList<Double> weights;
 	private double bias;
 	Activation activation;
@@ -97,15 +96,12 @@ public class Neuron implements Serializable {
 				double num = Math.random();
 				if (num < mutationRate) {
 					newWeights.set(i, Math.random());
-					System.out.println("mutation");
 				}
 				else if (num < 0.5) {
 					newWeights.set(i, n2.getWeights().get(i)); // need to clone
-					System.out.println("not");
 				}
 				else {
 					newWeights.set(i, n1.getWeights().get(i));
-					System.out.println("not");
 				}
 			}
 			

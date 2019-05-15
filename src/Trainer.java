@@ -7,7 +7,7 @@ public class Trainer {
 	}
 	
 	public void start() throws InterruptedException, ExecutionException {
-		GeneticAlgorithm ga = new GeneticAlgorithm(0.5, 2, 182);
+		GeneticAlgorithm ga = new GeneticAlgorithm(0.9, 10, 169);
 		ga.start(10);
 	}
 }

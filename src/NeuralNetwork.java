@@ -1,14 +1,7 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class NeuralNetwork implements Serializable{
+public class NeuralNetwork {
 	private int numInputs = 0;
 	private double fitness = 0;
 	private ArrayList<ArrayList<Neuron>> layers = new ArrayList<ArrayList<Neuron>>();
@@ -94,48 +87,23 @@ public class NeuralNetwork implements Serializable{
 	
 	private ArrayList<Integer> getMaxIndexs(ArrayList<Double> l, double thresh) {
 		ArrayList<Integer> maxIndexs = new ArrayList<Integer>();
-		
+		boolean didFind = false;
 		for (int i=1; i<l.size(); i++) {
 			if (l.get(i) > thresh) {
 				maxIndexs.add(i);
+				didFind = true;
 			}
 			else {
 				maxIndexs.add(0);
 			}
 		}
-		if (maxIndexs.size() == 0)
+		if (!didFind) {
+		        maxIndexs = new ArrayList<Integer>();
 			maxIndexs.add(-1);
+		}
 		return maxIndexs;	
 	}
 	
-	public void save(String path) {
-		try {
-			FileOutputStream f = new FileOutputStream(path);
-			ObjectOutputStream out = new ObjectOutputStream(f);
-			out.writeObject(this);
-			out.close();
-			f.close();
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static NeuralNetwork getFromFile(String path) {
-		try {
-			FileInputStream fi = new FileInputStream(path);
-			ObjectInputStream in;
-			in = new ObjectInputStream(fi);
-			NeuralNetwork net = (NeuralNetwork) in.readObject();
-			in.close();
-			fi.close();
-			return net;
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 	
 	public void setFitness(double f) {
 		fitness = f;

@@ -22,12 +22,21 @@ public class Game {
 	private int offset = 0;
 	private double fitness = 0;
 	boolean isDone = false;
-	private Timer repaint = new Timer(18, new ActionListener(){
+	private int frames = 0;
+	public Individual indiv;
+	public static int me = 0;
+	public static int maxFrames = 20;
+	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
-			if (m.y < 0 || m.y > 624 || m.x<0) {
-				frame.dispose();
+			frames += 1;
+			if (m.y < 0 || frames >= Game.maxFrames) {
+				Game.me++;
+				System.out.println("ME"+Game.me);
+				if (indiv != null)
+					indiv.setDone(true);
 				isDone = true;
+				frame.dispose();
 				if (isDone) {
 					repaint.stop();
 					
@@ -48,9 +57,9 @@ public class Game {
 	}
 
 	public double[][] getState() {
-		double[][] doubles = new double[tilelayout.length][tilelayout[0].length];
+		double[][] doubles = new double[tilelayout.length][tilelayout[0].length - 1];
 		for(int i = 0; i < tilelayout.length; i++) {
-			for(int j = 0; j < tilelayout.length; j++) {
+			for(int j = 0; j < tilelayout.length - 1; j++) {
 				doubles[i][j] = tilelayout[i][j]*5;
 			}
 		}
