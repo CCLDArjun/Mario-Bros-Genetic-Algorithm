@@ -60,22 +60,6 @@ public class GeneticAlgorithm {
  				for (int i = 0; i < futures.size(); i++) {
 					Individual ind = futures.get(i).get();
 					individuals.add(ind);
-//					int x = 0;
-//					while (individuals.size() > x && individuals.get(x).getFitness() < ind.getFitness()) {
-//						x++;
-//						System.out.println("i am stuck here arjun is trash");
-//					}
-//					individuals.add(x, ind);
-//					boolean didAdd = false;
-//					for (int x = 0; x<individuals.size(); x++) {
-//						if (individuals.get(x).getFitness() >= ind.getFitness()) {
-//							individuals.add(ind);
-//							didAdd = true;
-//							break;
-//						}
-//					}
-//					if (!didAdd)
-//						individuals.add(individuals.size(), ind);
 				}
 				break;
 			}
