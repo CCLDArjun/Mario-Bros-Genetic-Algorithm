@@ -24,7 +24,7 @@ public class Individual implements Callable<Individual> {
 	}
 		
 	public void play() {
-		System.out.println("PLAYING");
+//		System.out.println("PLAYING");
 		double[][] state = game.getState();
 		ArrayList<Double> newState = new ArrayList<Double>();
 

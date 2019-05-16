@@ -25,7 +25,7 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 2;
+	public static int maxFrames = 30;
 	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();

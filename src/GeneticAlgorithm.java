@@ -59,8 +59,15 @@ public class GeneticAlgorithm {
 				individuals = new ArrayList<Individual>();
  				for (int i = 0; i < futures.size(); i++) {
 					Individual ind = futures.get(i).get();
-					individuals.add(ind);
+					boolean didAdd = false;
+					int x = 0;
+					while (x<individuals.size() && individuals.get(x).getFitness() >= ind.getFitness()) {
+						x++;
+						didAdd = true;
+					}
+					individuals.add(x, ind);
 				}
+ 				System.out.println(individuals.toString());
 				break;
 			}
 		}
@@ -81,7 +88,7 @@ public class GeneticAlgorithm {
 		System.out.println("Selection in progress"+individuals.size());
 		int initSize = individuals.size();
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
-		for(int i = 0; i < individuals.size() * 0.03; i++) {
+		for(int i = 0; i < individuals.size() * 0.1; i++) {
 			System.out.println("WAITING HERE12");
 			theBest.add(individuals.get(i));
 
