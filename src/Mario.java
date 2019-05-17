@@ -15,6 +15,7 @@ public class Mario{
 	double x_vel = 0;
 	double y_vel = 0;
 	boolean inAir = true;
+	boolean moved = false;
 	
 	public Mario(int x, int y) {
 		this.x = x;
@@ -30,15 +31,24 @@ public class Mario{
 	public void jump() {
 		if (inAir == false) {
 			y_vel = 48;
+//			System.out.println("y");
 		}
 	}
 	
 	public void moveRight() {
-		x_vel += 1;
+		if (!moved) {
+			x_vel += 1;
+			moved = true;
+		}
+//		System.out.println("x+");
 	}
 
 	public void moveLeft() {
-		x_vel -= 1;
+		if (!moved) {
+			x_vel -= 1;
+			moved = true;
+		}
+//		System.out.println("x-");
 	}
 	
 	public void key(int[] useKeys) {
@@ -175,6 +185,7 @@ public class Mario{
 		}
 //		System.out.println(x_vel);
 //		System.out.println(y_vel);
+		moved = false;
 		return answer;
 	}
 }
