@@ -1,3 +1,4 @@
+
 import java.util.concurrent.ExecutionException;
 
 public class Trainer {
@@ -8,6 +9,6 @@ public class Trainer {
 	
 	public void start() throws InterruptedException, ExecutionException {
 		GeneticAlgorithm ga = new GeneticAlgorithm(0.9, 10, 169);
-		ga.start(10);
+		ga.start((int)Double.MAX_VALUE);
 	}
 }

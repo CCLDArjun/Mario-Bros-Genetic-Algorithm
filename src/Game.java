@@ -23,17 +23,25 @@ public class Game {
 	private double fitness = 0;
 	boolean isDone = false;
 	private int frames = 0;
+	public Individual indiv;
+	public static int me = 0;
+	public static int maxFrames = 100;
+	public boolean play = false;
 	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
-			if (m.y < 0 || frames > 300) {
-				frame.dispose();
+			if (m.y < 0 || (frames >= maxFrames && !play)) {
+				Game.me++;
+				//System.out.println("ME"+Game.me);
+				if (indiv != null)
+					indiv.setDone(true);
 				isDone = true;
+				frame.dispose();
 				if (isDone) {
 					repaint.stop();
 					
-					System.out.println(fitness / 48);
+					//System.out.println(fitness / 48);
 				}
 			}
 		}
@@ -44,7 +52,7 @@ public class Game {
 	}
 
 	void start() {
-		System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
+		//System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
 		makeFrame();
 		repaint.start();
 	}
@@ -53,7 +61,7 @@ public class Game {
 		double[][] doubles = new double[tilelayout.length][tilelayout[0].length - 1];
 		for(int i = 0; i < tilelayout.length; i++) {
 			for(int j = 0; j < tilelayout.length - 1; j++) {
-				doubles[i][j] = tilelayout[i][j]*5;
+				doubles[i][j] = tilelayout[i][j] * 5;
 			}
 		}
 		return doubles;
@@ -137,10 +145,10 @@ public class Game {
 				try {
 					ans[(int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT] = 1;
 				} catch (IndexOutOfBoundsException e) {
-					System.out.println("ERRRRRROOOOOOOOOOOAAAAAAAARRRRRR");
-					System.out.println(y);
-					System.out.println(HEIGHT);
-					System.out.println(lastcol.length);
+					//System.out.println("ERRRRRROOOOOOOOOOOAAAAAAAARRRRRR");
+					//System.out.println(y);
+					//System.out.println(HEIGHT);
+					//System.out.println(lastcol.length);
 				}
 			}
 		}
