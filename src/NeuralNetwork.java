@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.*;
 
-public class NeuralNetwork {
+public class NeuralNetwork implements Serializable {
 	private int numInputs = 0;
 	private double fitness = 0;
 	private ArrayList<ArrayList<Neuron>> layers = new ArrayList<ArrayList<Neuron>>();
@@ -102,6 +103,34 @@ public class NeuralNetwork {
 			maxIndexs.add(-1);
 		}
 		return maxIndexs;	
+	}
+	
+	public void save(String path) {
+		try {
+			FileOutputStream f = new FileOutputStream(path);
+			ObjectOutputStream out = new ObjectOutputStream(f);
+			out.writeObject(this);
+			out.close();
+			f.close();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static NeuralNetwork getFromFile(String path) throws EOFException {
+		try {
+			FileInputStream fi = new FileInputStream(path);
+			ObjectInputStream in;
+			in = new ObjectInputStream(fi);
+			NeuralNetwork net = (NeuralNetwork) in.readObject();
+			in.close();
+			fi.close();
+			return net;
+		} 
+		catch (Exception e) {
+		}
+		return null;
 	}
 	
 	

@@ -1,3 +1,4 @@
+import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -80,8 +81,27 @@ public class GeneticAlgorithm {
 		GeneticAlgorithm.numDone = 0;
 		select();
 	}
-
-
+	
+	public static String path = "/Users/arjunbemarkar/eclipse-workspace/Mario-Bros-Genetic-Algorithm/best.nn";
+	private void saveBest() {
+		try {
+			NeuralNetwork bst = NeuralNetwork.getFromFile(path);
+			if (bst != null && individuals.get(0).getFitness() > bst.getFitness()) {
+				individuals.get(0).getNN().save(path);
+			}
+			else if (bst == null) {
+				individuals.get(0).getNN().save(path);
+			}
+		}
+		
+		catch (EOFException e) {
+		   // ... this is fine
+		} 
+		catch (Exception e) {
+			
+		}
+	}
+	
 	private void select() {
 
 		/**
@@ -91,6 +111,7 @@ public class GeneticAlgorithm {
 		 * adds 30 new individuals to maintain population size(100). 
 		 */
 		System.out.println("Selecting...");
+		saveBest();
 		int initSize = individuals.size();
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
 		for(int i = 0; i < individuals.size() * 0.1; i++) {
