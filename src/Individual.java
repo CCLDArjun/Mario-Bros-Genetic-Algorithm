@@ -57,7 +57,7 @@ public class Individual implements Callable<Individual> {
 	
 	public boolean ifDone = false;
 	public void setDone(boolean f) {
-		System.out.println("WHAT?"+GeneticAlgorithm.numDone);
+		//System.out.println("WHAT?"+GeneticAlgorithm.numDone);
 		ifDone = f;
 	}
 	
@@ -81,7 +81,7 @@ public class Individual implements Callable<Individual> {
 		}
 		network.setFitness(game.getFitness());
 		GeneticAlgorithm.numDone++;
-		System.out.println("NUM DONE"+GeneticAlgorithm.numDone);
+		//System.out.println("NUM DONE"+GeneticAlgorithm.numDone);
 		return this;
 	}
 }

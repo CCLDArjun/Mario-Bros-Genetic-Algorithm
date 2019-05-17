@@ -26,6 +26,7 @@ public class GeneticAlgorithm {
 
 	public void start(int times) throws InterruptedException, ExecutionException {
 		for (int i = 0; i < times; i++) {
+			System.out.println("Starting generation "+(i+1));
 			main();
 		}
 	}
@@ -51,14 +52,18 @@ public class GeneticAlgorithm {
 			}
 		}
 		System.out.println("Population size is" + popSize);
-		
+		double mean = 0;
+		double best = 0;
 		while (true) {
 			Thread.sleep(1);
 			if (GeneticAlgorithm.numDone >= popSize-1) {
-				System.out.println("Storing all results in sorted manner"+futures.size());
+				System.out.println("Saving Results...");
 				individuals = new ArrayList<Individual>();
  				for (int i = 0; i < futures.size(); i++) {
 					Individual ind = futures.get(i).get();
+					mean += ind.getFitness();
+					if (ind.getFitness()>best)
+						best = ind.getFitness();
 					boolean didAdd = false;
 					int x = 0;
 					while (x<individuals.size() && individuals.get(x).getFitness() >= ind.getFitness()) {
@@ -67,11 +72,11 @@ public class GeneticAlgorithm {
 					}
 					individuals.add(x, ind);
 				}
- 				System.out.println(individuals.toString());
 				break;
 			}
 		}
-		System.out.println("finished sorting");
+		System.out.println("Generation Score: "+(mean/individuals.size()));
+		System.out.println("Best Fitness: "+(best));
 		GeneticAlgorithm.numDone = 0;
 		select();
 	}
@@ -85,16 +90,16 @@ public class GeneticAlgorithm {
 		 * Adds the best individuals from the individuals arrayList, and reproduces pairs of best 70 individuals
 		 * adds 30 new individuals to maintain population size(100). 
 		 */
-		System.out.println("Selection in progress"+individuals.size());
+		System.out.println("Selecting...");
 		int initSize = individuals.size();
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
 		for(int i = 0; i < individuals.size() * 0.1; i++) {
-			System.out.println("WAITING HERE12");
+			//System.out.println("WAITING HERE12");
 			theBest.add(individuals.get(i));
 
 		}
 		for(int i = 0; i < individuals.size() * 0.69; i++) {
-			System.out.println("WAITING HERE1" + " " + i + " " + individuals.size() * 0.69);
+			//System.out.println("WAITING HERE1" + " " + i + " " + individuals.size() * 0.69);
 			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 //			NeuralNetwork m2 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 
@@ -103,7 +108,7 @@ public class GeneticAlgorithm {
 		}
 		
 		while (theBest.size() < initSize) {
-			System.out.println("WAITING HERE");
+			//System.out.println("WAITING HERE");
 			theBest.add(new Individual(numInputs));
 		}
 		
@@ -111,8 +116,9 @@ public class GeneticAlgorithm {
 		if (mutationRate >= 0.01) {
 			mutationRate = mutationRate * 0.5;
 		}
-		Game.maxFrames += 2;
-		System.out.println("Finished Selection");
+		Game.maxFrames += 3;
+		System.out.println("Finished generation starting next one");
+		System.out.println("*********************************");
 	}
 }
 

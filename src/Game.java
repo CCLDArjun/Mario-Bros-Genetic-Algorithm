@@ -25,14 +25,14 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 30;
+	public static int maxFrames = 20;
 	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
 			if (m.y < 0 || frames >= maxFrames) {
 				Game.me++;
-				System.out.println("ME"+Game.me);
+				//System.out.println("ME"+Game.me);
 				if (indiv != null)
 					indiv.setDone(true);
 				isDone = true;
@@ -40,7 +40,7 @@ public class Game {
 				if (isDone) {
 					repaint.stop();
 					
-					System.out.println(fitness / 48);
+					//System.out.println(fitness / 48);
 				}
 			}
 		}
@@ -51,7 +51,7 @@ public class Game {
 	}
 
 	void start() {
-		System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
+		//System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
 		makeFrame();
 		repaint.start();
 	}
@@ -144,10 +144,10 @@ public class Game {
 				try {
 					ans[(int) (Math.random() * (lastcol.length - y + HEIGHT)) + y - HEIGHT] = 1;
 				} catch (IndexOutOfBoundsException e) {
-					System.out.println("ERRRRRROOOOOOOOOOOAAAAAAAARRRRRR");
-					System.out.println(y);
-					System.out.println(HEIGHT);
-					System.out.println(lastcol.length);
+					//System.out.println("ERRRRRROOOOOOOOOOOAAAAAAAARRRRRR");
+					//System.out.println(y);
+					//System.out.println(HEIGHT);
+					//System.out.println(lastcol.length);
 				}
 			}
 		}
