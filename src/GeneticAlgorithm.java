@@ -1,4 +1,3 @@
-import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -11,6 +10,7 @@ public class GeneticAlgorithm {
 	private int popSize;
 	private int numInputs;
 	public static int numDone = 0;
+	public int oldBest = 0;
 
 	/**
 	 * @author - Sri Kondapalli 
@@ -52,7 +52,7 @@ public class GeneticAlgorithm {
 				futures.add(service.submit(indi));
 			}
 		}
-		System.out.println("Population size is" + popSize);
+		System.out.println("Population size is " + popSize);
 		double mean = 0;
 		double best = 0;
 		while (true) {
@@ -76,32 +76,22 @@ public class GeneticAlgorithm {
 				break;
 			}
 		}
-		System.out.println("Generation Score: "+(mean/individuals.size()));
-		System.out.println("Best Fitness: "+(best));
+		System.out.println("Generation Score: " + (mean / individuals.size()));
+		System.out.println("Best Fitness: "+ (best));
+		Game.maxFrames += (int) ((best - oldBest) / 200.0) + 1;
+		mutationRate = mutationRate * (oldBest / best + 0.5);
+		if (mutationRate > 1) {
+			mutationRate = 0.9999;
+		}
+		
+		oldBest = (int) best;
+		System.out.println(Game.maxFrames);
+		System.out.println(mutationRate);
 		GeneticAlgorithm.numDone = 0;
 		select();
 	}
-	
-	public static String path = "/Users/arjunbemarkar/eclipse-workspace/Mario-Bros-Genetic-Algorithm/best.nn";
-	private void saveBest() {
-		try {
-			NeuralNetwork bst = NeuralNetwork.getFromFile(path);
-			if (bst != null && individuals.get(0).getFitness() > bst.getFitness()) {
-				individuals.get(0).getNN().save(path);
-			}
-			else if (bst == null) {
-				individuals.get(0).getNN().save(path);
-			}
-		}
-		
-		catch (EOFException e) {
-		   // ... this is fine
-		} 
-		catch (Exception e) {
-			
-		}
-	}
-	
+
+
 	private void select() {
 
 		/**
@@ -111,7 +101,6 @@ public class GeneticAlgorithm {
 		 * adds 30 new individuals to maintain population size(100). 
 		 */
 		System.out.println("Selecting...");
-		saveBest();
 		int initSize = individuals.size();
 		ArrayList<Individual> theBest = new ArrayList<Individual>();
 		for(int i = 0; i < individuals.size() * 0.1; i++) {
@@ -134,10 +123,6 @@ public class GeneticAlgorithm {
 		}
 		
 		individuals = theBest;
-		if (mutationRate >= 0.01) {
-			mutationRate = mutationRate * 0.5;
-		}
-		Game.maxFrames += 3;
 		System.out.println("Finished generation starting next one");
 		System.out.println("*********************************");
 	}
