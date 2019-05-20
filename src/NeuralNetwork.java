@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 public class NeuralNetwork {
 	private int numInputs = 0;
@@ -40,8 +39,8 @@ public class NeuralNetwork {
 		ArrayList<Double> oldRes = input;
 		ArrayList<Double> newRes = new ArrayList<Double>();
 		
-		for (int r=0; r<layers.size(); r++) {
-			for (int c=0; c<layers.get(r).size(); c++) {
+		for (int r = 0; r < layers.size(); r++) {
+			for (int c = 0; c < layers.get(r).size(); c++) {
 				newRes.add(layers.get(r).get(c).propagate(oldRes));
 			}
 			oldRes = newRes;
@@ -70,12 +69,12 @@ public class NeuralNetwork {
 			throw new RuntimeException("Mutation Rate given is not between 0 and 1 ");
 		
 		ArrayList<ArrayList<Neuron>> newLayers = new ArrayList<ArrayList<Neuron>>();
-		for (int r=0; r<nn1.getLayers().size(); r++) {
+		for (int r = 0; r < nn1.getLayers().size(); r++) {
 			newLayers.add(new ArrayList<Neuron>());
 		}
 		
-		for (int r=0; r<nn1.getLayers().size(); r++) {
-			for (int c=0; c<nn1.getLayers().get(r).size(); c++) {
+		for (int r = 0; r < nn1.getLayers().size(); r++) {
+			for (int c = 0; c < nn1.getLayers().get(r).size(); c++) {
 				Neuron n1 = nn1.getLayers().get(r).get(c);
 				Neuron n2 = nn2.getLayers().get(r).get(c);
 				newLayers.get(r).add(c, Neuron.reproduce(n1, n2, mutationRate));

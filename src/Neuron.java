@@ -92,7 +92,7 @@ public class Neuron {
 		int lastRandom = 0;
 		while (true) {
 			int rand = randomNum(lastRandom, n1.getWeights().size()-1);
-			for (int i=lastRandom; i<rand; i++) {
+			for (int i = lastRandom; i < rand; i++) {
 				double num = Math.random();
 				if (num < mutationRate) {
 					newWeights.set(i, Math.random());

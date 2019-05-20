@@ -7,7 +7,7 @@ public class Individual implements Callable<Individual> {
 	public Individual(int numInputs) {
 		network = new NeuralNetwork(numInputs);
 		network.addLayer(40, Activation.ReLu);
-		network.addLayer(3, Activation.Sigmoid);
+		network.addLayer(4, Activation.Sigmoid);
 	}
 	
 	/**
@@ -40,18 +40,15 @@ public class Individual implements Callable<Individual> {
 			return;
 		}
 			
-		boolean isMovingRight = false;
 		if (actions.size() >= 1 && actions.get(0) >= 1) {
 			game.moveRight();
-			isMovingRight = true;
 		}
 		if(actions.size() >= 2 && actions.get(1) >= 1) {
 			game.jump();
 		}
 		if(actions.size() >= 3 && actions.get(2) >= 1) {
-			if (!isMovingRight) {
-				game.moveLeft();
-			}
+			System.out.println("Moving Left");
+			game.moveLeft();
 		}
 	}
 	

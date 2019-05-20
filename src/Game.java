@@ -4,7 +4,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -25,13 +27,18 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 100;
+	public static int maxFrames = 150;
 	public boolean play = false;
+	public BufferedReader in;
 	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
 			if (m.y < 0 || (frames >= maxFrames && !play)) {
+				if (m.y < 0) {
+					fitness -= 200;
+				}
+				
 				Game.me++;
 				//System.out.println("ME"+Game.me);
 				if (indiv != null)
@@ -40,8 +47,12 @@ public class Game {
 				frame.dispose();
 				if (isDone) {
 					repaint.stop();
-					
-					//System.out.println(fitness / 48);
+					try {
+						in.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+//					System.out.println("My fit: " + fitness);
 				}
 			}
 		}
@@ -95,10 +106,23 @@ public class Game {
 		};
 		panel.setBackground(new Color(111,196,249));
 		frame.add(panel);
-		for (int x = 0; x < tilelayout[0].length; x++) {
-			tilelayout[tilelayout.length - 1][x] = 1;
+
+//		for (int x = 0; x < tilelayout[0].length; x++) {
+//			tilelayout[tilelayout.length - 1][x] = 1;
+//		}
+//		tilelayout[tilelayout.length - 2][13] = 1;
+		
+		try {
+			in = new BufferedReader(new FileReader("data"));
+			String str;
+			for (int x = 0; x < tilelayout[0].length; x++) {
+				str = in.readLine();
+				process(str, x);
+			}
+		} catch (IOException e) {
+			System.out.println("BRUHHHHH");
 		}
-		tilelayout[tilelayout.length - 2][13] = 1;
+
 //		printArray(tilelayout);
 		panel.repaint();
 		panel.setPreferredSize(new Dimension(624, 624));
@@ -110,7 +134,19 @@ public class Game {
 
 	}
 
-/*/	private void printArray(int[][] t) {
+	private void process(String str, int x) {
+		int[] replace = new int[tilelayout.length];
+		for (int y = 0; y < tilelayout.length; y++) {
+			char s = str.charAt(3 * y);
+			int i = Character.getNumericValue(s);
+			replace[y] = i;
+		}
+		for (int y = 0; y < tilelayout.length; y++) {
+			tilelayout[y][x] = replace[y];
+		}
+	}
+
+	/*/	private void printArray(int[][] t) {
 		for (int [] y : t) {
 			for (int x : y) {
 				System.out.print(x + ", ");
@@ -118,16 +154,25 @@ public class Game {
 			System.out.println();
 		}
 	}
-/*/
+	/*/
+	
 	private void loadNext() {
 		for (int y = 0; y < tilelayout.length; y++) {
 			for (int x = 1; x < tilelayout[0].length; x++) {
 				tilelayout[y][x - 1] = tilelayout[y][x];
 			}
 		}
-		int[] colay = getNewLine();
-		for (int y = 0; y < tilelayout.length; y++) {
-			tilelayout[y][tilelayout[y].length - 1] = colay[y];
+		try {
+			String str;
+			str = in.readLine();
+			process(str, tilelayout[0].length - 1);
+			
+		} catch (Exception e) {
+//			e.printStackTrace();
+			int[] colay = getNewLine();
+			for (int y = 0; y < tilelayout.length; y++) {
+				tilelayout[y][tilelayout[y].length - 1] = colay[y];
+			}
 		}
 	}
 	
@@ -162,8 +207,9 @@ public class Game {
 	
 	private void draw(Graphics g) {
 //		System.out.println(offset);
-		offset += m.draw(g, tilelayout, offset);
-		fitness += offset;
+		int moved = m.draw(g, tilelayout, offset);
+		offset += moved;
+		fitness += moved;
 		while (offset >= 48) {
 			loadNext();
 			offset -= 48;
