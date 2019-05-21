@@ -27,7 +27,7 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 20;
+	public static int maxFrames = 50;
 	public boolean play = false;
 	public BufferedReader in;
 	private Timer repaint = new Timer(0, new ActionListener(){
@@ -70,11 +70,24 @@ public class Game {
 
 	public double[][] getState() {
 		double[][] doubles = new double[tilelayout.length][tilelayout[0].length - 1];
-		for(int i = 0; i < tilelayout.length; i++) {
-			for(int j = 0; j < tilelayout.length - 1; j++) {
-				doubles[i][j] = tilelayout[i][j] * 5;
+		/*/
+		for (int i = 0; i < tilelayout.length; i++) {
+			for (int j = 0; j < tilelayout.length - 1; j++) {
+				doubles[i][j] = tilelayout[i][j] * 5.0;
 			}
 		}
+		/*/
+		for (int i = m.tiley - 6; i < m.tiley + 6; i++) {
+			if (i < 0) continue;
+			if (i > 13) continue;
+			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
+				if (j < 0) continue;
+				if (j > 13) continue;
+				doubles[i][j] = tilelayout[i][j] * 5.0;
+			}
+		}				
+
+		
 		return doubles;
 	}
 	
@@ -231,4 +244,3 @@ public class Game {
 		}
 	}
 }
-
