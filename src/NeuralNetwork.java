@@ -48,7 +48,7 @@ public class NeuralNetwork implements Serializable {
 			oldRes = newRes;
 			newRes = new ArrayList<Double>();
 		}
-		return getMaxIndexs(oldRes, 0.5);
+		return getMaxIndexs(oldRes, thresh);
 	}
 	
 	public ArrayList<Integer> predict(ArrayList<Double> input) {
