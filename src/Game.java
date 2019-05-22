@@ -34,7 +34,8 @@ public class Game {
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
-			if (m.y < 0 || (frames >= maxFrames && !play)) {
+			if (m.y < 0 || frames >= maxFrames) {
+				//System.out.println("done"+GeneticAlgorithm.numDone);
 				if (m.y < 0) {
 					fitness -= 200;
 				}
@@ -52,7 +53,7 @@ public class Game {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-//					System.out.println("My fit: " + fitness);
+					System.out.println("My fit: " + fitness);
 				}
 			}
 		}

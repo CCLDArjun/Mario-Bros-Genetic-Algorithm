@@ -57,6 +57,7 @@ public class GeneticAlgorithm {
 		double best = 0;
 		while (true) {
 			Thread.sleep(1);
+			//System.out.println("num done: "+numDone);
 			if (GeneticAlgorithm.numDone >= popSize-1) {
 				System.out.println("Saving Results...");
 				individuals = new ArrayList<Individual>();
@@ -81,7 +82,7 @@ public class GeneticAlgorithm {
 //		if (mutationRate > 1) {
 //			mutationRate = 0.9999;
 //		}
-		mutationRate = 0.99;
+		//mutationRate = 0.99;
 		
 		oldBest = (int) best;
 		System.out.println(Game.maxFrames);
@@ -119,7 +120,7 @@ public class GeneticAlgorithm {
 			theBest.add(individuals.get(i));
 		
 		for (int i=0; i<5; i++) {
-			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i+1).getNN(), 0.9);
+			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i+1).getNN(), mutationRate);
 			theBest.add(new Individual(m1));
 		}
 		
@@ -127,9 +128,13 @@ public class GeneticAlgorithm {
 			//System.out.println("WAITING HERE");
 			theBest.add(new Individual(numInputs));
 		}
+		
+		mutationRate -= mutationRate*0.06;
+		
 		Individual.predictionThreshold += Individual.predictionThreshold*0.03; 
 		individuals = theBest;
 		System.out.println("Finished generation starting next one");
+		System.out.println(Individual.jump+", "+Individual.left+", "+Individual.right);
 		System.out.println("*********************************");
 	}
 }

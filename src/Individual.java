@@ -39,22 +39,30 @@ public class Individual implements Callable<Individual> {
 		if (actions.get(0) == -1) {
 			return;
 		}
-			
+		
 		if (actions.size() >= 1 && actions.get(0) >= 1) {
 			game.moveRight();
+			right++;
 		}
-		if(actions.size() >= 2 && actions.get(1) >= 1) {
+		else if(actions.size() >= 2 && actions.get(1) >= 1) {
 			game.moveLeft();
+			left++;
 		}
-		if(actions.size() >= 3 && actions.get(2) >= 1) {
+		else if(actions.size() >= 3 && actions.get(2) >= 1) {
 			game.jump();
+			jump++;
 		}
 	}
+	public static int right = 0;
+	public static int left = 0;
+	public static int jump = 0;
 	
-	public boolean ifDone = false;
+	public boolean isDone = false;
 	public void setDone(boolean f) {
-		//System.out.println("WHAT?"+GeneticAlgorithm.numDone);
-		ifDone = f;
+		this.isDone = f;
+		//GeneticAlgorithm.numDone++;
+		//network.setFitness(game.getFitness());
+		//System.out.println("INDIVDONE "+GeneticAlgorithm.numDone);
 	}
 	
 	public NeuralNetwork getNN() {
@@ -68,16 +76,23 @@ public class Individual implements Callable<Individual> {
 	}
 
 	@Override
-	public Individual call() throws Exception {
+	public Individual call() {
 		game = new Game();
 		game.indiv = this;
 		game.start();
-		while (!game.isDone) {
-			play();
+		while (true) {
+			try {
+				Thread.sleep(1);
+				if (game.isDone || isDone)
+					break;
+				else
+					play();
+			}
+			
+			catch (Exception e) {}
 		}
 		network.setFitness(game.getFitness());
 		GeneticAlgorithm.numDone++;
-		//System.out.println("NUM DONE"+GeneticAlgorithm.numDone);
 		return this;
 	}
 }
