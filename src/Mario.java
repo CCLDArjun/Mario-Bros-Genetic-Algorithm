@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 public class Mario{
 	int x = 0;
 	int y = 0;
+	int tilex = 0;
+	int tiley = 0;
 	int prev_x = 0;
 	int prev_y = 0;
 	final int MAX_SPEED = 24;
@@ -74,8 +76,8 @@ public class Mario{
 	public int draw(Graphics g, int[][] t, int offset) {
 		int answer = 0;
 
-		int tilex = (int) Math.ceil(x / 48.0);
-		int tiley = (int) Math.ceil((624 - y) / 48.0);
+		tilex = (int) Math.ceil(x / 48.0);
+		tiley = (int) Math.ceil((624 - y) / 48.0);
 		g.setColor(Color.RED);
 		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) + 48 - offset, (tiley * 48));
 		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) - offset, (tiley * 48) + 48);
@@ -168,6 +170,7 @@ public class Mario{
 		x_vel = x_vel * 0.9;
 		if (inAir) {
 			y_vel = y_vel - 5;
+			x_vel = x_vel * 0.9;
 		}
 		if (x > 312) {
 			answer = x - 312;
