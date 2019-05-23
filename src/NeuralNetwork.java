@@ -37,7 +37,7 @@ public class NeuralNetwork implements Serializable {
 	 * @param input
 	 * @return prediction
 	 */
-	public ArrayList<Integer> predict(ArrayList<Double> input, double thresh) {
+	public ArrayList<Double> predict(ArrayList<Double> input, double thresh) {
 		ArrayList<Double> oldRes = input;
 		ArrayList<Double> newRes = new ArrayList<Double>();
 		
@@ -48,12 +48,12 @@ public class NeuralNetwork implements Serializable {
 			oldRes = newRes;
 			newRes = new ArrayList<Double>();
 		}
-		return getMaxIndexs(oldRes, thresh);
+		return oldRes;//getMaxIndexs(oldRes, thresh);
 	}
 	
-	public ArrayList<Integer> predict(ArrayList<Double> input) {
-		return predict(input, 0.9);
-	}
+//	public ArrayList<Integer> predict(ArrayList<Double> input) {
+//		return predict(input, 0.9);
+//	}
 	
 	/**
 	 *  Reproduce two Neural Networks. Analogous to recombination in meiosis.

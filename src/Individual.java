@@ -6,7 +6,7 @@ public class Individual implements Callable<Individual> {
 	private Game game;
 	public Individual(int numInputs) {
 		network = new NeuralNetwork(numInputs);
-//		network.addLayer(40, Activation.ReLu);
+		network.addLayer(40, Activation.Sigmoid);
 		network.addLayer(4, Activation.Sigmoid);
 	}
 	
@@ -22,8 +22,11 @@ public class Individual implements Callable<Individual> {
 		return network.getFitness();
 		
 	}
-	public static double predictionThreshold = 0.9;
+	public static double predictionThreshold = 0.8;
+	int times = 0;
 	public void play() {
+		times++;
+		
 //		System.out.println("PLAYING");
 		double[][] state = game.getState();
 		ArrayList<Double> newState = new ArrayList<Double>();
@@ -34,24 +37,30 @@ public class Individual implements Callable<Individual> {
 			}
 		}
 
-		ArrayList<Integer> actions = network.predict(newState, predictionThreshold);
-			
-		if (actions.get(0) == -1) {
-			return;
-		}
+		ArrayList<Double> actions = network.predict(newState, predictionThreshold);
+		System.out.println(actions);
+//		if (actions.get(0) == -1) {
+//			return;
+//		}
 		
-		if (actions.size() >= 1 && actions.get(0) >= 1) {
+		if (actions.get(0) >= -1) {
 			game.moveRight();
 			right++;
+			System.out.print("MOVING RIGHT"+times);
 		}
-		else if(actions.size() >= 2 && actions.get(1) >= 1) {
-			game.moveLeft();
-			left++;
-		}
-		else if(actions.size() >= 3 && actions.get(2) >= 1) {
-			game.jump();
-			jump++;
-		}
+//		else
+
+//		if(actions.get(1) >= predictionThreshold) {
+//			game.moveLeft();
+//			left++;
+//			System.out.print("MOVING LEFT");
+//		}
+//		if(actions.get(2) >= predictionThreshold) {
+//			game.moveRight();
+//			jump++;
+//			System.out.print("JUMPING");
+//		}
+		System.out.print("\n");
 	}
 	public static int right = 0;
 	public static int left = 0;
@@ -89,8 +98,12 @@ public class Individual implements Callable<Individual> {
 					play();
 			}
 			
-			catch (Exception e) {}
+			catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}
 		}
+		System.out.println("DOINE");
 		network.setFitness(game.getFitness());
 		GeneticAlgorithm.numDone++;
 		return this;

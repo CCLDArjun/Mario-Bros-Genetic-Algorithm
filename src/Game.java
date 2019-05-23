@@ -27,14 +27,14 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 50;
+	public static int maxFrames = 10000;
 	public boolean play = false;
 	public BufferedReader in;
 	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
-			if (m.y < 0 || frames >= maxFrames) {
+			if (m.y < 0 || (frames >= maxFrames && !play)) {
 				//System.out.println("done"+GeneticAlgorithm.numDone);
 				if (m.y < 0) {
 					fitness -= 200;
