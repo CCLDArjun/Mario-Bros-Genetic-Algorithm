@@ -41,6 +41,7 @@ public class Game {
 				}
 				
 				Game.me++;
+				fitness += 312;
 				//System.out.println("ME"+Game.me);
 				if (indiv != null)
 					indiv.setDone(true);
