@@ -80,7 +80,7 @@ public class Game {
 		/*/
 		for (int i = m.tiley - 6; i < m.tiley + 6; i++) {
 			if (i < 0) continue;
-			if (i > 13) continue;
+			if (i > 12) continue;
 			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
 				if (j < 0) continue;
 				if (j > 13) continue;
