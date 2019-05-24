@@ -55,6 +55,20 @@ public class NeuralNetwork implements Serializable {
 		return predict(input, 0.9);
 	}
 	
+	public ArrayList<Double> rawPredict(ArrayList<Double> input) {
+		ArrayList<Double> oldRes = input;
+		ArrayList<Double> newRes = new ArrayList<Double>();
+		
+		for (int r=0; r<layers.size(); r++) {
+			for (int c=0; c<layers.get(r).size(); c++) {
+				newRes.add(layers.get(r).get(c).propagate(oldRes));
+			}
+			oldRes = newRes;
+			newRes = new ArrayList<Double>();
+		}
+		return oldRes;
+	} 
+	
 	/**
 	 *  Reproduce two Neural Networks. Analogous to recombination in meiosis.
 	 * @author Arjun
@@ -114,7 +128,6 @@ public class NeuralNetwork implements Serializable {
 			f.close();
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

@@ -22,7 +22,7 @@ public class Individual implements Callable<Individual> {
 		return network.getFitness();
 		
 	}
-		
+	public static double predictionThreshold = 0.9;
 	public void play() {
 //		System.out.println("PLAYING");
 		double[][] state = game.getState();
@@ -34,20 +34,18 @@ public class Individual implements Callable<Individual> {
 			}
 		}
 
-		ArrayList<Integer> actions = network.predict(newState, 0);
-			
+		ArrayList<Double> actions = network.rawPredict(newState);
 		if (actions.get(0) == -1) {
 			return;
 		}
 			
-		boolean isMovingRight = false;
-		if (actions.size() >= 1 && actions.get(0) >= 1) {
+		if (actions.get(0) >= predictionThreshold) {
 			game.moveRight();
 		}
-		if(actions.size() >= 2 && actions.get(1) >= 1) {
+		if(actions.get(1) >= predictionThreshold) {
 			game.jump();
 		}
-		if(actions.size() >= 3 && actions.get(2) >= 1) {
+		if(actions.get(2) >= predictionThreshold) {
 			game.moveLeft();
 		}
 	}
@@ -69,16 +67,22 @@ public class Individual implements Callable<Individual> {
 	}
 
 	@Override
-	public Individual call() throws Exception {
-		game = new Game();
-		game.indiv = this;
-		game.start();
-		while (!game.isDone) {
-			play();
+	public Individual call() {
+		try {
+			game = new Game();
+			game.indiv = this;
+			game.start();
+			while (!game.isDone) {
+				play();
+			}
+			network.setFitness(game.getFitness());
+			GeneticAlgorithm.numDone++;
+			return this;
 		}
-		network.setFitness(game.getFitness());
-		GeneticAlgorithm.numDone++;
-		//System.out.println("NUM DONE"+GeneticAlgorithm.numDone);
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return this;
 	}
 }

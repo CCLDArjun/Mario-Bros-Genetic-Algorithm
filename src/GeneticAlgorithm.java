@@ -134,7 +134,7 @@ public class GeneticAlgorithm {
 		Individual.predictionThreshold += Individual.predictionThreshold*0.03; 
 		individuals = theBest;
 		System.out.println("Finished generation starting next one");
-		System.out.println(Individual.jump+", "+Individual.left+", "+Individual.right);
+	//	System.out.println(Individual.jump+", "+Individual.left+", "+Individual.right);
 		System.out.println("*********************************");
 	}
 }
