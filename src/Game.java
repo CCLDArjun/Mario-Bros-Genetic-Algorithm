@@ -34,13 +34,14 @@ public class Game {
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
-			if (m.y < 0 || frames >= maxFrames) {
+			if (m.y < 0 || (frames >= maxFrames && !play)) {
 				//System.out.println("done"+GeneticAlgorithm.numDone);
 				if (m.y < 0) {
 					fitness -= 200;
 				}
 				
 				Game.me++;
+				fitness += m.x;
 				//System.out.println("ME"+Game.me);
 				if (indiv != null)
 					indiv.setDone(true);
@@ -80,7 +81,7 @@ public class Game {
 		/*/
 		for (int i = m.tiley - 6; i < m.tiley + 6; i++) {
 			if (i < 0) continue;
-			if (i > 13) continue;
+			if (i > 12) continue;
 			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
 				if (j < 0) continue;
 				if (j > 13) continue;
