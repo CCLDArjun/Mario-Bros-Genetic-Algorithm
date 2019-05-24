@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Neuron {
-	private ArrayList<Double> weights;
+public class Neuron{
+	private transient ArrayList<Double> weights;
 	private double bias;
 	Activation activation;
 
@@ -55,7 +55,7 @@ public class Neuron {
 		sum += bias;
 		
 		if (activation == Activation.Sigmoid)
-			sum = (1 / (1 + Math.pow(Math.E, (-1 * sum))));
+			sum = 1 / (1 + Math.pow(Math.E, (-1 * sum)));
 
 		else if (activation == Activation.ReLu)
 			sum = Math.max(0.01 * sum, sum);
@@ -64,6 +64,15 @@ public class Neuron {
 			sum = 2 / (1 + Math.pow(Math.E, (-2 * sum)));
 
 		return sum;
+	}
+	
+	public String toString() {
+		String answer = "";
+		for (int x = 0; x < weights.size(); x++) {
+			answer += weights.get(x) + " ";
+		}
+		answer += "," + bias + " ";
+		return answer;
 	}
 	
 	public static void print(ArrayList<Integer> arrayList) {
@@ -92,7 +101,7 @@ public class Neuron {
 		int lastRandom = 0;
 		while (true) {
 			int rand = randomNum(lastRandom, n1.getWeights().size()-1);
-			for (int i=lastRandom; i<rand; i++) {
+			for (int i = lastRandom; i < rand; i++) {
 				double num = Math.random();
 				if (num < mutationRate) {
 					newWeights.set(i, Math.random());

@@ -6,14 +6,18 @@ import java.util.concurrent.Executors;
 
 public class NeuralNetworkTester implements Callable<ArrayList<Integer>> {
 	public static void main(String args[]) throws InterruptedException, ExecutionException {
-		ExecutorService executor = Executors.newFixedThreadPool(10);
-		int times = 0;
-		while (true) {
-			times++;
-			System.out.println(times+" times");
-			Callable<ArrayList<Integer>> callable = new NeuralNetworkTester();
-			executor.submit(callable).get();
-			executor.submit(callable).get();
+//		ExecutorService executor = Executors.newFixedThreadPool(10);
+//		int times = 0;
+//		while (true) {
+//			times++;
+//			System.out.println(times+" times");
+//			Callable<ArrayList<Double>> callable = new NeuralNetworkTester();
+//			executor.submit(callable).get();
+//			executor.submit(callable).get();
+//		}
+		
+		for (int i=0; i<100; i++) {
+			System.out.println(1 / (1 + Math.pow(Math.E, (-1 * i))));
 		}
 	}
 	
@@ -38,7 +42,7 @@ public class NeuralNetworkTester implements Callable<ArrayList<Integer>> {
 		in.add(1.0);
 		in.add(2.0);
 		in.add(5.0);
-		return nn.predict(in);
+		return nn.predict(in, 0.8);
 	}
 	
 	public void testReproduction() {

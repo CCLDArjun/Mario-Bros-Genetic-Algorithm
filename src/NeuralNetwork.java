@@ -1,7 +1,12 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Random;
 
-public class NeuralNetwork {
+public class NeuralNetwork{
 	private int numInputs = 0;
 	private double fitness = 0;
 	private ArrayList<ArrayList<Neuron>> layers = new ArrayList<ArrayList<Neuron>>();
@@ -54,6 +59,20 @@ public class NeuralNetwork {
 		return predict(input, 0.9);
 	}
 	
+	public ArrayList<Double> rawPredict(ArrayList<Double> input) {
+		ArrayList<Double> oldRes = input;
+		ArrayList<Double> newRes = new ArrayList<Double>();
+		
+		for (int r=0; r<layers.size(); r++) {
+			for (int c=0; c<layers.get(r).size(); c++) {
+				newRes.add(layers.get(r).get(c).propagate(oldRes));
+			}
+			oldRes = newRes;
+			newRes = new ArrayList<Double>();
+		}
+		return oldRes;
+	} 
+	
 	/**
 	 *  Reproduce two Neural Networks. Analogous to recombination in meiosis.
 	 * @author Arjun
@@ -102,6 +121,77 @@ public class NeuralNetwork {
 			maxIndexs.add(-1);
 		}
 		return maxIndexs;	
+	}
+	
+	public void save(String path) {
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("best.nn", "UTF-8");
+			for (int x = 0; x < layers.size(); x++) {
+				for (int y = 0; y < layers.get(x).size(); y++) {
+					writer.println(layers.get(x).get(y));
+				}
+				writer.println();
+			}
+			writer.close();	
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public double toDouble(String s) {
+		return Double.parseDouble(s);
+	}
+	
+	public NeuralNetwork getFromFile(String path){
+		try {
+			BufferedReader in = new BufferedReader(new FileReader("best.nn"));
+			String str = in.readLine();
+			String shore;
+			ArrayList<Double> ad = new ArrayList<Double>();
+			int x = 0;
+			int y = 0;
+			while (str != null) {
+//				System.out.println(x + " " + y);
+				if (str.length() > 0) {
+//					System.out.println(str.indexOf(' '));
+					shore = str.substring(0, str.indexOf(' '));
+//					System.out.println(shore);
+					while (str.length() > 0) {
+//						System.out.println(shore);
+//						System.out.println(shore.charAt(0));
+						if (shore.charAt(0) == ',') {
+							shore = shore.substring(1);
+//							System.out.println(x + " " + y);
+							layers.get(x).get(y).setBias(toDouble(shore));
+							break;
+						}
+						else {
+							ad.add(toDouble(shore));
+							str = str.substring(shore.length() + 1);
+//							System.out.println(str);
+							shore = str.substring(0, str.indexOf(' '));
+//							System.out.println(shore);
+						}
+					}
+					layers.get(x).get(y).setWeights(ad);
+					ad.clear();
+					y++;
+				}
+				else {
+//					System.out.println("YEYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+					ad.clear();
+					x++;
+					y = 0;
+				}
+				str = in.readLine();
+			}
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	

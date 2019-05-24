@@ -1,4 +1,3 @@
-
-public enum Activation {
+public enum Activation{
 	Sigmoid, ReLu, Tanh, None
 }

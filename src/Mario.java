@@ -9,9 +9,11 @@ import javax.imageio.ImageIO;
 public class Mario{
 	int x = 0;
 	int y = 0;
+	int tilex = 0;
+	int tiley = 0;
 	int prev_x = 0;
 	int prev_y = 0;
-	final int MAX_SPEED = 24;
+	final int MAX_SPEED = 48;
 	double x_vel = 0;
 	double y_vel = 0;
 	boolean inAir = true;
@@ -74,8 +76,13 @@ public class Mario{
 	public int draw(Graphics g, int[][] t, int offset) {
 		int answer = 0;
 
-		int tilex = (int) Math.ceil(x / 48.0);
-		int tiley = (int) Math.ceil((624 - y) / 48.0);
+//		System.out.println("x: " + x);
+//		System.out.println("y: " + y);
+//		System.out.println("prev_x: " + prev_x);
+//		System.out.println("prev_y: " + prev_y);
+
+		tilex = (int) Math.ceil(x / 48.0);
+		tiley = (int) Math.ceil((624 - y) / 48.0);
 		g.setColor(Color.RED);
 		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) + 48 - offset, (tiley * 48));
 		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) - offset, (tiley * 48) + 48);
@@ -91,13 +98,26 @@ public class Mario{
 //		System.out.println(tiley);
 		if (t[tiley][tilex] == 1 && collided(tilex * 48 - offset, tiley * 48)) {
 //			System.out.println("SUGONDESE");
-//			System.out.println(x);
-//			System.out.println(y);
-//			System.out.println(prev_x);
-//			System.out.println(prev_y);
 //			System.out.println("CO");
 			x = prev_x;
 			y = prev_y;
+			/*/
+			if (x > tilex * 48 - offset) {
+//				System.out.println("plus");
+				x++;
+			}
+			else if (x < tilex * 48 - offset){
+//				System.out.println("minus");
+				x--;
+			}
+
+			if (y > tiley * 48) {
+				y++;
+			}
+			else if (y < tiley * 48){
+				y--;
+			}
+			/*/
 		}
 		
 		boolean ti;
@@ -168,6 +188,7 @@ public class Mario{
 		x_vel = x_vel * 0.9;
 		if (inAir) {
 			y_vel = y_vel - 5;
+			x_vel = x_vel * 0.99;
 		}
 		if (x > 312) {
 			answer = x - 312;
@@ -186,6 +207,7 @@ public class Mario{
 //		System.out.println(x_vel);
 //		System.out.println(y_vel);
 		moved = false;
+//		System.out.println(answer);
 		return answer;
 	}
 }
