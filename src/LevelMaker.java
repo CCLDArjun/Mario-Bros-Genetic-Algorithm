@@ -12,6 +12,7 @@ public class LevelMaker {
 	JFrame frame = new JFrame("Mario Bros Level Maker");
 	JPanel panel;
 	GameGrid grid = new GameGrid(50);
+	private JLabel label = new JLabel("<html>Green Squares represent blocks, black squares are holes</html>");
 	private Dimension DIM;
 	int[] dims;
 	public static void main(String[] args) {
@@ -42,7 +43,7 @@ public class LevelMaker {
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		setupButtons();
-		frame.add(panel, BorderLayout.NORTH);
+		frame.add(panel, BorderLayout.PAGE_START);
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -72,8 +73,11 @@ public class LevelMaker {
 			}
 		});
 		
+		label.setForeground(Color.BLACK);
+		frame.add(label, BorderLayout.CENTER);
 		frame.add(saveButton, BorderLayout.WEST);	
-		frame.add(loadButton, BorderLayout.EAST);	
+		frame.add(loadButton, BorderLayout.EAST);
+		
 	}
 	
 	public File showDialog() {
@@ -85,7 +89,21 @@ public class LevelMaker {
 	}
 	
 	public void save() {
+		print(grid.grid);
+		print(grid.getGrid());
 		grid.save("/Users/arjunbemarkar/eclipse-workspace/Mario-Bros-Genetic-Algorithm/"+"level.gg");
+		label.setText(label.getText()+"Saved.");
+		System.out.println("DONE");
+	}
+	
+	public static void print(int[][] arr) {
+		for (int r=0; r<arr.length; r++) {
+			for (int c=0; c<arr[0].length; c++) {
+				System.out.print(arr[r][c]+", ");
+			}
+			System.out.println(" ");
+		}
+		
 	}
 	
 	public void load()  {

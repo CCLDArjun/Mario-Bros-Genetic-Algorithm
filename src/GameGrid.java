@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class GameGrid implements Serializable{
-	private int[][] grid;
+	public int[][] grid;
 	public int rows = 13;
 	public int cols;
 	
@@ -82,7 +82,28 @@ public class GameGrid implements Serializable{
 		return dims;
 	}
 	
+	private void rotate(int[][] newG) {
+		for (int r=0; r<grid.length; r++) {
+			for (int c=0; c<grid[0].length; c++) {
+				newG[c][r] = grid[r][c];
+			}
+		}
+	}
+	
+	private void flip(int[][] newG) {
+		int[][] gg = new int[newG.length][newG[0].length];
+		int index2 = newG.length-1;
+		for (int r=0; r<gg.length; r++) {
+			gg[index2] = newG[r];
+			index2--;
+		}
+		newG = gg;
+	}
+	
 	public int[][] getGrid() {
-		return null;
+		int[][] gg = new int[grid[0].length][grid.length];
+		flip(gg);
+		rotate(gg);
+		return gg;
 	}
 }
