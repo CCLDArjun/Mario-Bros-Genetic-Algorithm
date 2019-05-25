@@ -14,10 +14,19 @@ public class Trainer {
 	}
 	static String path  = "/home/computerscience/eclipse-workspace/Mario-Bros-Genetic-Algorithm/best.nn";
 	public void testSave() throws EOFException {
-		NeuralNetwork nn = new NeuralNetwork(60);
-		nn.save(path);
+		
+		NeuralNetwork network = new NeuralNetwork(100);
+		network.addLayer(40, Activation.Sigmoid);
+		network.addLayer(3, Activation.Sigmoid);
+		network.save(path);
 		System.out.println("done");
 		NeuralNetwork nn2 = NeuralNetwork.getFromFile(path);
 		System.out.println("done2");
 	}
+	
+	
+	public void testElse() {
+		
+	}
+	
 }
