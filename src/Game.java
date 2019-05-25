@@ -70,8 +70,7 @@ public class Game {
 		repaint.start();
 	}
 
-	public double[][] getState() {
-		double[][] doubles = new double[tilelayout.length][tilelayout[0].length - 1];
+		double[] doubles = new double[tilelayout.length * (tilelayout[0].length - 1)];
 		/*/
 		for (int i = 0; i < tilelayout.length; i++) {
 			for (int j = 0; j < tilelayout.length - 1; j++) {
@@ -85,14 +84,12 @@ public class Game {
 			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
 				if (j < 0) continue;
 				if (j > 13) continue;
-				doubles[i][j] = tilelayout[i][j] * 5.0;
+				doubles[i * tilelayout.length + j] = tilelayout[i][j];
 			}
-		}				
-
-		
+		}
 		return doubles;
 	}
-	
+
 	public void jump() {
 		m.jump();
 	}
