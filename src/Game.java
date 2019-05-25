@@ -72,7 +72,7 @@ public class Game {
 	}
 
 	public ArrayList<Double> getState() {
-		ArrayList<Double> doubles = new ArrayList<Double>();
+		double[] doubles = new double[tilelayout.length * (tilelayout[0].length - 1)];
 		/*/
 		for (int i = 0; i < tilelayout.length; i++) {
 			for (int j = 0; j < tilelayout.length - 1; j++) {
@@ -86,11 +86,15 @@ public class Game {
 			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
 				if (j < 0) continue;
 				if (j > 13) continue;
-				doubles.add((double) tilelayout[i][j]);
+				doubles[i * tilelayout.length + j] = tilelayout[i][j];
 			}
+		}		
+		ArrayList<Double> answer = new ArrayList<Double>();
+		for (int x = 0; x < tilelayout.length * (tilelayout[0].length - 1); x++) {
+			answer.add(doubles[x]);
 		}
 		
-		return doubles;
+		return answer;
 	}
 	
 	public void jump() {
