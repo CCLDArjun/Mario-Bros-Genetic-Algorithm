@@ -27,7 +27,7 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 100;
+	public static int maxFrames = 10000;
 	public boolean play = false;
 	public BufferedReader in;
 	private Timer repaint = new Timer(0, new ActionListener(){
