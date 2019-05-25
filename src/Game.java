@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -28,7 +29,7 @@ public class Game {
 	public Individual indiv;
 	public static int me = 0;
 	public static int maxFrames = 50;
-	public boolean play = true;
+	public boolean play = false;
 	public BufferedReader in;
 	private Timer repaint = new Timer(18, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
@@ -70,7 +71,8 @@ public class Game {
 		repaint.start();
 	}
 
-		double[] doubles = new double[tilelayout.length * (tilelayout[0].length - 1)];
+	public ArrayList<Double> getState() {
+		ArrayList<Double> doubles = new ArrayList<Double>();
 		/*/
 		for (int i = 0; i < tilelayout.length; i++) {
 			for (int j = 0; j < tilelayout.length - 1; j++) {
@@ -84,12 +86,13 @@ public class Game {
 			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
 				if (j < 0) continue;
 				if (j > 13) continue;
-				doubles[i * tilelayout.length + j] = tilelayout[i][j];
+				doubles.add((double) tilelayout[i][j]);
 			}
 		}
+		
 		return doubles;
 	}
-
+	
 	public void jump() {
 		m.jump();
 	}
