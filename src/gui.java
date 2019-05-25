@@ -1,11 +1,16 @@
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 
-
+import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+
 
 public class gui extends javax.swing.JFrame {
 
@@ -22,16 +27,16 @@ public class gui extends javax.swing.JFrame {
 
 		jSlider1 = new javax.swing.JSlider();
 		jLabel1 = new javax.swing.JLabel();
-		jtf = new javax.swing.JTextField(7);
+		jSlider2 = new javax.swing.JSlider();
 		jLabel2 = new javax.swing.JLabel();
-
-		try {
-			GenNum = Integer.parseInt(jtf.getText());
-
-		}
-		catch (NumberFormatException e) {
-			System.out.println("Please enter a valid input.");
-		}
+		jSlider3 = new javax.swing.JSlider();
+		JLabel3 = new javax.swing.JLabel();
+		button = new JButton("Train");
+		button2 = new JButton("Create new Level");
+		Jlabel4 = new javax.swing.JLabel();
+		
+		
+		
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,46 +51,90 @@ public class gui extends javax.swing.JFrame {
 				jSlider1StateChanged(evt);
 			}
 		});
+		jSlider2.setFont(new java.awt.Font("Tahoma", 1, 18)); 
+		jSlider2.setForeground(new java.awt.Color(255, 0, 102));
+		jSlider2.setMajorTickSpacing(10);
+		jSlider2.setPaintLabels(true);
+		jSlider2.setPaintTicks(true);
+		jSlider2.setValue(0);
+		jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				jSlider2StateChanged1(evt);
+			}
+		});
+		jSlider3.setFont(new java.awt.Font("Tahoma", 1, 18)); 
+		jSlider3.setForeground(new java.awt.Color(255, 0, 102));
+		jSlider3.setMajorTickSpacing(10);
+		jSlider3.setPaintLabels(true);
+		jSlider3.setPaintTicks(true);
+		jSlider3.setValue(0);
+		jSlider3.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				jSlider3StateChanged(evt);
+			}
+		});
 		
-		
+
 
 
 
 
 		jLabel1.setFont(new java.awt.Font("serif", Font.BOLD, 22)); // NOI18N
 		jLabel1.setText("0" + "%" + " Mutation Rate");
-		jLabel2.setFont(new java.awt.Font("serif", Font.BOLD, 22)); // NOI18N
-		jLabel2.setText("0" + " Generations");
-
+		jLabel2.setText("Generations: " + "0");
+		jLabel2.setFont(new java.awt.Font("serif", Font.BOLD, 22));
+		JLabel3.setText("PopSize: " + "0");
+		JLabel3.setFont(new java.awt.Font("serif", Font.BOLD, 22 ));
+		Jlabel4.setFont(new java.awt.Font("serif", Font.BOLD, 22)); // NOI18N
+		Jlabel4.setText("Mario Bros Genetic Algorithm");
+		
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-				.addGroup(layout.createSequentialGroup()
-						.addGap(206, 206, 206)
-						.addComponent(jLabel1)
-						.addComponent(jLabel2)
-						.addContainerGap(290, Short.MAX_VALUE))
-				.addGroup(layout.createSequentialGroup()
-						.addContainerGap()
+				layout.createParallelGroup()
+
+
+				.addComponent(jLabel1)
+				
+				
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						
 						.addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(jtf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
-						.addContainerGap())
-				);
-
-		layout.setHorizontalGroup(
-				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-				.addGroup(layout.createSequentialGroup()
-						.addGap(100, 100, 100)
-						.addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addComponent(jtf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
-						.addGap(20, 20, 20)
+						//				.addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						//						.addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(jLabel1)
+						.addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(jLabel2)
-						.addContainerGap(61, Short.MAX_VALUE))
+						.addComponent(jSlider3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(JLabel3)
+						.addComponent(button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
+						
+						//						.addComponent(JLabel3)
+						));	
+
+		layout.setVerticalGroup(
+				layout.createSequentialGroup()
+				
+				
+				.addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+				//.addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				//		.addComponent(jSlider3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				//
+				.addComponent(jLabel1)
+				.addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(jLabel2)
+				.addComponent(jSlider3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(JLabel3)
+			
+
+				.addComponent(button,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(button2,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				//				.addComponent(JLabel3)
+				//
+				
 				);
 
 
@@ -101,15 +150,23 @@ public class gui extends javax.swing.JFrame {
 
 	}
 
-	private void GenerationsInputChanged(javax.swing.event.ChangeEvent evt) {
-		jLabel2.setText(GenNum + " Generations");
+	private void jSlider2StateChanged1(javax.swing.event.ChangeEvent evt) {
+		jLabel2.setText("Generations:" + Integer.toString(jSlider2.getValue()));
+
 	}
+	private void jSlider3StateChanged(javax.swing.event.ChangeEvent evt) {
+		JLabel3.setText("PopSize: " + jSlider3.getValue());
+
+	}
+
+
+
 
 	/**
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
-		
+
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -139,9 +196,13 @@ public class gui extends javax.swing.JFrame {
 	// Variables declaration                  
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JSlider jSlider1;
-	private JTextField jtf; 
+	private javax.swing.JSlider jSlider2; 
 	private JLabel jLabel2;
+	private JSlider jSlider3; 
+	private javax.swing.JLabel JLabel3;
+	Image img;
+	JButton button;
+	JButton button2;
+	private javax.swing.JLabel Jlabel4; 
 }
-
-
 
