@@ -27,19 +27,21 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 10000;
-	public boolean play = false;
+	public static int maxFrames = 50;
+	public boolean play = true;
 	public BufferedReader in;
-	private Timer repaint = new Timer(0, new ActionListener(){
+	private Timer repaint = new Timer(18, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
 			if (m.y < 0 || (frames >= maxFrames && !play)) {
+				//System.out.println("done"+GeneticAlgorithm.numDone);
 				if (m.y < 0) {
 					fitness -= 200;
 				}
 				
 				Game.me++;
+				fitness += m.x;
 				//System.out.println("ME"+Game.me);
 				if (indiv != null)
 					indiv.setDone(true);
@@ -52,7 +54,7 @@ public class Game {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					//System.out.println(fitness / 48);
+					System.out.println("My fit: " + fitness);
 				}
 			}
 		}
@@ -70,11 +72,24 @@ public class Game {
 
 	public double[][] getState() {
 		double[][] doubles = new double[tilelayout.length][tilelayout[0].length - 1];
-		for(int i = 0; i < tilelayout.length; i++) {
-			for(int j = 0; j < tilelayout.length - 1; j++) {
-				doubles[i][j] = tilelayout[i][j] * 5;
+		/*/
+		for (int i = 0; i < tilelayout.length; i++) {
+			for (int j = 0; j < tilelayout.length - 1; j++) {
+				doubles[i][j] = tilelayout[i][j] * 5.0;
 			}
 		}
+		/*/
+		for (int i = m.tiley - 6; i < m.tiley + 6; i++) {
+			if (i < 0) continue;
+			if (i > 12) continue;
+			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
+				if (j < 0) continue;
+				if (j > 13) continue;
+				doubles[i][j] = tilelayout[i][j] * 5.0;
+			}
+		}				
+
+		
 		return doubles;
 	}
 	
@@ -207,8 +222,9 @@ public class Game {
 	
 	private void draw(Graphics g) {
 //		System.out.println(offset);
-		offset += m.draw(g, tilelayout, offset);
-		fitness += offset;
+		int moved = m.draw(g, tilelayout, offset);
+		offset += moved;
+		fitness += moved;
 		while (offset >= 48) {
 			loadNext();
 			offset -= 48;
@@ -230,4 +246,3 @@ public class Game {
 		}
 	}
 }
-
