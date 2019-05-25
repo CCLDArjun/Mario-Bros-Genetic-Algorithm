@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 public class Individual implements Callable<Individual> {
@@ -25,15 +26,8 @@ public class Individual implements Callable<Individual> {
 	public static double predictionThreshold = 0.9;
 	public void play() {
 //		System.out.println("PLAYING");
-		double[][] state = game.getState();
-		ArrayList<Double> newState = new ArrayList<Double>();
-
-		for(int r = 0; r < state.length; r++) {
-			for(int c = 0; c < state[r].length; c++) {
-				newState.add(state[r][c]); 
-			}
-		}
-
+		ArrayList<Double> newState = game.getState();
+		
 		ArrayList<Double> actions = network.rawPredict(newState);
 		if (actions.get(0) == -1) {
 			return;
