@@ -1,7 +1,9 @@
 import java.awt.*;
 //import java.awt.Graphics;
 import java.awt.event.*;
+import java.io.EOFException;
 //import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.*;
 
@@ -38,8 +40,9 @@ public class LevelMaker {
 		});
 		panel.setPreferredSize(DIM);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setLayout(new BorderLayout());
 		setupButtons();
-		frame.add(panel);
+		frame.add(panel, BorderLayout.NORTH);
 		frame.pack();
 		frame.setVisible(true);
 	}
@@ -51,18 +54,47 @@ public class LevelMaker {
 		}
 		catch (IndexOutOfBoundsException e) {}
 	}
-	JButton button = null;
+
 	public void setupButtons() {
-		if (button == null) {
-			button = new JButton("save");
-			button.setBounds(0, (int)dims[1]+10, 100, 20);
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.out.println("DONE");
-				}
-			});
-		}
-		frame.add(button);	
+		JButton saveButton = new JButton("save");
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				save();
+			}
+		});
+		
+		JButton loadButton = new JButton("load");
+		loadButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				load();
+			}
+		});
+		
+		frame.add(saveButton, BorderLayout.WEST);	
+		frame.add(loadButton, BorderLayout.EAST);	
+	}
+	
+	public File showDialog() {
+		FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+	    dialog.setMode(FileDialog.LOAD);
+	    dialog.setVisible(true);
+	    File file = new File(dialog.getFile());
+	    return file;
+	}
+	
+	public void save() {
+		grid.save("/Users/arjunbemarkar/eclipse-workspace/Mario-Bros-Genetic-Algorithm/"+"level.gg");
+	}
+	
+	public void load()  {
+		File file = showDialog();
+	    try {
+	    	grid = GameGrid.getFromFile(file.getAbsolutePath());
+	    }
+	    catch (Exception e) {}
+	    frame.setVisible(false);
+	    start();
 	}
 }

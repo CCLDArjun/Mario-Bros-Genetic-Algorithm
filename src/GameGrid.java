@@ -1,5 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class GameGrid implements Serializable{
@@ -43,6 +48,33 @@ public class GameGrid implements Serializable{
 				}
 			}
 		}
+	}
+	
+	public void save(String path) {
+		try {
+			FileOutputStream f = new FileOutputStream(path);
+			ObjectOutputStream out = new ObjectOutputStream(f);
+			out.writeObject(this);
+			out.close();
+			f.close();
+		} 
+		catch (Exception e) {
+		}
+	}
+
+	public static GameGrid getFromFile(String path) throws EOFException {
+		try {
+			FileInputStream fi = new FileInputStream(path);
+			ObjectInputStream in;
+			in = new ObjectInputStream(fi);
+			GameGrid gg = (GameGrid) in.readObject();
+			in.close();
+			fi.close();
+			return gg;
+		} 
+		catch (Exception e) {
+		}
+		return null;
 	}
 	
 	public int[] recommendedDims() {
