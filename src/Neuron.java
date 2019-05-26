@@ -8,7 +8,7 @@ public class Neuron implements Serializable {
 	Activation activation;
 
 	public ArrayList<Double> getWeights() {
-		return new ArrayList<Double>(weights);
+		return (ArrayList<Double>) weights.clone();
 	}
 	
 	public void setWeights(ArrayList<Double> w) {

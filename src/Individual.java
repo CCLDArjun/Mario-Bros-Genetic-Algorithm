@@ -7,7 +7,8 @@ public class Individual implements Callable<Individual> {
 	private Game game;
 	public Individual(int numInputs) {
 		network = new NeuralNetwork(numInputs);
-		network.addLayer(4, Activation.ReLu);
+		network.addLayer(4, Activation.Sigmoid);
+		network.addLayer(5, Activation.ReLu);
 		network.addLayer(5, Activation.Sigmoid);
 		network.addLayer(3, Activation.Sigmoid);
 	}
@@ -29,7 +30,6 @@ public class Individual implements Callable<Individual> {
 //		System.out.println("PLAYING");
 		ArrayList<Double> newState = game.getState();
 		ArrayList<Double> actions = network.rawPredict(newState);
-		System.out.println(actions.toString());
 		if (actions.get(0) == -1) {
 			return;
 		}

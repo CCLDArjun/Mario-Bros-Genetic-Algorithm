@@ -31,6 +31,7 @@ public class Game {
 	public static int maxFrames = 50;
 	public boolean play = false;
 	public BufferedReader in;
+	
 	private Timer repaint = new Timer(18, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
@@ -43,6 +44,7 @@ public class Game {
 				
 				Game.me++;
 				fitness += m.x;
+				fitness -= 2*m.numJumps;
 				//System.out.println("ME"+Game.me);
 				if (indiv != null)
 					indiv.setDone(true);

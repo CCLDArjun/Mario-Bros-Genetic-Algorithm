@@ -35,6 +35,7 @@ public class Mario{
 		return ((Math.abs(x - x2) < 48) && (Math.abs((618 - y) - y2) < 48));
 	}
 	
+	int numJumps = 0;
 	public void jump() {
 		if (!upButton) {
 			if (inAir == false) {
@@ -45,7 +46,9 @@ public class Mario{
 				y_vel += 7;
 			}
 			upButton = true;
+			
 		}
+		numJumps++;
 	}
 	
 	public void moveRight() {
