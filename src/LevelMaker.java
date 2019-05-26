@@ -24,7 +24,7 @@ public class LevelMaker {
 		start();
 	}
 
-	private void start() {
+	public void start() {
 		dims = grid.recommendedDims();
 		DIM = new Dimension(dims[0], dims[1]+50);
 		panel = new JPanel() {
