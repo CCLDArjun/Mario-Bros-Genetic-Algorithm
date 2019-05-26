@@ -60,11 +60,11 @@ public class LevelMaker {
 	}
 
 	public void setupButtons() {
-		JButton saveButton = new JButton("save");
+		JButton saveButton = new JButton("Genetic Algorithm");
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				save();
+				sendBack();
 			}
 		});
 		
@@ -93,10 +93,10 @@ public class LevelMaker {
 	
 	
 	
-	public void save() {
-		File file = showFileDialog("Select a directory to save to");
-		
-		
+	public void sendBack() {
+		Gui gui = new Gui(grid.getGrid());
+		gui.setVisible(true);
+		frame.setVisible(false);
 	}
 	
 	public static void print(int[][] arr) {

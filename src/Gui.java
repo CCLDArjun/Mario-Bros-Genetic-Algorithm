@@ -17,16 +17,21 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 
-public class gui extends javax.swing.JFrame {
+public class Gui extends javax.swing.JFrame {
 
 	int GenNum;
 	/**
 	 * Creates new form gui
 	 */
-	public gui() {
+	public Gui() {
 		initComponents();
 		setTitle("Mario Bros Genetic Algorithm");
 		setSize(600,400);
+	}
+	int[][] gameGrid;
+	public Gui(int[][] gg) {
+		this();
+		this.gameGrid = gg;
 	}
 	
 	public void train() {
@@ -203,20 +208,20 @@ public class gui extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		//</editor-fold>
 
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new gui().setVisible(true);
+				new Gui().setVisible(true);
 			}
 		});
 	}
