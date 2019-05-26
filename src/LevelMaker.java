@@ -21,7 +21,7 @@ public class LevelMaker {
 	}
 	
 	public LevelMaker() {
-		start();
+		
 	}
 
 	public void start() {
