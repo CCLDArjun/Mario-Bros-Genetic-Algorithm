@@ -71,29 +71,70 @@ public class Game {
 		repaint.start();
 	}
 
+//	public ArrayList<Double> getState() {
+//		double[] doubles = new double[tilelayout.length * (tilelayout[0].length - 1)];
+//		/*/
+//		for (int i = 0; i < tilelayout.length; i++) {
+//			for (int j = 0; j < tilelayout.length - 1; j++) {
+//				doubles[i][j] = tilelayout[i][j] * 5.0;
+//			}
+//		}
+//		/*/
+//		for (int i = m.tiley - 6; i < m.tiley + 6; i++) {
+//			if (i < 0) continue;
+//			if (i > 12) continue;
+//			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
+//				if (j < 0) continue;
+//				if (j > 13) continue;
+//				doubles[i * tilelayout.length + j] = tilelayout[i][j];
+//			}
+//		}		
+//		ArrayList<Double> answer = new ArrayList<Double>();
+//		for (int x = 0; x < tilelayout.length * (tilelayout[0].length - 1); x++) {
+//			answer.add(doubles[x]);
+//		}
+//		
+//		return answer;
+//	}
+	
 	public ArrayList<Double> getState() {
-		double[] doubles = new double[tilelayout.length * (tilelayout[0].length - 1)];
-		/*/
-		for (int i = 0; i < tilelayout.length; i++) {
-			for (int j = 0; j < tilelayout.length - 1; j++) {
-				doubles[i][j] = tilelayout[i][j] * 5.0;
-			}
-		}
-		/*/
-		for (int i = m.tiley - 6; i < m.tiley + 6; i++) {
-			if (i < 0) continue;
-			if (i > 12) continue;
-			for (int j = m.tilex - 6; j < m.tilex + 6; j++) {
-				if (j < 0) continue;
-				if (j > 13) continue;
-				doubles[i * tilelayout.length + j] = tilelayout[i][j];
-			}
-		}		
 		ArrayList<Double> answer = new ArrayList<Double>();
-		for (int x = 0; x < tilelayout.length * (tilelayout[0].length - 1); x++) {
-			answer.add(doubles[x]);
+		int row = m.tiley;
+		int col = m.tilex;
+		int index = 0;
+		int buff = 1;
+		
+		if (m.tilex == 0 && m.tiley==0) {
+			for (int i = 0; i < 9; i++) {
+				  answer.add((double) 0);
+			}
+			return answer;
 		}
 		
+		for (int r=row-buff; r<tilelayout.length; r++) {
+			if (r>row+buff) continue;
+			if (r<0) {
+				answer.add(0.0);
+				continue;
+			}
+			for (int c=col-buff; c<tilelayout[0].length; c++) {
+				if (c>col+buff) continue;
+				if(c<0) {
+					answer.add(0.0);
+					continue;
+				}
+				answer.add((double)tilelayout[r][c]);
+				index++;
+			}
+		}
+		
+		
+		if (answer.size() != 9) {
+			while (answer.size()<9) {
+				  answer.add((double) 0);
+			}
+			return answer;
+		}
 		return answer;
 	}
 	
