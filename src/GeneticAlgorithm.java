@@ -25,8 +25,8 @@ public class GeneticAlgorithm {
 		this.numInputs = numInputs;
 	}
 
-	public void start() throws InterruptedException, ExecutionException {
-		for (int i = 0; i < Gui.numGenerations; i++) {
+	public void start(int times) throws InterruptedException, ExecutionException {
+		for (int i = 0; i < times; i++) {
 			System.out.println("Starting generation "+(i+1));
 			main();
 		}

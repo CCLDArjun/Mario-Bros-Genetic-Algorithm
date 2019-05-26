@@ -9,8 +9,8 @@ public class Trainer {
 	}
 	
 	public void start() throws InterruptedException, ExecutionException {
-		GeneticAlgorithm ga = new GeneticAlgorithm(Gui.MutationRate, Gui.PopSize, 169);
-		ga.start();
+		GeneticAlgorithm ga = new GeneticAlgorithm(0.9, 10, 169);
+		ga.start((int)Double.MAX_VALUE);
 	}
 	static String path  = "/home/computerscience/eclipse-workspace/Mario-Bros-Genetic-Algorithm/best.nn";
 	public void testSave() throws EOFException {
