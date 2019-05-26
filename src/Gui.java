@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 
 
-public class gui extends javax.swing.JFrame {
+public class Gui extends javax.swing.JFrame {
 
 	int GenNum;
 	public static int MutationRate;
