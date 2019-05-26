@@ -1,12 +1,10 @@
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.*;
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -15,37 +13,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
 
 
-public class Gui extends javax.swing.JFrame {
+public class gui extends javax.swing.JFrame {
 
 	int GenNum;
+	public static int MutationRate;
+	public static int PopSize;
+	public static int numGenerations;
+	Trainer k = new Trainer();
+	LevelMaker f = new LevelMaker();
+
 	/**
 	 * Creates new form gui
 	 */
-	public Gui() {
+	public gui() {
 		initComponents();
-		setTitle("Mario Bros Genetic Algorithm");
-		setSize(600,400);
-	}
-	int[][] gameGrid;
-	public Gui(int[][] gg) {
-		this();
-		this.gameGrid = gg;
-	}
-	
-	public void train() {
-		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
-		try {
-			ga.start(jSlider3.getValue());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void buildLevel() {
-		setVisible(false);
-		new LevelMaker().setVisible(true);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -58,23 +42,11 @@ public class Gui extends javax.swing.JFrame {
 		jSlider3 = new javax.swing.JSlider();
 		JLabel3 = new javax.swing.JLabel();
 		button = new JButton("Train");
-		
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				train();
-			}
-		});
-		
 		button2 = new JButton("Create new Level");
 		Jlabel4 = new javax.swing.JLabel();
-		
-		button2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				buildLevel();
-			}
-		});
+
+
+
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,19 +83,47 @@ public class Gui extends javax.swing.JFrame {
 				jSlider3StateChanged(evt);
 			}
 		});
+		button.addActionListener( new ActionListener()  {
+
+
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					k.start();
+					
+				} catch (InterruptedException | ExecutionException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+
+		});
 		
+		button2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				f.start();
+				
+			}
+			
+		});
+
+
+
+
+
 		jLabel1.setFont(new java.awt.Font("serif", Font.BOLD, 22)); // NOI18N
 		jLabel1.setText("0" + "%" + " Mutation Rate");
 		jLabel2.setText("Generations: " + "0");
 		jLabel2.setFont(new java.awt.Font("serif", Font.BOLD, 22));
-		JLabel3.setText("Population Size: " + "0");
+		JLabel3.setText("PopSize: " + "0");
 		JLabel3.setFont(new java.awt.Font("serif", Font.BOLD, 22 ));
 		Jlabel4.setFont(new java.awt.Font("serif", Font.BOLD, 22)); // NOI18N
 		Jlabel4.setText("Mario Bros Genetic Algorithm");
-		
-		
-		
-		
+
+
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
@@ -131,10 +131,10 @@ public class Gui extends javax.swing.JFrame {
 
 
 				.addComponent(jLabel1)
-				
-				
+
+
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-						
+
 						.addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						//				.addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						//						.addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -146,14 +146,14 @@ public class Gui extends javax.swing.JFrame {
 						.addComponent(button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 
-						
+
 						//						.addComponent(JLabel3)
 						));	
 
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
-				
-				
+
+
 				.addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 				//.addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				//		.addComponent(jSlider3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -163,11 +163,13 @@ public class Gui extends javax.swing.JFrame {
 				.addComponent(jLabel2)
 				.addComponent(jSlider3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addComponent(JLabel3)
+
+
 				.addComponent(button,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addComponent(button2,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				//				.addComponent(JLabel3)
 				//
-				
+
 				);
 
 
@@ -176,19 +178,22 @@ public class Gui extends javax.swing.JFrame {
 
 
 		pack();
-	}// </editor-fold>                        
+	}                       
 
 	private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {                                   
 		jLabel1.setText(Integer.toString(jSlider1.getValue()) + "%" + "Mutation Rate");
+		MutationRate = jSlider1.getValue();
 
 	}
 
 	private void jSlider2StateChanged1(javax.swing.event.ChangeEvent evt) {
 		jLabel2.setText("Generations:" + Integer.toString(jSlider2.getValue()));
+		numGenerations = jSlider2.getValue();
 
 	}
 	private void jSlider3StateChanged(javax.swing.event.ChangeEvent evt) {
 		JLabel3.setText("PopSize: " + jSlider3.getValue());
+		PopSize = jSlider3.getValue();
 
 	}
 
@@ -208,22 +213,23 @@ public class Gui extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
-		//</editor-fold>
 
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new Gui().setVisible(true);
+				new gui().setVisible(true);
 			}
 		});
+
+
 	}
 
 	// Variables declaration                  
