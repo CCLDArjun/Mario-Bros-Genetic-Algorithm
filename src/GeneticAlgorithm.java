@@ -1,3 +1,4 @@
+import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -10,7 +11,8 @@ public class GeneticAlgorithm {
 	private int popSize;
 	private int numInputs;
 	public static int numDone = 0;
-	public int oldBest = 0;
+	public int oldBest = 1;
+	public int time = 0;
 
 	/**
 	 * @author - Sri Kondapalli 
@@ -28,6 +30,7 @@ public class GeneticAlgorithm {
 	public void start(int times) throws InterruptedException, ExecutionException {
 		for (int i = 0; i < times; i++) {
 			System.out.println("Starting generation "+(i+1));
+			time = i + 1;
 			main();
 		}
 	}
@@ -43,6 +46,13 @@ public class GeneticAlgorithm {
 		if (firstTime) {
 			for(int i = 0; i < popSize; i++) {
 				Individual ind = new Individual(numInputs);
+				
+				try {
+					ind.getNN().getFromFile("best.nn");
+				} catch (EOFException e) {
+					e.printStackTrace();
+				}
+				
 				futures.add(service.submit(ind));
 			}
 			firstTime = false;
@@ -64,7 +74,7 @@ public class GeneticAlgorithm {
  				for (int i = 0; i < futures.size(); i++) {
 					Individual ind = futures.get(i).get();
 					mean += ind.getFitness();
-					if (ind.getFitness()>best)
+					if (ind.getFitness() > best)
 						best = ind.getFitness();
 					int x = 0;
 					while (x < individuals.size() && individuals.get(x).getFitness() >= ind.getFitness()) {
@@ -75,14 +85,19 @@ public class GeneticAlgorithm {
 				break;
 			}
 		}
+//		individuals.get(0).getNN().save("best.nn");
 		System.out.println("Generation Score: " + (mean / individuals.size()));
 		System.out.println("Best Fitness: "+ (best));
-		Game.maxFrames += 10;//(int) ((best - oldBest) / 200.0) + 1;
-		//mutationRate = mutationRate * (oldBest / best + 0.5);
-//		if (mutationRate > 1) {
-//			mutationRate = 0.9999;
-//		}
+		System.out.println("Old best: " + (oldBest));
+		System.out.println("Order: " + (individuals));
+//		Game.maxFrames += 10;
+		Game.maxFrames += (int) ((best - oldBest) / 10.0) + 1;
+		mutationRate = mutationRate * (oldBest / (best + time) * (1.0 + (1.0 / time)));
+		if (mutationRate > 1) {
+			mutationRate = 0.9999;
+		}
 		//mutationRate = 0.99;
+
 		
 		oldBest = (int) best;
 		System.out.println(Game.maxFrames);
@@ -111,15 +126,15 @@ public class GeneticAlgorithm {
 //		for(int i = 0; i < individuals.size() * 0.7; i++) {
 //			//System.out.println("WAITING HERE1" + " " + i + " " + individuals.size() * 0.69);
 //			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get((int) (Math.random() * individuals.size() * 0.3)).getNN(), individuals.get(i).getNN(), mutationRate);
-////			NeuralNetwork m2 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
+//			NeuralNetwork m2 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i + 1).getNN(), mutationRate);
 //
 //			theBest.add(new Individual(m1));
-////			theBest.add(new Individual(m2));
+//			theBest.add(new Individual(m2));
 //		}
-		for (int i=0; i<3; i++)
+		for (int i = 0; i < 3; i++)
 			theBest.add(individuals.get(i));
 		
-		for (int i=0; i<5; i++) {
+		for (int i = 0; i < 5; i++) {
 			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i+1).getNN(), mutationRate);
 			theBest.add(new Individual(m1));
 		}
@@ -128,8 +143,8 @@ public class GeneticAlgorithm {
 			//System.out.println("WAITING HERE");
 			theBest.add(new Individual(numInputs));
 		}
-		
-		mutationRate -= mutationRate*0.06;
+		System.out.println(theBest);
+//		mutationRate -= mutationRate*0.06;
 		
 		Individual.predictionThreshold += Individual.predictionThreshold*0.03; 
 		individuals = theBest;
@@ -138,10 +153,3 @@ public class GeneticAlgorithm {
 		System.out.println("*********************************");
 	}
 }
-
-
-
-
-
-
-
