@@ -26,7 +26,7 @@ public class GeneticAlgorithm {
 	}
 
 	public void start() throws InterruptedException, ExecutionException {
-		for (int i = 0; i < gui.numGenerations; i++) {
+		for (int i = 0; i < Gui.numGenerations; i++) {
 			System.out.println("Starting generation "+(i+1));
 			main();
 		}
