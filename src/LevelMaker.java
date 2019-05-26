@@ -6,6 +6,7 @@ import java.io.EOFException;
 import java.io.File;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 
 public class LevelMaker {
 
@@ -16,10 +17,12 @@ public class LevelMaker {
 	private Dimension DIM;
 	int[] dims;
 	public static void main(String[] args) {
-		new LevelMaker().start();
+		new LevelMaker();
 	}
 	
-	
+	public LevelMaker() {
+		start();
+	}
 
 	private void start() {
 		dims = grid.recommendedDims();
@@ -80,39 +83,45 @@ public class LevelMaker {
 		
 	}
 	
-	public File showDialog() {
-		FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
+	public File showFileDialog(String prompt) {
+		FileDialog dialog = new FileDialog((Frame)null, prompt);
 	    dialog.setMode(FileDialog.LOAD);
-	    dialog.setVisible(true);
+	    dialog.setVisible(true);	    
 	    File file = new File(dialog.getFile());
 	    return file;
 	}
 	
+	
+	
 	public void save() {
-		print(grid.grid);
-		print(grid.getGrid());
-		grid.save("/Users/arjunbemarkar/eclipse-workspace/Mario-Bros-Genetic-Algorithm/"+"level.gg");
-		label.setText(label.getText()+"Saved.");
-		System.out.println("DONE");
+		File file = showFileDialog("Select a directory to save to");
+		
+		
 	}
 	
 	public static void print(int[][] arr) {
 		for (int r=0; r<arr.length; r++) {
 			for (int c=0; c<arr[0].length; c++) {
 				System.out.print(arr[r][c]+", ");
-			}
+			}	
 			System.out.println(" ");
 		}
 		
 	}
 	
 	public void load()  {
-		File file = showDialog();
+		File file = showFileDialog("Select File to Open");
 	    try {
 	    	grid = GameGrid.getFromFile(file.getAbsolutePath());
 	    }
 	    catch (Exception e) {}
 	    frame.setVisible(false);
 	    start();
+	}
+
+
+
+	public void setVisible(boolean b) {
+		frame.setVisible(b);
 	}
 }

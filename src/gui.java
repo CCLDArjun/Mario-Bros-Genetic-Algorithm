@@ -1,7 +1,12 @@
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutionException;
 
+import javax.swing.*;
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -20,6 +25,22 @@ public class gui extends javax.swing.JFrame {
 	 */
 	public gui() {
 		initComponents();
+		setTitle("Mario Bros Genetic Algorithm");
+		setSize(600,400);
+	}
+	
+	public void train() {
+		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
+		try {
+			ga.start(jSlider3.getValue());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void buildLevel() {
+		setVisible(false);
+		new LevelMaker().setVisible(true);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -32,11 +53,23 @@ public class gui extends javax.swing.JFrame {
 		jSlider3 = new javax.swing.JSlider();
 		JLabel3 = new javax.swing.JLabel();
 		button = new JButton("Train");
+		
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				train();
+			}
+		});
+		
 		button2 = new JButton("Create new Level");
 		Jlabel4 = new javax.swing.JLabel();
 		
-		
-		
+		button2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				buildLevel();
+			}
+		});
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,21 +107,18 @@ public class gui extends javax.swing.JFrame {
 			}
 		});
 		
-
-
-
-
-
 		jLabel1.setFont(new java.awt.Font("serif", Font.BOLD, 22)); // NOI18N
 		jLabel1.setText("0" + "%" + " Mutation Rate");
 		jLabel2.setText("Generations: " + "0");
 		jLabel2.setFont(new java.awt.Font("serif", Font.BOLD, 22));
-		JLabel3.setText("PopSize: " + "0");
+		JLabel3.setText("Population Size: " + "0");
 		JLabel3.setFont(new java.awt.Font("serif", Font.BOLD, 22 ));
 		Jlabel4.setFont(new java.awt.Font("serif", Font.BOLD, 22)); // NOI18N
 		Jlabel4.setText("Mario Bros Genetic Algorithm");
 		
-
+		
+		
+		
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
@@ -128,8 +158,6 @@ public class gui extends javax.swing.JFrame {
 				.addComponent(jLabel2)
 				.addComponent(jSlider3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addComponent(JLabel3)
-			
-
 				.addComponent(button,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				.addComponent(button2,  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				//				.addComponent(JLabel3)

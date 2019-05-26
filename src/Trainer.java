@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutionException;
 public class Trainer {
 	public static void main(String args[]) throws InterruptedException, ExecutionException, EOFException {
 		Trainer t = new Trainer();
-		t.testSave();
+		t.start();
 	}
 	
 	public void start() throws InterruptedException, ExecutionException {
