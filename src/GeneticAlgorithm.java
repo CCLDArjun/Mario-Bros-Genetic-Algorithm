@@ -119,17 +119,21 @@ public class GeneticAlgorithm {
 		for (int i=0; i<3; i++)
 			theBest.add(individuals.get(i));
 		
-		for (int i=0; i<5; i++) {
+		for (int i=0; i<7; i++) {
 			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i+1).getNN(), mutationRate);
 			theBest.add(new Individual(m1));
 		}
 		
-		while (theBest.size() < initSize) {
-			//System.out.println("WAITING HERE");
-			theBest.add(new Individual(numInputs));
+		
+		while (theBest.size() < initSize-1) {
+			System.out.println("WAITING HERE");
+			if (Math.random()>=0.5)
+				theBest.add(new Individual(numInputs));
+			else 
+				theBest.add(individuals.get((int) ((individuals.size()/2)*Math.random())+individuals.size()/2));
 		}
 		
-		mutationRate -= mutationRate*0.06;
+		mutationRate -= mutationRate*0.0278;
 		
 		Individual.predictionThreshold += Individual.predictionThreshold*0.03; 
 		individuals = theBest;

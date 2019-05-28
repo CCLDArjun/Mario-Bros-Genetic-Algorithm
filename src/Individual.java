@@ -7,10 +7,7 @@ public class Individual implements Callable<Individual> {
 	private Game game;
 	public Individual(int numInputs) {
 		network = new NeuralNetwork(numInputs);
-		network.addLayer(4, Activation.Sigmoid);
-		network.addLayer(5, Activation.ReLu);
-		network.addLayer(5, Activation.Sigmoid);
-		network.addLayer(3, Activation.Sigmoid);
+		network.addLayer(3, Activation.DoubleSigmoid);
 	}
 	
 	/**
@@ -25,22 +22,24 @@ public class Individual implements Callable<Individual> {
 		return network.getFitness();
 		
 	}
-	public static double predictionThreshold = 0.5;
+	public static double predictionThreshold = 0.7;
 	public void play() {
-//		System.out.println("PLAYING");
 		ArrayList<Double> newState = game.getState();
+		
 		ArrayList<Double> actions = network.rawPredict(newState);
 		if (actions.get(0) == -1) {
 			return;
 		}
-			
+		
+		boolean turnRight = false;
 		if (actions.get(0) >= predictionThreshold) {
 			game.moveRight();
+			turnRight = true;
 		}
 		if(actions.get(1) >= predictionThreshold) {
 			game.jump();
 		}
-		if(actions.get(2) >= predictionThreshold) {
+		if(actions.get(2) >= predictionThreshold && !turnRight) {
 			game.moveLeft();
 		}
 	}

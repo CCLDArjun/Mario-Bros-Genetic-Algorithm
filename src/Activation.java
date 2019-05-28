@@ -1,4 +1,4 @@
 
 public enum Activation {
-	Sigmoid, ReLu, Tanh, None
+	Sigmoid, ReLu, Tanh, DoubleSigmoid, None
 }

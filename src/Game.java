@@ -32,11 +32,13 @@ public class Game {
 	public boolean play = false;
 	public BufferedReader in;
 	
-	private Timer repaint = new Timer(18, new ActionListener(){
+	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
+			getState();
 			if (m.y < 0 || (frames >= maxFrames && !play)) {
+				
 				//System.out.println("done"+GeneticAlgorithm.numDone);
 				if (m.y < 0) {
 					fitness -= 200;
@@ -44,7 +46,7 @@ public class Game {
 				
 				Game.me++;
 				fitness += m.x;
-				fitness -= 2*m.numJumps;
+				fitness -= 0.5*m.numJumps;
 				//System.out.println("ME"+Game.me);
 				if (indiv != null)
 					indiv.setDone(true);
@@ -107,7 +109,7 @@ public class Game {
 		int buff = 1;
 		
 		if (m.tilex == 0 && m.tiley==0) {
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < Math.pow((double)((2*buff)+1), 2); i++) {
 				  answer.add((double) 0);
 			}
 			return answer;
@@ -131,11 +133,8 @@ public class Game {
 		}
 		
 		
-		if (answer.size() != 9) {
-			while (answer.size()<9) {
-				  answer.add((double) 0);
-			}
-			return answer;
+		while (answer.size()<Math.pow((double)((2*buff)+1), 2)) {
+			answer.add((double) 0);
 		}
 		return answer;
 	}

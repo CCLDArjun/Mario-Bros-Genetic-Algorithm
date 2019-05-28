@@ -12,7 +12,7 @@ public class Neuron implements Serializable {
 	}
 	
 	public void setWeights(ArrayList<Double> w) {
-		weights = new ArrayList<Double>(w);
+		weights = (ArrayList<Double>) w.clone();
 	}
 
 	public double getBias() {
@@ -25,10 +25,10 @@ public class Neuron implements Serializable {
 
 	public Neuron(Activation activation, int numInputs) {
 		this.activation = activation;
-		this.bias = (Math.random() * 2) - 1; 
+		this.bias = (Math.random() * 9) - 4; 
 		weights = new ArrayList<Double>();
 		for (int i = 0; i < numInputs; i++) {
-			weights.add((Math.random() * 2) - 1);
+			weights.add((Math.random() * 9) - 4);
 		}
 	}
 	
@@ -63,6 +63,11 @@ public class Neuron implements Serializable {
 
 		else if (activation == Activation.Tanh)
 			sum = 2 / (1 + Math.pow(Math.E, (-2 * sum)));
+		
+		else if (activation == Activation.DoubleSigmoid) {
+			sum = (1 / (1 + Math.pow(Math.E, (-1 * sum))));
+			sum = (1 / (1 + Math.pow(Math.E, (-1 * sum))));
+		}
 
 		return sum;
 	}
@@ -96,7 +101,7 @@ public class Neuron implements Serializable {
 			for (int i=lastRandom; i<rand; i++) {
 				double num = Math.random();
 				if (num < mutationRate) {
-					newWeights.set(i, Math.random());
+					newWeights.set(i, (Math.random() * 9) - 4);
 				}
 				else if (num < 0.5) {
 					newWeights.set(i, n2.getWeights().get(i)); // need to clone

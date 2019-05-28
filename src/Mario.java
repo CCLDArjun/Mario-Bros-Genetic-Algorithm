@@ -46,9 +46,8 @@ public class Mario{
 				y_vel += 7;
 			}
 			upButton = true;
-			
+			numJumps++;
 		}
-		numJumps++;
 	}
 	
 	public void moveRight() {
