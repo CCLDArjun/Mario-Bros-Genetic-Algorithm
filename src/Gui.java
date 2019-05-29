@@ -28,7 +28,7 @@ public class Gui extends javax.swing.JFrame {
 		setTitle("Mario Bros Genetic Algorithm");
 		setSize(600,400);
 	}
-	int[][] gameGrid;
+	int[][] gameGrid = null;
 	public Gui(int[][] gg) {
 		this();
 		this.gameGrid = gg;
@@ -36,6 +36,8 @@ public class Gui extends javax.swing.JFrame {
 	
 	public void train() {
 		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
+		
+		
 		try {
 			ga.start(jSlider3.getValue());
 		} catch (Exception e) {

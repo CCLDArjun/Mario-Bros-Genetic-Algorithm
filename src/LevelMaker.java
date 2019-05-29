@@ -68,58 +68,34 @@ public class LevelMaker {
 			}
 		});
 		
-		JButton loadButton = new JButton("load");
-		loadButton.addActionListener(new ActionListener() {
+		JButton gameButton = new JButton("Play Game");
+		gameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				load();
+				playGame();
 			}
 		});
 		
 		label.setForeground(Color.BLACK);
 		frame.add(label, BorderLayout.CENTER);
 		frame.add(saveButton, BorderLayout.WEST);	
-		frame.add(loadButton, BorderLayout.EAST);
+		frame.add(gameButton, BorderLayout.EAST);
 		
 	}
-	
-	public File showFileDialog(String prompt) {
-		FileDialog dialog = new FileDialog((Frame)null, prompt);
-	    dialog.setMode(FileDialog.LOAD);
-	    dialog.setVisible(true);	    
-	    File file = new File(dialog.getFile());
-	    return file;
-	}
-	
 	
 	
 	public void sendBack() {
-		Gui gui = new Gui(grid.getGrid());
+		Gui gui = new Gui(grid.grid);
 		gui.setVisible(true);
 		frame.setVisible(false);
-	}
-	
-	public static void print(int[][] arr) {
-		for (int r=0; r<arr.length; r++) {
-			for (int c=0; c<arr[0].length; c++) {
-				System.out.print(arr[r][c]+", ");
-			}	
-			System.out.println(" ");
-		}
 		
 	}
-	
-	public void load()  {
-		File file = showFileDialog("Select File to Open");
-	    try {
-	    	grid = GameGrid.getFromFile(file.getAbsolutePath());
-	    }
-	    catch (Exception e) {}
-	    frame.setVisible(false);
-	    start();
+
+	public void playGame()  {
+		Game game = new Game();
+		game.start();
+		game.setLevel(grid.grid);
 	}
-
-
 
 	public void setVisible(boolean b) {
 		frame.setVisible(b);

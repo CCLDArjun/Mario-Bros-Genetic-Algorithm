@@ -34,7 +34,7 @@ public class GeneticAlgorithm {
 			main();
 		}
 	}
-
+	
 	boolean firstTime = true;
 	/**
 	 * @author Sri Kondapalli 
@@ -105,7 +105,7 @@ public class GeneticAlgorithm {
 		GeneticAlgorithm.numDone = 0;
 		select();
 	}
-
+	
 
 	private void select() {
 

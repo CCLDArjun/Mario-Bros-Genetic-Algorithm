@@ -29,9 +29,9 @@ public class Game {
 	public Individual indiv;
 	public static int me = 0;
 	public static int maxFrames = 50;
-	public boolean play = false;
+	public boolean play = true;
 	public BufferedReader in;
-	private Timer repaint = new Timer(18, new ActionListener(){
+	private Timer repaint = new Timer(15, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
@@ -60,6 +60,10 @@ public class Game {
 			}
 		}
 	});	
+	
+	public void setLevel(int[][] nl) {
+		tilelayout = nl.clone();
+	}
 	
 	public static void main(String[] args) {
 		new Game().start();
