@@ -20,7 +20,7 @@ public class Game {
 	private JPanel panel;
 	private Mario m = new Mario(0, 624);
 	private Keyboard keys = new Keyboard(m);
-	private int[][] tilelayout = new int[13][14];
+	private static int[][] tilelayout = new int[13][14];
 	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
 	private double fitness = 0;
@@ -61,7 +61,7 @@ public class Game {
 		}
 	});	
 	
-	public void setLevel(int[][] nl) {
+	public static void setLevel(int[][] nl) {
 		tilelayout = nl.clone();
 	}
 	

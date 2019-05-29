@@ -16,6 +16,7 @@ public class LevelMaker {
 	private JLabel label = new JLabel("<html>Green Squares represent blocks, black squares are holes</html>");
 	private Dimension DIM;
 	int[] dims;
+	
 	public static void main(String[] args) {
 		new LevelMaker();
 	}
@@ -26,6 +27,8 @@ public class LevelMaker {
 
 	private void start() {
 		dims = grid.recommendedDims();
+		
+		
 		DIM = new Dimension(dims[0], dims[1]+50);
 		panel = new JPanel() {
 			@Override 
@@ -76,11 +79,24 @@ public class LevelMaker {
 			}
 		});
 		
+		JButton randomButton = new JButton("Random");
+		randomButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				grid.addRandom(7);
+				frame.repaint();
+			}
+		});
+		
+		JPanel subPanel = new JPanel();
+	    subPanel.add(gameButton);
+	    subPanel.add(randomButton);
+	    
+		
 		label.setForeground(Color.BLACK);
 		frame.add(label, BorderLayout.CENTER);
-		frame.add(saveButton, BorderLayout.WEST);	
-		frame.add(gameButton, BorderLayout.EAST);
-		
+		frame.add(saveButton, BorderLayout.WEST);
+		frame.add(subPanel, BorderLayout.EAST);
 	}
 	
 	
@@ -90,11 +106,11 @@ public class LevelMaker {
 		frame.setVisible(false);
 		
 	}
-
+//	grid.addRandom(25);
 	public void playGame()  {
 		Game game = new Game();
 		game.start();
-		game.setLevel(grid.grid);
+		Game.setLevel(grid.grid);
 	}
 
 	public void setVisible(boolean b) {
