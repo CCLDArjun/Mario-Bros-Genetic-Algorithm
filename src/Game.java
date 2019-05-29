@@ -248,5 +248,24 @@ public class Game {
 				}
 			}
 		}
+		
+		ArrayList<Double> i = getState();
+		for (int y = 0; y < 13; y++) {
+			for (int x = 0; x < 13; x++) {
+				if (i.get(y * 13 + x) == 0) {
+					g.setColor(Color.BLACK);
+				}
+				
+				g.drawRect(x * 10, y * 10, 10, 10);
+			}
+		}
+		for (int y = 0; y < 13; y++) {
+			for (int x = 0; x < 13; x++) {
+				if (i.get(y * 13 + x) == 1) {
+					g.setColor(Color.RED);
+					g.drawRect(x * 10, y * 10, 10, 10);
+				}
+			}
+		}
 	}
 }
