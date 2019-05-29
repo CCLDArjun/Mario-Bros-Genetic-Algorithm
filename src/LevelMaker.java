@@ -104,6 +104,7 @@ public class LevelMaker {
 		Gui gui = new Gui(grid.grid);
 		gui.setVisible(true);
 		frame.setVisible(false);
+		Game.setLevel(grid.grid);
 		
 	}
 //	grid.addRandom(25);
