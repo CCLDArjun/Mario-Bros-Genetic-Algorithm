@@ -1,9 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -96,11 +93,11 @@ public class Mario{
 
 		tilex = (int) Math.ceil(x / 48.0);
 		tiley = (int) Math.ceil((624 - y) / 48.0);
-		g.setColor(Color.RED);
-		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) + 48 - offset, (tiley * 48));
-		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) - offset, (tiley * 48) + 48);
-		g.drawLine((tilex * 48) - offset, (tiley * 48) + 48, (tilex * 48) + 48 - offset, (tiley * 48) + 48);
-		g.drawLine((tilex * 48) + 48 - offset, (tiley * 48) + 48, (tilex * 48) + 48 - offset, (tiley * 48));
+//		g.setColor(Color.RED);
+//		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) + 48 - offset, (tiley * 48));
+//		g.drawLine((tilex * 48) - offset, (tiley * 48), (tilex * 48) - offset, (tiley * 48) + 48);
+//		g.drawLine((tilex * 48) - offset, (tiley * 48) + 48, (tilex * 48) + 48 - offset, (tiley * 48) + 48);
+//		g.drawLine((tilex * 48) + 48 - offset, (tiley * 48) + 48, (tilex * 48) + 48 - offset, (tiley * 48));
 		if (tiley < 0) {
 			tiley = 0;
 		}
