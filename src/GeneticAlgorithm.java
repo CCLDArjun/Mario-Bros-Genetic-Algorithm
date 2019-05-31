@@ -24,6 +24,9 @@ public class GeneticAlgorithm {
 		this.mutationRate = mutationRate; 
 		this.popSize = popSize;
 		this.numInputs = numInputs;
+		System.out.println(mutationRate);
+		System.out.println(popSize);
+		System.out.println(numInputs);
 	}
 
 	public void start(int times) throws InterruptedException, ExecutionException {

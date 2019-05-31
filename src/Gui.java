@@ -35,9 +35,9 @@ public class Gui extends javax.swing.JFrame {
 	}
 	
 	public void train() {
-		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
+		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue() / 100.0, jSlider3.getValue(), 169);
 		try {
-			ga.start(jSlider3.getValue());
+			ga.start(jSlider2.getValue());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
