@@ -31,7 +31,7 @@ public class Game {
 	public static int maxFrames = 50;
 	public boolean play = false;
 	public BufferedReader in;
-	private Timer repaint = new Timer(18, new ActionListener(){
+	private Timer repaint = new Timer(0, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
@@ -66,7 +66,7 @@ public class Game {
 	}
 
 	void start() {
-		//System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
+//		System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
 		makeFrame();
 		repaint.start();
 	}
@@ -118,6 +118,7 @@ public class Game {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel() {
 			public void paintComponent(Graphics g) {
+				System.out.println("yet");
 				super.paintComponent(g);
 				m.key(keys.r);
 				draw(g);
