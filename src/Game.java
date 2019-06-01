@@ -263,7 +263,7 @@ public class Game {
 				if (tile != 0) {
 					Image img;
 					try {
-						img = ImageIO.read(new File(tileID[tile] + ".png"));
+						img = ImageIO.read(new File(System.getProperty("user.dir") + "/" + tileID[tile] + ".png"));
 						g.drawImage(img, x * 48 - offset, y * 48, null);
 					} catch (IOException e) {
 						// Auto-generated catch block
