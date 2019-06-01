@@ -20,7 +20,7 @@ public class Game {
 	private JPanel panel;
 	private Mario m = new Mario(0, 624);
 	private Keyboard keys = new Keyboard(m);
-	private int[][] tilelayout = new int[13][14];
+	private static int[][] tilelayout = new int[13][14];
 	private String[] tileID = {"AIR", "ground"};
 	private int offset = 0;
 	private double fitness = 0;
@@ -29,9 +29,9 @@ public class Game {
 	public Individual indiv;
 	public static int me = 0;
 	public static int maxFrames = 50;
-	public boolean play = false;
+	public boolean play = true;
 	public BufferedReader in;
-	private Timer repaint = new Timer(0, new ActionListener(){
+	private Timer repaint = new Timer(15, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
 			frame.repaint();
 			frames += 1;
@@ -61,12 +61,16 @@ public class Game {
 		}
 	});	
 	
+	public static void setLevel(int[][] nl) {
+		tilelayout = nl.clone();
+	}
+	
 	public static void main(String[] args) {
 		new Game().start();
 	}
 
 	void start() {
-//		System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
+		//System.out.println("THREAD: "+Thread.currentThread().getId()+ " "+getFitness());
 		makeFrame();
 		repaint.start();
 	}
@@ -118,7 +122,6 @@ public class Game {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel() {
 			public void paintComponent(Graphics g) {
-				System.out.println("yet");
 				super.paintComponent(g);
 				m.key(keys.r);
 				draw(g);

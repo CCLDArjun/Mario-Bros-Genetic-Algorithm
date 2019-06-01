@@ -35,10 +35,16 @@ public class Gui extends javax.swing.JFrame {
 	}
 	
 	public void train() {
-		System.out.println("LuL");
+		//System.out.println("LuL");
+		//double mutationRate, int popSize, int numInputs, int numTimes
 //		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
 		try {
-			new Trainer().start();
+			double mutationRate = ((double) jSlider1.getValue())/100.0;
+			int popSize = jSlider3.getValue();
+			int numTimes = jSlider2.getValue();
+			Trainer t = new Trainer(mutationRate, popSize, 169, numTimes);
+			t.start();
+			//new Trainer((double)jSlider1.getValue()/100, jSlider).start();
 		} 
 		
 		catch (Exception e) {
