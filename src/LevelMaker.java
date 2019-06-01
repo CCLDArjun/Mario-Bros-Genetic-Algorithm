@@ -89,9 +89,8 @@ public class LevelMaker {
 		});
 		
 		JPanel subPanel = new JPanel();
-	    subPanel.add(gameButton);
-	    subPanel.add(randomButton);
-	    
+		subPanel.add(gameButton);
+		subPanel.add(randomButton);
 		
 		label.setForeground(Color.BLACK);
 		frame.add(label, BorderLayout.CENTER);
@@ -101,17 +100,18 @@ public class LevelMaker {
 	
 	
 	public void sendBack() {
-		Gui gui = new Gui(grid.grid);
+		Gui gui = new Gui(grid.getGrid());
 		gui.setVisible(true);
 		frame.setVisible(false);
-		Game.setLevel(grid.grid);
+		Game.setLevel(grid.getGrid());
 		
 	}
 //	grid.addRandom(25);
 	public void playGame()  {
 		Game game = new Game();
+		Game.setLevel(grid.getGrid());
+		game.play = true;
 		game.start();
-		Game.setLevel(grid.grid);
 	}
 
 	public void setVisible(boolean b) {
