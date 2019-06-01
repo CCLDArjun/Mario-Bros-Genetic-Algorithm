@@ -5,23 +5,29 @@ import java.util.concurrent.ExecutionException;
 
 public class Trainer extends Thread {
 	public static void main(String args[]) throws InterruptedException, ExecutionException, EOFException {
-		Trainer t = new Trainer();
+		Trainer t = new Trainer(0.9, 10, 169, 10);
 		try{
 			t.start();
 		}		
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+//		
 //		t.testSave();
 //		t.testGet();
 	}
 	
+	private GeneticAlgorithm ga;
+	private int times;
+	public Trainer(double mutationRate, int popSize, int numInputs, int numTimes) {
+		times = numTimes;
+		ga = new GeneticAlgorithm(mutationRate, popSize, numInputs);
+//		double mutationRate, int popSize, int numInputs
+	}
 	
 	public void run() {
-		GeneticAlgorithm ga = new GeneticAlgorithm(0.9, 10, 169);
 		try {
-			ga.start((int)Double.MAX_VALUE);
+			ga.start(times);
 		}
 		
 		catch (Exception e) {

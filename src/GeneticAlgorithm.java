@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import javax.swing.JOptionPane;
+
 public class GeneticAlgorithm {
 	private ArrayList <Individual> individuals =  new ArrayList <Individual>();
 	private double mutationRate;
@@ -50,14 +52,12 @@ public class GeneticAlgorithm {
 				Individual ind = new Individual(numInputs);
 				/*/
 				try {
-//					System.out.println(ind.getNN().getLayers());
-//					System.out.println(NeuralNetwork.getFromFile("best.nn"));
-					ind.getNN().setLayers(NeuralNetwork.getFromFile("best.nn").getLayers());
-				} catch (EOFException e) {
+					ind.getNN().setLayers(NeuralNetwork.getFromFile(System.getProperty("user.dir") + "/" + "best.nn").getLayers());
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				/*/
-//				System.out.println(ind.getNN().getLayers().get(0).get(0).getBias());
+//				/*/
+				System.out.println(ind.getNN().getLayers().get(0).get(0).getBias());
 				futures.add(service.submit(ind));
 			}
 			firstTime = false;
@@ -91,11 +91,14 @@ public class GeneticAlgorithm {
 			}
 		}
 		
-		individuals.get(0).getNN().save("best.nn");
-		System.out.println("Generation Score: " + (mean / individuals.size()));
-		System.out.println("Best Fitness: "+ (best));
-		System.out.println("Old best: " + (oldBest));
-		System.out.println("Order: " + (individuals));
+		individuals.get(0).getNN().save(System.getProperty("user.dir") + "/" + "best.nn");
+//		new GenerationUpdate("Generation Score: " + (mean / individuals.size())+"<br>"
+//							+"Best Fitness: "+ (best)+"<br>"
+//							+"Old best: " + (oldBest));
+		JOptionPane.showMessageDialog(null, "Generation Score: " + (mean / individuals.size())+"\n"
+							+"Best Fitness: "+ (best)+"\n"
+						+"Old best: " + (oldBest)+"\n"+"click okay to start next Generation", "Generation Update", JOptionPane.INFORMATION_MESSAGE);
+		System.out.println();
 //		Game.maxFrames += 10;
 		Game.maxFrames += (int) ((best - oldBest) / 10.0) + 1;
 		mutationRate = mutationRate * (oldBest / (best + time) * (1.0 + (1.0 / time)));
@@ -137,10 +140,10 @@ public class GeneticAlgorithm {
 //			theBest.add(new Individual(m1));
 //			theBest.add(new Individual(m2));
 //		}
-		for (int i = 0; i < initSize / 3 + 1; i++)
+		for (int i = 0; i < Math.round(initSize / 3.0); i++)
 			theBest.add(individuals.get(i));
 		
-		for (int i = 0; i < initSize * 2 / 3 + 1; i++) {
+		for (int i = 0; i < Math.round(initSize * 2 / 3.0); i++) {
 			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i+1).getNN(), mutationRate);
 			theBest.add(new Individual(m1));
 		}
@@ -159,10 +162,3 @@ public class GeneticAlgorithm {
 		System.out.println("*********************************");
 	}
 }
-
-
-
-
-
-
-

@@ -16,6 +16,7 @@ public class LevelMaker {
 	private JLabel label = new JLabel("<html>Green Squares represent blocks, black squares are holes</html>");
 	private Dimension DIM;
 	int[] dims;
+	
 	public static void main(String[] args) {
 		new LevelMaker();
 	}
@@ -26,6 +27,8 @@ public class LevelMaker {
 
 	private void start() {
 		dims = grid.recommendedDims();
+		
+		
 		DIM = new Dimension(dims[0], dims[1]+50);
 		panel = new JPanel() {
 			@Override 
@@ -68,58 +71,48 @@ public class LevelMaker {
 			}
 		});
 		
-		JButton loadButton = new JButton("load");
-		loadButton.addActionListener(new ActionListener() {
+		JButton gameButton = new JButton("Play Game");
+		gameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				load();
+				playGame();
 			}
 		});
 		
+		JButton randomButton = new JButton("Random");
+		randomButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				grid.addRandom(7);
+				frame.repaint();
+			}
+		});
+		
+		JPanel subPanel = new JPanel();
+		subPanel.add(gameButton);
+		subPanel.add(randomButton);
+		
 		label.setForeground(Color.BLACK);
 		frame.add(label, BorderLayout.CENTER);
-		frame.add(saveButton, BorderLayout.WEST);	
-		frame.add(loadButton, BorderLayout.EAST);
-		
+		frame.add(saveButton, BorderLayout.WEST);
+		frame.add(subPanel, BorderLayout.EAST);
 	}
-	
-	public File showFileDialog(String prompt) {
-		FileDialog dialog = new FileDialog((Frame)null, prompt);
-	    dialog.setMode(FileDialog.LOAD);
-	    dialog.setVisible(true);	    
-	    File file = new File(dialog.getFile());
-	    return file;
-	}
-	
 	
 	
 	public void sendBack() {
 		Gui gui = new Gui(grid.getGrid());
 		gui.setVisible(true);
 		frame.setVisible(false);
-	}
-	
-	public static void print(int[][] arr) {
-		for (int r=0; r<arr.length; r++) {
-			for (int c=0; c<arr[0].length; c++) {
-				System.out.print(arr[r][c]+", ");
-			}	
-			System.out.println(" ");
-		}
+		Game.setLevel(grid.getGrid());
 		
 	}
-	
-	public void load()  {
-		File file = showFileDialog("Select File to Open");
-	    try {
-	    	grid = GameGrid.getFromFile(file.getAbsolutePath());
-	    }
-	    catch (Exception e) {}
-	    frame.setVisible(false);
-	    start();
+//	grid.addRandom(25);
+	public void playGame()  {
+		Game game = new Game();
+		Game.setLevel(grid.getGrid());
+		game.play = true;
+		game.start();
 	}
-
-
 
 	public void setVisible(boolean b) {
 		frame.setVisible(b);

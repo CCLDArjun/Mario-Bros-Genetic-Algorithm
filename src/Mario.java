@@ -188,7 +188,7 @@ public class Mario{
 			if (isLeft) {
 				str = "L" + str;
 			}
-			img = ImageIO.read(new File(str));
+			img = ImageIO.read(new File(System.getProperty("user.dir") + "/" + str));
 			g.drawImage(img, x, 624 - y, null);
 		} catch (IOException e) {
 			// 1 2 Oatmeal

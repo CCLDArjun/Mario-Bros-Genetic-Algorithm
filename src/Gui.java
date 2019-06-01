@@ -27,6 +27,7 @@ public class Gui extends javax.swing.JFrame {
 		initComponents();
 		setTitle("Mario Bros Genetic Algorithm");
 		setSize(600,400);
+		
 	}
 	int[][] gameGrid;
 	public Gui(int[][] gg) {
@@ -35,10 +36,18 @@ public class Gui extends javax.swing.JFrame {
 	}
 	
 	public void train() {
-		System.out.println("LuL");
+		//System.out.println("LuL");
+		//double mutationRate, int popSize, int numInputs, int numTimes
 //		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
+		
 		try {
-			new Trainer().start();
+			double mutationRate = ((double) jSlider1.getValue())/100.0;
+			int popSize = jSlider3.getValue();
+			int numTimes = jSlider2.getValue();
+			Trainer t = new Trainer(mutationRate, popSize, 169, numTimes);
+			t.start();
+			setVisible(false);
+			//new Trainer((double)jSlider1.getValue()/100, jSlider).start();
 		} 
 		
 		catch (Exception e) {
@@ -226,6 +235,12 @@ public class Gui extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new Gui().setVisible(true);
+				new GenerationUpdate("Multiple windows will appear once you hit train, "
+						+ "every generation there will be an update given on how good all"
+						+ " Mario's are doing. In the multiple windows you can see how "
+						+ "Mario is doing and learning. You can also create your own level, "
+						+ "after creating the level you can click the Genetic Algorithm "
+						+ "button so you can use it.", 400);
 			}
 		});
 	}
