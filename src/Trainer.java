@@ -20,7 +20,10 @@ public class Trainer extends Thread {
 	private GeneticAlgorithm ga;
 	private int times;
 	public Trainer(double mutationRate, int popSize, int numInputs, int numTimes) {
-		times = numTimes;
+		if (numTimes < 10)
+			times = 10;
+		else
+			times = numTimes;
 		ga = new GeneticAlgorithm(mutationRate, popSize, numInputs);
 //		double mutationRate, int popSize, int numInputs
 	}
