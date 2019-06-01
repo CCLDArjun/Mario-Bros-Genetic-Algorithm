@@ -28,8 +28,8 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 50;
-	public boolean play = true;
+	public static int maxFrames = 20;
+	public boolean play = false;
 	public BufferedReader in;
 	private Timer repaint = new Timer(15, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
