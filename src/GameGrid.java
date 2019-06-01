@@ -22,6 +22,13 @@ public class GameGrid implements Serializable{
 		}
 	}
 	
+	public void addRandom(int num) {
+		for (int i=0; i<num; i++) {
+			int col = (int) (Math.random()*grid[0].length);
+			int row = (int) (Math.random()*grid.length);
+			grid[row][col] = 1;
+		}
+	}
 
 	public void updateClick(int x, int y) {
 		int row = (y/size);

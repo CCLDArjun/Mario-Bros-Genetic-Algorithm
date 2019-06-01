@@ -27,6 +27,7 @@ public class Gui extends javax.swing.JFrame {
 		initComponents();
 		setTitle("Mario Bros Genetic Algorithm");
 		setSize(600,400);
+		
 	}
 	int[][] gameGrid;
 	public Gui(int[][] gg) {
@@ -35,10 +36,21 @@ public class Gui extends javax.swing.JFrame {
 	}
 	
 	public void train() {
-		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
+		//System.out.println("LuL");
+		//double mutationRate, int popSize, int numInputs, int numTimes
+//		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
+		
 		try {
-			ga.start(jSlider3.getValue());
-		} catch (Exception e) {
+			double mutationRate = ((double) jSlider1.getValue())/100.0;
+			int popSize = jSlider3.getValue();
+			int numTimes = jSlider2.getValue();
+			Trainer t = new Trainer(mutationRate, popSize, 169, numTimes);
+			t.start();
+			setVisible(false);
+			//new Trainer((double)jSlider1.getValue()/100, jSlider).start();
+		} 
+		
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -50,7 +62,8 @@ public class Gui extends javax.swing.JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
-
+		
+		
 		jSlider1 = new javax.swing.JSlider();
 		jLabel1 = new javax.swing.JLabel();
 		jSlider2 = new javax.swing.JSlider();
@@ -175,7 +188,7 @@ public class Gui extends javax.swing.JFrame {
 		jLabel2.getAccessibleContext().setAccessibleName("JLblVal");
 
 
-		pack();
+		pack(); 
 	}// </editor-fold>                        
 
 	private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {                                   
@@ -222,6 +235,16 @@ public class Gui extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new Gui().setVisible(true);
+				new GenerationUpdate("Adjust the sliders to your preferred extent "
+						+ "for each of the 3 parameters of the Genetic Algorithm. "
+						+ "They are the Mutation Rate, the Number of Generations and the "
+						+ "Population Size respectively. Select Level Builder to create "
+						+ "your own custom level clicking on an area in a grid to "
+						+ "designate it as a solid block and clicking it again to "
+						+ "deselect it. Multiple windows will appear once you hit train, "
+						+ "in every generation there will be an update given on how "
+						+ "good all the Mario's are doing. In the multiple windows you "
+						+ "can see how Mario is doing and learning. ", 400);
 			}
 		});
 	}
