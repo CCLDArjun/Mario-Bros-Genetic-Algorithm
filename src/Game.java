@@ -5,8 +5,10 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -28,8 +30,8 @@ public class Game {
 	private int frames = 0;
 	public Individual indiv;
 	public static int me = 0;
-	public static int maxFrames = 20;
-	public boolean play = false;
+	public static int maxFrames = 10;
+	public static boolean play = false;
 	public BufferedReader in;
 	private Timer repaint = new Timer(15, new ActionListener(){
 		public void actionPerformed(ActionEvent e) {
@@ -62,7 +64,20 @@ public class Game {
 	});	
 	
 	public static void setLevel(int[][] nl) {
-		tilelayout = nl.clone();
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter("data"));
+			for (int[] y : nl) {
+				String s = "";
+				for (int x : y) {
+					s += x + ", ";
+				}
+				s += "\n";
+				out.write(s);
+			}
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -140,6 +155,10 @@ public class Game {
 			String str;
 			for (int x = 0; x < tilelayout[0].length; x++) {
 				str = in.readLine();
+				if (str == null) {
+					in = new BufferedReader(new FileReader("level.gg"));
+					str = in.readLine();
+				}
 				process(str, x);
 			}
 		} catch (IOException e) {
