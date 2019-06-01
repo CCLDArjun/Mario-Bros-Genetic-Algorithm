@@ -15,7 +15,7 @@ public class GenerationUpdate {
 	}
 	
 	public GenerationUpdate(String text, int height) {
-		frame.setPreferredSize(new Dimension(400, height));
+		frame.setPreferredSize(new Dimension(500, height));
 		JLabel jtf = new JLabel("<html>"+text+"</html>");
 		jtf.setFont(new Font(jtf.getName(), Font.PLAIN, 20));
 		frame.add(jtf);

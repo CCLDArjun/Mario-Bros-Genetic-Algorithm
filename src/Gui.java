@@ -235,12 +235,16 @@ public class Gui extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new Gui().setVisible(true);
-				new GenerationUpdate("Multiple windows will appear once you hit train, "
-						+ "every generation there will be an update given on how good all"
-						+ " Mario's are doing. In the multiple windows you can see how "
-						+ "Mario is doing and learning. You can also create your own level, "
-						+ "after creating the level you can click the Genetic Algorithm "
-						+ "button so you can use it.", 400);
+				new GenerationUpdate("Adjust the sliders to your preferred extent "
+						+ "for each of the 3 parameters of the Genetic Algorithm. "
+						+ "They are the Mutation Rate, the Number of Generations and the "
+						+ "Population Size respectively. Select Level Builder to create "
+						+ "your own custom level clicking on an area in a grid to "
+						+ "designate it as a solid block and clicking it again to "
+						+ "deselect it. Multiple windows will appear once you hit train, "
+						+ "in every generation there will be an update given on how "
+						+ "good all the Mario's are doing. In the multiple windows you "
+						+ "can see how Mario is doing and learning. ", 400);
 			}
 		});
 	}
