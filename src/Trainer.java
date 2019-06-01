@@ -3,7 +3,7 @@ import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class Trainer {
+public class Trainer extends Thread {
 	public static void main(String args[]) throws InterruptedException, ExecutionException, EOFException {
 		Trainer t = new Trainer();
 		try{
@@ -17,10 +17,21 @@ public class Trainer {
 //		t.testGet();
 	}
 	
-	public void start() throws InterruptedException, ExecutionException {
+	
+	public void run() {
 		GeneticAlgorithm ga = new GeneticAlgorithm(0.9, 10, 169);
-		ga.start((int)Double.MAX_VALUE);
+		try {
+			ga.start((int)Double.MAX_VALUE);
+		}
+		
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+//	public void start() throws InterruptedException, ExecutionException {
+//		GeneticAlgorithm ga = new GeneticAlgorithm(0.9, 10, 169);
+//		ga.start((int)Double.MAX_VALUE);
+//	}
 	
 	static String path  = "best.nn";
 	public void testSave() throws EOFException {

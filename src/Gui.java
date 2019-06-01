@@ -35,10 +35,13 @@ public class Gui extends javax.swing.JFrame {
 	}
 	
 	public void train() {
-		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue() / 100.0, jSlider3.getValue(), 169);
+		System.out.println("LuL");
+//		GeneticAlgorithm ga = new GeneticAlgorithm(jSlider1.getValue()/100, jSlider2.getValue(), 169);
 		try {
-			ga.start(jSlider2.getValue());
-		} catch (Exception e) {
+			new Trainer().start();
+		} 
+		
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -50,7 +53,8 @@ public class Gui extends javax.swing.JFrame {
 
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
-
+		
+		
 		jSlider1 = new javax.swing.JSlider();
 		jLabel1 = new javax.swing.JLabel();
 		jSlider2 = new javax.swing.JSlider();
@@ -175,7 +179,7 @@ public class Gui extends javax.swing.JFrame {
 		jLabel2.getAccessibleContext().setAccessibleName("JLblVal");
 
 
-		pack();
+		pack(); 
 	}// </editor-fold>                        
 
 	private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {                                   
