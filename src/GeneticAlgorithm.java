@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import javax.swing.JOptionPane;
+
 public class GeneticAlgorithm {
 	private ArrayList <Individual> individuals =  new ArrayList <Individual>();
 	private double mutationRate;
@@ -90,10 +92,13 @@ public class GeneticAlgorithm {
 		}
 		
 		individuals.get(0).getNN().save(System.getProperty("user.dir") + "/" + "best.nn");
-		System.out.println("Generation Score: " + (mean / individuals.size()));
-		System.out.println("Best Fitness: "+ (best));
-		System.out.println("Old best: " + (oldBest));
-		System.out.println("Order: " + (individuals));
+//		new GenerationUpdate("Generation Score: " + (mean / individuals.size())+"<br>"
+//							+"Best Fitness: "+ (best)+"<br>"
+//							+"Old best: " + (oldBest));
+		JOptionPane.showMessageDialog(null, "Generation Score: " + (mean / individuals.size())+"\n"
+							+"Best Fitness: "+ (best)+"\n"
+						+"Old best: " + (oldBest)+"\n"+"click okay to start next Generation", "Generation Update", JOptionPane.INFORMATION_MESSAGE);
+		System.out.println();
 //		Game.maxFrames += 10;
 		Game.maxFrames += (int) ((best - oldBest) / 10.0) + 1;
 		mutationRate = mutationRate * (oldBest / (best + time) * (1.0 + (1.0 / time)));
