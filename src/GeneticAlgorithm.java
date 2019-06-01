@@ -1,4 +1,3 @@
-import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -25,6 +24,9 @@ public class GeneticAlgorithm {
 		this.mutationRate = mutationRate; 
 		this.popSize = popSize;
 		this.numInputs = numInputs;
+		System.out.println(mutationRate);
+		System.out.println(popSize);
+		System.out.println(numInputs);
 	}
 
 	public void start(int times) throws InterruptedException, ExecutionException {
@@ -46,13 +48,14 @@ public class GeneticAlgorithm {
 		if (firstTime) {
 			for(int i = 0; i < popSize; i++) {
 				Individual ind = new Individual(numInputs);
-				
+				/*/
 				try {
-					ind.getNN().getFromFile("best.nn");
-				} catch (EOFException e) {
+					ind.getNN().setLayers(NeuralNetwork.getFromFile(System.getProperty("user.dir") + "/" + "best.nn").getLayers());
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+//				/*/
+				System.out.println(ind.getNN().getLayers().get(0).get(0).getBias());
 				futures.add(service.submit(ind));
 			}
 			firstTime = false;
@@ -85,7 +88,8 @@ public class GeneticAlgorithm {
 				break;
 			}
 		}
-//		individuals.get(0).getNN().save("best.nn");
+		
+		individuals.get(0).getNN().save(System.getProperty("user.dir") + "/" + "best.nn");
 		System.out.println("Generation Score: " + (mean / individuals.size()));
 		System.out.println("Best Fitness: "+ (best));
 		System.out.println("Old best: " + (oldBest));
@@ -131,16 +135,16 @@ public class GeneticAlgorithm {
 //			theBest.add(new Individual(m1));
 //			theBest.add(new Individual(m2));
 //		}
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < Math.round(initSize / 3.0); i++)
 			theBest.add(individuals.get(i));
 		
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < Math.round(initSize * 2 / 3.0); i++) {
 			NeuralNetwork m1 = NeuralNetwork.reproduce(individuals.get(i).getNN(), individuals.get(i+1).getNN(), mutationRate);
 			theBest.add(new Individual(m1));
 		}
 		
 		while (theBest.size() < initSize) {
-			//System.out.println("WAITING HERE");
+			System.out.println("WAITING HERE");
 			theBest.add(new Individual(numInputs));
 		}
 		System.out.println(theBest);
